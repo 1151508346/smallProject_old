@@ -1,3 +1,40 @@
 <view class="container">
-  aa
+
+ <view class="page-section page-section-spacing swiper">
+      <swiper indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}"
+        >
+        <block wx:for="{{background}}" wx:key="{{index}}" >
+          <swiper-item>
+            <view class="swiper-item">
+              <image src="{{item}}"/>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view class = "gird">
+      <block wx:for="{{routers1}}" wx:key="{{index}}" >
+          <navigator url="{{item.url}}">  
+            <view class="weui-grid__icon">  
+              <image src=" {{item.icon}}" mode="scaleToFill" />  
+            </view>  
+            <text class="weui-grid__label">{{item.name}}</text>  
+          </navigator> 
+        </block>
+    </view>
+     <view class = "gird">
+      <block wx:for="{{routers2}}" wx:key="{{index}}" >
+          <navigator url="{{item.url}}">  
+            <view class="weui-grid__icon">  
+              <image src=" {{item.icon}}" mode="scaleToFill" />  
+            </view>  
+            <text class="weui-grid__label">{{item.name}}</text>  
+          </navigator> 
+        </block>
+    </view>
+
+
+
+
 </view>

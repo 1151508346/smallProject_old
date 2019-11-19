@@ -1,0 +1,16 @@
+.gird{
+  display: flex;
+  justify-content: space-around;
+   text-align:center;
+}
+.weui-grid__icon{
+  text-align: center;
+  width: 100rpx;
+}
+.weui-grid__icon image{
+  width: 80rpx;
+  height: 80rpx;
+}
+.weui-grid__label{
+  font-size: 28rpx;
+}

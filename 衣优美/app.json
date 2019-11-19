@@ -12,11 +12,13 @@
     "navigationBarTextStyle":"black"
   },
   "tabBar": {
+    "selectedColor": "#f00",
     "list": [{
       "pagePath": "pages/index/index",
       "text": "首页",
       "iconPath": "static/tabbarIcon/default/ai-home.png",
       "selectedIconPath": "static/tabbarIcon/select/ai-home.png"
+     
     },
       {
         "pagePath": "pages/shopping/index",
@@ -28,7 +30,7 @@
         "pagePath": "pages/car/index",
         "text": "购物车",
         "iconPath": "static/tabbarIcon/default/gouwucheman.png",
-        "selectedIconPath": "static/tabbarIcon/select/gouwucheman.png",
+        "selectedIconPath": "static/tabbarIcon/select/gouwucheman.png"
         
       },
       {
