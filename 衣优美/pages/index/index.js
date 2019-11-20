@@ -14,7 +14,7 @@ Page({
     indicatorDots: true,
     vertical: false,
     autoplay: true,
-    interval: 3000,
+    interval: 4000,
     duration: 2500,
     routers1:[
       {
@@ -39,7 +39,8 @@ Page({
         icon: "/static/grid/优惠券拷贝.jpg",
       }
 
-    ]
+    ],
+    initDefaultImg:"/static/init.jpg"
   },
   //事件处理函数
   

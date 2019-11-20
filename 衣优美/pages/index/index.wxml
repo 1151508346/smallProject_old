@@ -13,6 +13,7 @@
         </block>
       </swiper>
     </view>
+
     <view class = "gird">
       <block wx:for="{{routers1}}" wx:key="{{index}}" >
           <navigator url="{{item.url}}">  
@@ -33,7 +34,20 @@
           </navigator> 
         </block>
     </view>
+    <view class="tuijian_box">
+      <view class="btuijian">
+        <text class="btuijian_list btuijian_title">商家推荐</text>
+        <text class="btuijian_list btuijian_more">更多>></text>
+      </view>
+      <view class="tujian_image_list">
+          <view>
+            <image class="tujian_image_list_img" src="{{initDefaultImg}}"></image>
+          </view>
+          <view>2</view>
+          <view>3</view>
+      </view>
 
+    </view>
 
 
 

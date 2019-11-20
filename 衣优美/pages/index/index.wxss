@@ -1,8 +1,22 @@
 .gird{
+  margin-top:40rpx;
   display: flex;
   justify-content: space-around;
    text-align:center;
 }
+.page-section{
+  height: 400rpx;
+}
+.page-section swiper{
+  height: 100%;
+}
+.swiper-item image{
+  width:100%;
+  
+  display:inline-block;
+  
+}
+
 .weui-grid__icon{
   text-align: center;
   width: 100rpx;
@@ -11,6 +25,26 @@
   width: 80rpx;
   height: 80rpx;
 }
-.weui-grid__label{
-  font-size: 28rpx;
+.btuijian{
+  display: flex;
+  justify-content: space-between;
 }
+.btuijian_list{
+  margin:30rpx;
+}
+.btuijian_more:active{
+  color:#f00;
+}
+.tujian_image_list{
+  display: flex;
+  text-align:center;
+  justify-content: space-around
+}
+.tujian_image_list view{
+  flex:1;
+  border:1px solid red;
+}
+.tujian_image_list_img{
+  width: 100%;
+}
+
