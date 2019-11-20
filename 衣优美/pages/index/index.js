@@ -40,7 +40,8 @@ Page({
       }
 
     ],
-    initDefaultImg:"/static/init.jpg"
+    initDefaultImg:"/static/init.jpg",
+    branchTuijian: ["/static/init.jpg", "/static/init.jpg", "/static/init.jpg", "/static/init.jpg",]
   },
   //事件处理函数
   

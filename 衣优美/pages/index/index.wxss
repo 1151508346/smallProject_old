@@ -1,3 +1,8 @@
+	
+.container{
+	width: 750rpx;
+	
+}
 .gird{
   margin-top:40rpx;
   display: flex;
@@ -12,9 +17,7 @@
 }
 .swiper-item image{
   width:100%;
-  
   display:inline-block;
-  
 }
 
 .weui-grid__icon{
@@ -25,14 +28,17 @@
   width: 80rpx;
   height: 80rpx;
 }
-.btuijian{
+.btuijian,
+.hottitle{
   display: flex;
   justify-content: space-between;
 }
-.btuijian_list{
+.btuijian_list,
+.hottitle_list{
   margin:30rpx;
 }
-.btuijian_more:active{
+.btuijian_more:active,
+.hottitle_more:active{
   color:#f00;
 }
 .tujian_image_list{
@@ -42,9 +48,48 @@
 }
 .tujian_image_list view{
   flex:1;
-  border:1px solid red;
+}
+.tujian_image_list_box{
+  height: 500rpx;
+  text-align: center;
 }
 .tujian_image_list_img{
-  width: 100%;
+  width: 95%;
+  height: 100%;
+  padding-left:4rpx;
+}
+.tujian_image_list_item{
+  height: 50%;
+  /* margin: 10rpx; */
+}
+.tujian_image_list_item image{
+  width:98%;
+  height:100%;
+  
+}
+	
+.hotSallList{
+	/* display:flex;
+	/* width: 730rpx; */ 
+	/* height: 440rpx; */
+	box-sizing:border-box;
+	/* justify-content: space-between; */
+	margin:0rpx;
+	/* border:1px solid red; */
+	/* overflow: hidden; */
+	
 }
 
+
+.fashion_girl_title{
+	margin-left:20rpx;
+}
+.fashion_girl_more{
+	margin-left:510rpx;
+	
+}
+	
+.text{
+	display: flex;
+	justify-content: space-between;
+}

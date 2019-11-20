@@ -1,0 +1,57 @@
+/* component/shoppingList/index.wxss */
+.shoppingListBox{
+	float:left;
+	/* height: 420rpx; */
+	width: 373rpx;
+	margin-right:50prx;
+	/* border:1px solid red; */
+
+}
+.shoppingListBox::after{
+	content:"";
+	display:block;
+	clear:both;
+}
+.shopping_img{
+	height: 420rpx;
+	margin-left:8rpx;
+}
+.shopping_img image{
+	width: 100%;
+	height: 100%;
+}
+.shopping_content{
+	line-height: 45rpx;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	padding:15rpx;
+}
+	
+.shoppping_property{
+	display: flex;
+	justify-content: space-between;
+	
+}
+.shoppping_property text{
+	margin:15rpx;
+}
+	
+.shopping_price{
+	color:#f00;
+	font-size:40rpx;
+	
+}
+	
+.isHot{
+	display: inline-block;
+	padding:5rpx;
+	background:#f00;
+	color:#fff;
+	border-radius: 10rpx;
+	padding-right: 10rpx;
+}
+	

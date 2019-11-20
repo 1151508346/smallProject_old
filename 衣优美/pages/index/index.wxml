@@ -40,15 +40,77 @@
         <text class="btuijian_list btuijian_more">更多>></text>
       </view>
       <view class="tujian_image_list">
-          <view>
+          <view class="tujian_image_list_box">
             <image class="tujian_image_list_img" src="{{initDefaultImg}}"></image>
           </view>
-          <view>2</view>
-          <view>3</view>
+          <view class="tujian_image_list_box">
+              <view class="tujian_image_list_item ">
+                  <image src="{{branchTuijian[0]}}"></image>
+              </view>
+              <view class="tujian_image_list_item ">
+                  <image src="{{branchTuijian[1]}}"></image>
+              </view>
+          </view>
+          <view class="tujian_image_list_box">
+              <view class="tujian_image_list_item ">
+                  <image src="{{branchTuijian[2]}}"></image>
+              </view>
+              <view class="tujian_image_list_item ">
+                  <image src="{{branchTuijian[3]}}"></image>
+              </view>
+          </view>
       </view>
 
     </view>
-
+	
+   <view>
+		<view class="hottitle">
+		  <text class="hottitle_list hottitle_title">热卖区</text>
+		  <text class="hottitle_list hottitle_more">更多>></text>
+		</view>
+		<view class="hotSallList">
+			<ShoppingList/>
+			<ShoppingList/>
+		</view>
+		<view class="hotSallList">
+			<ShoppingList/>
+			<ShoppingList/>
+		</view>
+		<view class="hotSallList">
+			<ShoppingList/>
+			<ShoppingList/>
+		</view>
+		<view class="hotSallList">
+			<ShoppingList/>
+			<ShoppingList/>
+		</view>
+	
+	</view>
+	
+	<view>
+		<view class="fashion_girl">
+			<text class="fashion_girl_list fashion_girl_title">商家推荐</text>
+			<text class="fashion_girl_list fashion_girl_more">更多>></text>
+			
+		</view>
+	</view>
+	<view>
+		<view class="text">
+			<text>1</text>
+			<text>2</text>
+		</view>
+		
+		
+	</view>
+	<view>asda</view>
+	<view>asda</view>
+	<view>asda</view>
+	<view>asda</view>
+	<view>asda</view>
+	<view>asda</view>
+	
+	
+	
 
 
 </view>
