@@ -1,0 +1,52 @@
+{
+	"童装":{
+		"裤子":[
+			{
+				"goodsId":"T0001",
+				"goodsname":"童装/男童/女童 仿羊羔绒运动长裤 421494 优衣库",
+				"goodPrice":99.00,
+				"goodName":100,
+				"discount":15.00,
+				"goodImages":[
+					"01.jpg","02.jpg","03.jpg","04.jpg"
+				]
+				
+			}
+		],
+		"上衣":[
+			{
+				"goodsId":"T1001",
+				"goodsname":"巴拉巴拉儿童羽绒服女童宝宝冬2019新款羽绒外套",
+				"goodPrice":"650.00",
+				"goodName":100,
+				"discount":50,
+				"goodImages":[
+					"01.jpg","02.jpg","03.jpg","04.jpg"
+				]
+				
+			},
+			{
+				"goodsId":"T1002",
+				"goodsname":"女童加绒外套2019新款洋气儿童装12-15岁秋冬装拼色加厚保暖风衣",
+				"goodPrice":"198.00",
+				"goodName":100,
+				"discount":20,
+				"goodImages":[
+					"01.jpg","02.jpg","03.jpg","04.jpg"
+				]
+			}
+		],
+		"连衣裙":[
+			{
+				"goodsId":"2001",
+				"goodsname":"女童毛衣连衣裙2019新款秋冬加绒毛衣裙儿童针织公主裙长袖裙子冬",
+				"goodPrice":"58.00",
+				"goodName":100,
+				"discount":10,
+				"goodImages":[
+					"01.jpg","02.jpg","03.jpg","04.jpg"
+				]
+			}
+		]
+	}
+}
