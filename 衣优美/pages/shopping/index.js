@@ -1,31 +1,48 @@
+var app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    
+    screenWidth: wx.getSystemInfoSync().windowWidth,
+	screenHeight: wx.getSystemInfoSync().windowHeight ,
+	modelBgToggle:true,
+	shopping_bar:"shopping_bar_end",
+	shopping_barList:{
+		"全部商品":[],
+		"男装":[],
+		"女装":[],
+		"儿童":[
+			"裤子",
+			"上衣",
+			"连衣裙",
+		],
+		"明星大牌":[],
+		"精品套装":[]
+	},
+	shoppingType:"全部商品",
+	shopping_index_toggle:""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+	  
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+		console.log(app.globalData.defaultValue);
   },
 
   /**
@@ -61,5 +78,23 @@ Page({
    */
   onShareAppMessage: function () {
     
+  },
+  handleToggleShoppingList(e){
+	console.log(e)
+	this.setData({
+		modelBgToggle:true,
+		shopping_bar:"shopping_bar_end"
+	})
+  },
+  handleCloseModelBg(){
+	  this.setData({
+		  modelBgToggle:false,
+		  shopping_bar:"shopping_bar"
+	  })
+  },
+  handleShoppingListToggle(e){
+	 var data = e.dataset;
   }
+  
+	
 })

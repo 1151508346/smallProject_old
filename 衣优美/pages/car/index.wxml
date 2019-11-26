@@ -1,2 +1,4 @@
 <view class="container">
-car</view>
+car
+<button bindtap = "handleSwitchBarShoppingPage">shopping Page</button>
+</view>

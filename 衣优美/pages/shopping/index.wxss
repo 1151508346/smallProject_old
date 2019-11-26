@@ -1,0 +1,93 @@
+.container{
+	width: 750rpx;
+	overflow-x: hidden;
+}
+.fenlei_search_box{
+	/* border:1px solid red; */
+	box-sizing: border-box;
+	display: flex;
+}
+.fs_list{
+	padding-top:20rpx;
+	padding-bottom:20rpx;
+	/* height: 50rpx; */
+	/* border:1px solid red; */
+}
+.fenlei{
+	width: 100rpx;
+	text-align:center;
+}
+.fenlei_img {
+	width: 50rpx;
+	height: 50rpx;
+	
+}
+.fenlei:active{
+	opacity: 0.8;
+}
+.search{
+	flex: 1;
+}
+.search button{
+	height: 100%;
+	border-radius:20rpx;
+	padding-top:14rpx;
+	line-height: 30rpx;
+	margin-right: 20rpx;
+	background-color:rgba(225,225,225,1);
+}
+.search button:active{
+	color:#f00;
+}
+.modelbg{
+	position:absolute;
+	z-index:99;
+	background-color:#aaa;
+	opacity: 0.8;
+}
+
+.shopping_bar{
+	width: 250rpx;
+	position: absolute;
+	z-index:100;
+	height: 600rpx;
+	/* border:1px solid red; */
+	/* top:100rpx; */
+	transform: translateX(-100%);
+	transition: 1s;
+	background-color: #fff;
+	
+}
+.shopping_bar_end{
+	width: 250rpx;
+	position: absolute;
+	z-index:100;
+	/* height: 600rpx; */
+	/* border:1px solid red; */
+	/* top:100rpx; */
+	transition: 1s;
+	background-color: #fff;
+	
+	
+}
+
+ .activeShoppingStatus{
+	 color:#f00;
+ }
+ .defaultShoppingStatus{
+	 color:#000;
+ }
+ .defaultShoppingStatus,
+ .activeShoppingStatus{
+		text-align:center;
+		padding:20rpx 0 20rpx 0;
+		margin-left:5rpx;
+		margin-right:5rpx;
+		border-top:2px solid #eee;
+  }
+ .shopping_items{
+	 /* border:1px solid red; */
+	 margin-top:20rpx;
+ }
+
+

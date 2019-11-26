@@ -32,7 +32,7 @@ Page({
         name: "精品套装",
         icon: "/static/grid/套装拷贝.jpg",
       }, {
-        name: "积分专区",
+        name: "孕妇专区",
         icon: "/static/grid/积分拷贝.jpg",
       }, {
         name: "优惠卷",

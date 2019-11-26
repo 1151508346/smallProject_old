@@ -36,7 +36,7 @@
     </view>
     <view class="tuijian_box">
       <view class="btuijian">
-        <text class="btuijian_list btuijian_title">商家推荐</text>
+        <text class="btuijian_list btuijian_title">精品推荐</text>
         <text class="btuijian_list btuijian_more">更多>></text>
       </view>
       <view class="tujian_image_list">
@@ -89,28 +89,43 @@
 	
 	<view>
 		<view class="fashion_girl">
-			<text class="fashion_girl_list fashion_girl_title">商家推荐</text>
+			<text class="fashion_girl_list fashion_girl_title">时尚女装</text>
 			<text class="fashion_girl_list fashion_girl_more">更多>></text>
 			
 		</view>
+    <view>
+    	    <ShoppingList/>
+      	    <ShoppingList/>
+        	<ShoppingList/>
+          	<ShoppingList/>
+      </view>
 	</view>
 	<view>
 		<view class="text">
-			<text>1</text>
-			<text>2</text>
+			<text></text>
+			<text></text>
 		</view>
-		
-		
 	</view>
-	<view>asda</view>
-	<view>asda</view>
-	<view>asda</view>
-	<view>asda</view>
-	<view>asda</view>
-	<view>asda</view>
-	
-	
-	
+
+  	<view>
+		<view class="fashion_girl">
+			<text class="fashion_girl_list fashion_girl_title">时尚男装</text>
+			<text class="fashion_girl_list fashion_girl_more">更多>></text>
+			
+		</view>
+    <view>
+    	    <ShoppingList/>
+      	    <ShoppingList/>
+        	<ShoppingList/>
+          	<ShoppingList/>
+      </view>
+	</view>
+	<view>
+		<view class="text">
+			<text></text>
+			<text></text>
+		</view>
+	</view>
 
 
 </view>

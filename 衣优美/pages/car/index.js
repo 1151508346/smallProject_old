@@ -1,3 +1,4 @@
+var app = getApp();
 Page({
 
   /**
@@ -55,11 +56,16 @@ Page({
   onReachBottom: function () {
     
   },
-
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
     
+  },
+  handleSwitchBarShoppingPage(){
+	  app.globalData.defaultValue = "car"
+  	wx.switchTab({
+  	      url: '/pages/shopping/index'
+  	});
   }
 })
