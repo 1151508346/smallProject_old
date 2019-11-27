@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/shopping/index",
     "pages/car/index",
-    "pages/ownCenter/index"
+    "pages/ownCenter/index",
+	"pages/shoppingDetail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

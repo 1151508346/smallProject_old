@@ -1,0 +1,105 @@
+<view class="container">
+	
+	
+	<view class="page-body">
+	 <view class="page-section page-section-spacing swiper">
+	   <swiper 
+		 autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+		 <block wx:for="{{background}}" wx:key="*this">
+		   <swiper-item>
+			 <view class="swiper-item {{item}}">
+				 <image src="{{item}}">
+				 </image>
+			 </view>
+		   </swiper-item>
+		 </block>
+	   </swiper>
+	 </view>
+	</view>
+	<view class = "detail-title-share">
+		<text class="detail-title">大水坑恢复开始恢复卡山东矿机卡算法开始开发好看顺丰快递首付款刘德华斯卡迪分开了阿达上看见</text>
+		<text class="detail-share">分享</text>
+	</view>
+	
+	<view class="detail-price">
+		<text>销售价</text><text>￥139.00</text>
+	</view>
+	<view class="detail-size-count">
+		<text>请选择您的尺寸和数量</text><text>></text>
+	</view>
+	
+	<view class="detail-photo">
+		<view class="detail-photo-show">
+			<text>图文展示</text>
+		</view>
+		<view class="detail-photo-show-img">
+			<image src="/static/init.jpg">
+				
+			</image>
+		</view>
+		<view class="detail-photo-show-img">
+			<image src="/static/init.jpg">
+				
+			</image>
+		</view>
+		<view class="detail-photo-show-img">
+			<image src="/static/init.jpg">
+				
+			</image>
+		</view>
+		
+		<view class="detail-photo-show-img">
+			<image src="/static/init.jpg">
+				
+			</image>
+		</view>
+	</view>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<view class="detail-bar">
+		<navigator>
+			<view class="detail-bar-list detail-bar-my">
+				<image src="/static/shoppingDedail/defaultMy.png"></image>
+				<view class="detail-bar-list-title">
+					<text>我的</text>
+				</view>
+			</view>
+		</navigator>
+		
+		<navigator>
+			<view class="detail-bar-list detail-bar-car">
+				<image src="/static/shoppingDedail/defaultCar.png"></image>
+				<view class="detail-bar-list-title">
+					<text>购物车</text>
+				</view>
+			</view>
+		</navigator>
+			<view class="detail-bar-list detail-bar-collect">
+				<image src="/static/shoppingDedail/defaultCollect.png"></image>
+				<view class="detail-bar-list-title">
+					<text>收藏</text>
+				</view>
+			</view>
+		
+		<view class="detail-bar-list detail-bar-addCar" hover-class="active-bar">
+			加入购物车
+		</view>
+		<view class="detail-bar-list detail-bar-quickPay" hover-class="active-bar">立即购买</view>
+		
+		
+	</view>
+</view>

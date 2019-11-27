@@ -1,14 +1,16 @@
 <!--component/shoppingList/index.wxml-->
 <view class="shoppingListBox">
-	<view class="shopping_img">
-		<image src="../../static/init.jpg"></image>
-	</view>
-	<view>
-		<text class="shopping_content">小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序</text>
-	</view>
-	<view class="shoppping_property">
-		<text class="shopping_price">￥56.0</text>
-		<text class="isHot">Hot</text>
-	</view>
+	<navigator url="/pages/shoppingDetail/index" >
+		<view class="shopping_img">
+			<image src="../../static/init.jpg"></image>
+		</view>
+		<view>
+			<text class="shopping_content">小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序</text>
+		</view>
+		<view class="shoppping_property">
+			<text class="shopping_price">￥56.0</text>
+			<text class="isHot">Hot</text>
+		</view>
+	</navigator>
 	
 </view>
