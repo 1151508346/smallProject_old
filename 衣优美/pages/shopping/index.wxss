@@ -42,7 +42,7 @@
 .modelbg{
 	position:absolute;
 	z-index:99;
-	background-color:#aaa;
+	background-color:#777;
 	opacity: 0.8;
 }
 
@@ -67,27 +67,38 @@
 	/* top:100rpx; */
 	transition: 1s;
 	background-color: #fff;
-	
-	
 }
-
- .activeShoppingStatus{
+.shopping_barList_title{
+	display: block;
+}
+ .activeShoppingStatus,
+ .activeShoppingStatus_items
+ {
 	 color:#f00;
  }
- .defaultShoppingStatus{
+ .defaultShoppingStatus,
+ .defaultShoppingStatus_items{
 	 color:#000;
  }
  .defaultShoppingStatus,
  .activeShoppingStatus{
-		text-align:center;
-		padding:20rpx 0 20rpx 0;
+		/* text-align:center; */
+		padding:0rpx 0 20rpx 0;
+		padding-left:50rpx;
 		margin-left:5rpx;
 		margin-right:5rpx;
 		border-top:2px solid #eee;
   }
+  .defaultShoppingStatus_items,
+  .activeShoppingStatus_items{
+	  text-align:center;
+	  padding:20rpx 0 20rpx 0;
+	  margin-left:5rpx;
+	  margin-right:5rpx;
+  }
  .shopping_items{
 	 /* border:1px solid red; */
-	 margin-top:20rpx;
+	 /* margin-top:20rpx; */
  }
 
 

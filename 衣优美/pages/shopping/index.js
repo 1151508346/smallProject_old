@@ -7,8 +7,8 @@ Page({
   data: {
     screenWidth: wx.getSystemInfoSync().windowWidth,
 	screenHeight: wx.getSystemInfoSync().windowHeight ,
-	modelBgToggle:true,
-	shopping_bar:"shopping_bar_end",
+	modelBgToggle:false,
+	shopping_bar:"shopping_bar",
 	shopping_barList:{
 		"全部商品":[],
 		"男装":[],
@@ -22,7 +22,9 @@ Page({
 		"精品套装":[]
 	},
 	shoppingType:"全部商品",
-	shopping_index_toggle:""
+	shopping_index_toggle:"",
+	items_toggle:"",
+	// items_toggle_flag:false
   },
 
   /**
@@ -80,7 +82,7 @@ Page({
     
   },
   handleToggleShoppingList(e){
-	console.log(e)
+	// console.log(e)
 	this.setData({
 		modelBgToggle:true,
 		shopping_bar:"shopping_bar_end"
@@ -93,8 +95,27 @@ Page({
 	  })
   },
   handleShoppingListToggle(e){
-	 var data = e.dataset;
-  }
-  
+	 var data = e.currentTarget.dataset;
+		console.log(data)
+	
+	  this.setData({
+		  items_toggle:data.listname,
+		  // items_toggle_flag:!this.data.items_toggle_flag,
+		  shoppingType:data.listname
+	  })
+	 
+  },
+  handleShoppingListToggleItem(e){
+	  var data = e.currentTarget.dataset
+	  console.log(data)
+	  this.setData({
+	  		  shoppingType:data.listnameitem
+	  })
+	  console.log(this.data.shoppingType)
+  },
+  handleItemToggle(){
+	  console.log("aaaaaaa")
+  },
+ 
 	
 })

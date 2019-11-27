@@ -8,13 +8,24 @@
 	
 
 	 <view class="{{shopping_bar}}" >
-		
-		 <block wx:for="{{shopping_barList}}" wx:for-index="indexs" wx:for-item="items" >
-			 <view  class="{{indexs == shoppingType?'activeShoppingStatus':'defaultShoppingStatus'}}">
-				<text bindtap="handleShoppingListToggle" data-listName="{{indexs}}"> {{indexs}}</text>
-				<view class="shopping_items" wx-if="shopping_index_toggle">
+		 <block wx:for="{{shopping_barList}}" wx:for-index="indexs" wx:for-item="items" wx:key >
+			 <view >
+				<text 
+					class="shopping_barList_title {{indexs == shoppingType?'activeShoppingStatus':'defaultShoppingStatus'}}" 
+					bindtap="handleShoppingListToggle" 
+					data-listName="{{indexs}}"> 
+					{{indexs}}
+				</text>
+				<view  wx:if = "{{items_toggle == indexs }}" 
+						
+						class="shopping_items" 
+						wx-if="shopping_index_toggle">
 					<block  wx:for="{{items}}" wx:key="{{index}}">
-					 <view  class="{{indexs == shoppingType?'activeShoppingStatus':'defaultShoppingStatus'}}">
+					 <view 
+							class="{{item == shoppingType?'activeShoppingStatus_items':'defaultShoppingStatus_items'}}"
+							 bindtap = "handleShoppingListToggleItem"
+							 data-listNameItem="{{item}}"
+							>
 							{{item}}
 						</view>
 					</block>
@@ -32,7 +43,14 @@
 	  </view>
    </view>
 	<view>
-		aaa
+		
+			<ShoppingList/>
+			<ShoppingList/>
+			<ShoppingList/>
+			<ShoppingList/>
 	</view>
-
+	
+	
+	
+	
 </view>
