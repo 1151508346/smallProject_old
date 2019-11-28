@@ -56,6 +56,13 @@
 					"id": -1,
 					"name": "pages/shoppingDetail/index",
 					"pathName": "pages/shoppingDetail/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/car/index",
+					"pathName": "pages/car/index",
 					"scene": null
 				}
 			]

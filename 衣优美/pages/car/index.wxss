@@ -1,0 +1,34 @@
+.yiyoumei-discount{
+	/* border:1px solid red; */
+	display: flex;
+}
+.yym-discount-item{
+	/* border:1px solid red; */
+	/* line-height: 50rpx; */
+	font-size:28rpx;
+}
+.checked-window{
+	/* border:1px solid red; */
+	text-align: center;
+	border-radius:50%;
+	overflow:hidden;
+	width: 50rpx;
+	height: 50rpx;
+	padding:0;
+	margin-left:10rpx;
+	/* line-height: -10rpx; */
+	
+	
+	
+}
+	
+.yiyoumeiName{
+	flex:1;
+	padding-left:30rpx;
+	line-height: 55rpx;
+}
+.discount{
+	width:100rpx;
+	padding-right:20rpx;
+	line-height: 55rpx;
+}

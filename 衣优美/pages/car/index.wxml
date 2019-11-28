@@ -1,4 +1,21 @@
 <view class="container">
-car
-<button bindtap = "handleSwitchBarShoppingPage">shopping Page</button>
+<!-- <button bindtap = "handleSwitchBarShoppingPage">shopping Page</button> -->
+
+
+
+	<view class="yiyoumei-discount">
+		<view class="yym-discount-item checked-window">
+			<radio class="default-checkbox" value="aa"  color="#f00" bindtap = "toggleCheck" checked= "{{checkedStatus}}"/>
+		</view>
+		<view class="yym-discount-item yiyoumeiName">衣优美</view>
+		<view class="yym-discount-item discount" >优惠卷</view>
+	</view>
+
+
+
+
+
+
+
+
 </view>

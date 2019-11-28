@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    checkedStatus:"checked"
   },
 
   /**
@@ -67,5 +67,10 @@ Page({
   	wx.switchTab({
   	      url: '/pages/shopping/index'
   	});
+  },
+  toggleCheck(){
+	  this.setData({
+		  checkedStatus:""
+	  })
   }
 })
