@@ -12,7 +12,8 @@ Page({
     vertical: false,
     autoplay: false,
     interval: 2000,
-    duration: 500
+    duration: 500,
+	
   },
 
   changeIndicatorDots() {

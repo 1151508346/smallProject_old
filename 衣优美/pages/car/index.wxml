@@ -5,12 +5,50 @@
 
 	<view class="yiyoumei-discount">
 		<view class="yym-discount-item checked-window">
-			<radio class="default-checkbox" value="aa"  color="#f00" bindtap = "toggleCheck" checked= "{{checkedStatus}}"/>
+			<radio class="default-checkbox" 
+			value="aa"  
+			color="#f00" 
+			checked = "{{checkedStatus}}"
+			bindtap = "allSelectStatusToggle"
+			 />
 		</view>
 		<view class="yym-discount-item yiyoumeiName">衣优美</view>
 		<view class="yym-discount-item discount" >优惠卷</view>
 	</view>
-
+	
+	<block wx:for="{{car_shopping_list}}" >
+		<view class="car-list">
+			
+				<view class="class-list-item car-list-checked">
+					<radio class="default-checkbox" 
+					value="aa"  color="#f00" 
+					bindtap = "toggleCheck" 
+					checked= "{{item.selectStatus == true ? 'selected' : ''}}"
+					data-index="{{index}}"
+					/>
+				</view>
+				<view class="class-list-item car-list-image">
+					<image src= "{{item.goodsImage}}" >
+					</image>
+				</view>
+				<view class="class-list-item car-list-name">{{item.goodsName}}
+				
+				
+					<view class = "car-list_price"> ￥{{item.goodsPrice}}</view>
+					<view class = "car-list_input_num" >
+						
+						<view>
+							<button bindtap = "reduceBuyNum" data-index="{{index}}">-</button>
+							<input type="text" value="{{item.defaultValue}}" />
+							<button bindtap = "addBuyNum" data-index="{{index}}">+</button>
+						</view>
+					</view>
+				
+				</view>
+			
+		</view>
+	</block>
+	
 
 
 

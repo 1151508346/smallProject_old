@@ -7,19 +7,15 @@
 	/* line-height: 50rpx; */
 	font-size:28rpx;
 }
-.checked-window{
+.checked-window
+{
 	/* border:1px solid red; */
 	text-align: center;
-	border-radius:50%;
-	overflow:hidden;
-	width: 50rpx;
-	height: 50rpx;
+	
 	padding:0;
-	margin-left:10rpx;
+	margin-left:30rpx;
 	/* line-height: -10rpx; */
-	
-	
-	
+		
 }
 	
 .yiyoumeiName{
@@ -32,3 +28,64 @@
 	padding-right:20rpx;
 	line-height: 55rpx;
 }
+
+.car-list{
+	display: flex;
+}
+.car-list-image {
+	margin-left:30rpx;
+}
+ .car-list-image image{
+	 width: 150rpx;
+	 height: 150rpx;
+ }
+ .car-list-checked{
+	 margin-left:30rpx;
+	 margin-top:10rpx;
+	 line-height: 120rpx;	 
+ }
+ .car-list-name{
+	 flex:1;
+	 padding:10rpx;
+	 padding-top:0rpx;
+	 /* border:1px  solid red; */
+	 text-overflow: ellipsis;
+	 overflow: hidden;
+	 white-space: nowrap;
+	 /* display:flex; */
+	 position: relative;
+ }
+  .car-list-name view{
+	position: absolute;
+	bottom:0rpx;
+	
+  }
+    .car-list-name view:nth-of-type(2){
+		right:0rpx;
+	}
+	.car-list_input_num view{
+		display:flex;
+		position:absolute;
+		right:10rpx;
+	}
+	.car-list_input_num view button,
+	.car-list_input_num view input {
+		width: 60rpx;
+		/* border:1px solid red; */
+		line-height:60rpx;
+		padding:0;
+		margin:0;
+		text-align:center;
+		
+	}
+	.car-list_input_num view button{
+		/* margin-top:10rpx; */
+		height: 60rpx;
+	}
+	.car-list_input_num view input {
+		border:1px solid #ddd;
+	}
+	.car-list_price{
+		color:#f00;
+		font-size:32rpx;
+	}

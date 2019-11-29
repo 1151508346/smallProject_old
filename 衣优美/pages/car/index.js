@@ -5,7 +5,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    checkedStatus:"checked"
+    checkedStatus:"selected",
+	
+	checkedStatusToggle:true,
+	car_shopping_list:[
+		{
+			goodsName:"aaa打扫房间克鲁赛德后方可上岛咖啡",
+			goodsPrice:10.1,
+			goodsImage:"/static/init.jpg",
+		},
+		{
+			goodsName:"aaa打扫房间克鲁赛德后方可上岛房间克鲁赛德后方可上房间克鲁赛德后方可上房间克鲁赛德后方可上咖啡",
+			goodsPrice:10.0,
+			goodsImage:"/static/init.jpg",
+		}
+	],
+	// buy_num:1
   },
 
   /**
@@ -19,7 +34,16 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+    var length = this.data.car_shopping_list.length;
+	var newData = this.data.car_shopping_list.map((value,index)=>{
+		value.defaultValue = 1
+		value.selectStatus = true;
+		return value;
+	})
+	// console.log(newData);
+	this.setData({
+		car_shopping_list:newData
+	})
   },
 
   /**
@@ -62,15 +86,88 @@ Page({
   onShareAppMessage: function () {
     
   },
-  handleSwitchBarShoppingPage(){
+	handleSwitchBarShoppingPage(){
 	  app.globalData.defaultValue = "car"
-  	wx.switchTab({
-  	      url: '/pages/shopping/index'
-  	});
-  },
-  toggleCheck(){
-	  this.setData({
-		  checkedStatus:""
-	  })
-  }
+	wx.switchTab({
+		  url: '/pages/shopping/index'
+	});
+	},
+	toggleCheck(e){
+		var index = e.currentTarget.dataset.index;
+		
+		if(!this.data.car_shopping_list[index].selectStatus){
+		  
+		 this.data.car_shopping_list[index].selectStatus = true
+		 this.setData({
+				  checkedStatus:"",
+				  car_shopping_list: this.data.car_shopping_list
+		 })
+		}else{
+		  this.data.car_shopping_list[index].selectStatus = false
+		  this.setData({
+		  				  checkedStatus:"",
+		  				  car_shopping_list: this.data.car_shopping_list,
+		  })
+		}
+		var temp = this.data.car_shopping_list.length;
+		for (var i =0;i<this.data.car_shopping_list.length;i++) {
+			
+			if(!this.data.car_shopping_list[i].selectStatus){
+				break;
+				
+			}
+		}
+		if(temp===i){
+			this.setData({
+				checkedStatus :"checked",
+				checkedStatusToggle:true
+			})
+		}else{
+			this.setData({
+				checkedStatus :"",
+				checkedStatusToggle:false
+			})
+		}
+		
+	},
+	addBuyNum(e){
+		 var index = e.currentTarget.dataset.index;
+		  ++this.data.car_shopping_list[index].defaultValue;
+		 this.setData({
+			car_shopping_list:this.data.car_shopping_list
+		 })
+	},
+	reduceBuyNum(e){
+		var index = e.currentTarget.dataset.index;
+		--this.data.car_shopping_list[index].defaultValue;
+		this.setData({
+			car_shopping_list:this.data.car_shopping_list
+		})
+	},
+	allSelectStatusToggle(){
+		if(!this.data.checkedStatusToggle){
+			this.setData({
+				checkedStatus:"selected",
+				checkedStatusToggle:true
+			})
+			for (var i=0;i<this.data.car_shopping_list.length;i++) {
+				this.data.car_shopping_list[i].selectStatus = true
+			}
+			this.setData({
+				car_shopping_list:this.data.car_shopping_list
+			})
+			
+		}else {
+			this.setData({
+				checkedStatus:"",
+				checkedStatusToggle:false
+			});
+			for (var i=0;i<this.data.car_shopping_list.length;i++) {
+				this.data.car_shopping_list[i].selectStatus = false
+			}
+			this.setData({
+				car_shopping_list:this.data.car_shopping_list
+			})
+		}
+	}
 })
