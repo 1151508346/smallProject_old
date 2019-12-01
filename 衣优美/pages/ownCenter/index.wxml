@@ -1,3 +1,96 @@
-<view>
-  shopping
+<view class="container">
+    <view class="loginStatus_box">
+        <view class="login_icon">
+            <image src="/static/init.jpg"></image></view>
+        <view class="login_name">
+          <text>王国晗</text>
+        </view>
+        <view class="sign_come">
+          <text>签到</text>
+
+          </view>
+    </view>
+    <view class="yh_ll_jf_sc">
+      <view class="yh_ll_jf_sc_item">
+      <image src="/static/myCenter/jifen.png"></image>
+      <view> 积分</view>
+      </view>
+        <view class="yh_ll_jf_sc_item">
+      <image src="/static/myCenter/shoucang.png"></image>
+      <view>收藏夹</view>
+      </view>
+        <view class="yh_ll_jf_sc_item">
+      <image src="/static/myCenter/youhuiquan.png"></image>
+        <view>优惠卷</view>
+      </view>
+        <view class="yh_ll_jf_sc_item">
+      <image src="/static/myCenter/zuji.png"></image>
+        <view>历史浏览</view>
+      </view>
+    </view>
+
+    <view class="dingdan_box">
+      <view class="dingdan_title">
+          订单管理
+      </view>
+      <view class="dingdan_list">
+          <view class="dingdan_item">
+              <image src="/static/dingdanmanage/daifukuan.png"></image>
+              <view>待付款</view>
+
+            </view>
+           <view class="dingdan_item">
+              <image src="/static/dingdanmanage/daishouhuo.png"></image>
+              <view>待收货</view>
+
+             </view>
+            <view class="dingdan_item">
+              <image src="/static/dingdanmanage/icon4.png"></image>
+              <view>待评价</view>
+
+            </view>
+             <view class="dingdan_item">
+             <image src="/static/dingdanmanage/quanbudingdan.png"></image>
+              <view>全部商品</view>
+
+             </view>
+      </view>
+
+      <view>
+
+      </view>
+
+
+
+
+
+
+
+
+
+    </view>
+   <view class="qb_address_about_exit_list money">
+    <text>我的钱包</text>
+    <text >￥0.00</text>
+   </view>
+   <view class="qb_address_about_exit_list">
+   <text>收获地址</text><text>></text> </view>
+   <view class="qb_address_about_exit_list">
+   <text>关于</text> <text>></text></view>
+   <view class="qb_address_about_exit_list">
+   <text>退出</text> <text>></text></view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
 </view>

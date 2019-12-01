@@ -12,7 +12,7 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.3",
+	"libVersion": "2.9.2",
 	"appid": "wx9caba0a65fa4b117",
 	"projectname": "clotheProject",
 	"debugOptions": {
@@ -63,6 +63,34 @@
 					"id": -1,
 					"name": "pages/car/index",
 					"pathName": "pages/car/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/search/index",
+					"pathName": "pages/search/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/ownCenter/index",
+					"pathName": "pages/ownCenter/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/login/index",
+					"pathName": "pages/login/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/register/index",
+					"pathName": "pages/register/index",
 					"scene": null
 				}
 			]

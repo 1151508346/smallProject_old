@@ -1,0 +1,57 @@
+<view class="container" style="height:{{windowHeight}}px;">
+
+  <!--pages/register/index.wxml-->
+<view class="login_box">
+  
+    <view class="username">
+      <view class="username_icon">
+        <image src="/static/login-register/yonghu.png"></image>
+      </view>
+      <input type="text" placeholder="请输入您的用户名" 
+        value="{{username_input}}"
+        bindinput="handleUserNameInputValue"
+      />
+      <view wx:if="{{clearButtonStatus}}"
+            class="clear_content" 
+            hover-class="clear_content_active"
+            bindtap="handleInputUsernameClearValue"
+          
+            >x</view>
+
+    </view>
+    <view class="password">
+      <view class="password_icon">
+        <image src="/static/login-register/mima.png"></image>
+      </view>
+      <input type="password" placeholder="请输入您的密码" value=""/>
+      <!-- <view class="clear_content" hover-class="clear_content_active">x</view> -->
+
+    </view>
+     <view class="password">
+      <view class="password_icon">
+        <image src="/static/login-register/mima.png"></image>
+      </view>
+      <input type="password" placeholder="请重新输入您的密码" value=""/>
+      <!-- <view class="clear_content" hover-class="clear_content_active">x</view> -->
+    </view>
+    <view class="email">
+      <view class="email_icon">
+        <image src="/static/login-register/email-line.png"></image>
+      </view>
+      <input type="text" placeholder="请重新输入电子邮件" value="{{email_input}}"
+        bindtap="handleEmailInputValue"
+      
+      />
+      <view class="clear_content" hover-class="clear_content_active"
+      wx:if="{{clearButtonStatus2}}"
+        bindtap="handleInputEmailClearValue"
+      >x</view>
+    </view>
+    <view class="register-button">
+      <navigator> 注册 </navigator>
+    </view>
+
+  </view> 
+
+
+</view>

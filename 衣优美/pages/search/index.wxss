@@ -1,0 +1,66 @@
+/* pages/search/index.wxss */
+.search_box{
+  display: flex;
+  padding-top:20rpx;
+  padding-bottom:20rpx;
+  padding-left: 20rpx;
+  /* border:1px solid red; */
+}
+.search_icon{
+
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+    text-align: center;
+    left: 10rpx;
+  
+}
+.search_icon image{
+  width: 80%;
+  height: 80%;
+  margin-top:10%;
+
+}
+.search_window,
+.cancel{
+  /* border:1px solid red; */
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.search_window{
+flex: 1;
+position: relative;
+background-color: rgb(245, 245, 245);
+border-radius: 50rpx;
+}
+.search_window input{
+  /* border:1px solid red; */
+  margin-left:50rpx;
+  height: 45rpx;
+  text-align: center;
+  box-sizing: border-box
+}
+.cancel{
+  width: 100rpx;
+  text-align:center;
+}
+.zuijinsearch{
+  
+}
+.zuijinsearch_title{
+  margin-left: 25rpx;
+
+}
+.zuijinsearch_list{
+}
+.zuijinsearch_list button{
+  display: inline-block;
+  flex-wrap: wrap;
+  height: 50rpx;
+  line-height: 50rpx;
+  margin-left:25rpx;
+  margin-top:25rpx;
+
+}
+
+

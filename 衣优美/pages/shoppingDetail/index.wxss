@@ -2,7 +2,7 @@
 	height: 90rpx;
 	position:fixed;
 	bottom:0;
-	z-index: 999;
+	z-index: 99;
 	width: 100%;
 	box-sizing: border-box;
 	display: flex;
@@ -53,6 +53,7 @@
 }
 .swiper-item image{
 	height: 100%;
+  width:100%;
 }
 swiper{
 	height: 700rpx;
@@ -128,4 +129,150 @@ swiper{
 	float: right;
 	
 	margin-right:20rpx;
+}
+.detail-photo-show-img image{
+  width: 100%;
+  height: 600rpx;
+}
+.select-size-count-alert,
+
+.select-size-count-alert_end{
+  height:800rpx;
+  width:100%;
+  background-color:#fff;
+  /* opacity: 0.5; */
+  position:fixed;
+  transition:200ms;
+  z-index: 100;
+
+}
+
+.select-size-count-alert{
+  bottom:-1000rpx;
+}
+.select-size-count-alert_end{
+  
+ bottom:0;
+}
+.addCarAlert_image{
+  position: absolute;
+  /* border:1px solid red; */
+  left:60rpx;
+  top:-100rpx;
+}
+.addCarAlert_image image{
+  width: 260rpx;
+  height: 260rpx;
+  
+}
+.alertPrice_box{
+  /* border:1px solid red;  */
+  /* height: 100rpx; */
+  margin-left:320rpx;
+  padding-left: 10rpx;
+}
+.alertPrice{
+  font-size:36rpx;
+  color:#f00;
+  font-weight: bold;
+  margin-top:40rpx;
+}
+.alertCount,
+.alertSize{
+  color:#666;
+}
+.alert_size_box,
+.alert_count_box{
+  margin-top:40rpx;
+}
+.alert_count_box{
+  display: flex;
+  border:1px solid #eee;
+
+}
+.alert_count_box view{
+  
+  margin-top:20rpx;
+  margin-bottom: 20rpx;
+}
+.alert_size_box view{
+  margin-left:60rpx;
+  
+  /* border: 1px solid red; */
+}
+.alert_size_box view:nth-of-type(2){
+  margin-left:20rpx;
+}
+.alert_size_box view button{
+   margin-left:40rpx;
+   text-align: center;
+   padding:0px;
+}
+.alert_size button{
+  width: 100rpx;
+  display: inline-block;
+  background:#fff;
+}
+.alert_count_title{
+  margin-left:60rpx;
+  /* border: 1px solid red; */
+  line-height: 80rpx;
+}
+
+.alert_count_calc{
+  /* border:1px solid red; */
+  flex: 1;
+  text-align: right;
+}
+.alert_count_calc button,
+.alert_count_calc input{
+  display: inline-block;
+}
+.alert_count_calc input{
+  width: 60rpx;
+  border:1px solid #eee;
+  height: 63rpx;
+  text-align: center;
+}
+
+
+
+
+
+
+
+.alertYes{
+  display: inline-block;
+  background: #f00;
+  text-align: center;
+  width: 100%;
+  height: 100rpx;
+  font-size:40rpx;
+  font-weight: bold;
+  line-height: 100rpx;
+  color:#fff;
+  position: absolute;
+  bottom: 0rpx;
+}
+
+
+
+
+.closeWindow{
+  position: absolute;
+  right:25rpx;
+  top:25rpx;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  /* background-color:#fff; */
+  /* border-radius: 50%; */
+  text-align: center;
+  color:#aaa;
+
+  /* box-shadow: inset 0 0 10rpx #aaa; */
+}
+.closeWindowActive{
+  color:#f00;
+  /* background-color: #f00; */
 }

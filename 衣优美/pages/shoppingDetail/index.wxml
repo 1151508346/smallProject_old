@@ -1,6 +1,5 @@
 <view class="container">
 	
-	
 	<view class="page-body">
 	 <view class="page-section page-section-spacing swiper">
 	   <swiper 
@@ -24,7 +23,9 @@
 	<view class="detail-price">
 		<text>销售价</text><text>￥139.00</text>
 	</view>
-	<view class="detail-size-count">
+	<view class="detail-size-count"
+    bindtap="hanldeAddCarAlert"
+  >
 		<text>请选择您的尺寸和数量</text><text>></text>
 	</view>
 	
@@ -55,7 +56,44 @@
 		</view>
 	</view>
 	
-	
+	<view class="{{toggleAddCarAlert ? 'select-size-count-alert_end' : 'select-size-count-alert' }}" >
+      <view class="addCarAlert_image">
+          <image src="{{background[0]}}"></image>
+      </view>
+      <view class="alertPrice_box">
+        <view class = "alertPrice">￥0.00</view>
+        <view class="alertCount">库存数量100</view>
+        <view class="alertSize">请选择你的尺寸</view>
+      </view>
+      <view class="alert_size_box">
+        <view class="alert_size_title">尺寸</view>
+        <view class="alert_size">
+          <button>1.75</button>
+          <button>1.80</button>
+          <button>1.80</button>
+          <button>1.80</button>
+          <button>1.80</button>
+          <button>1.80</button>
+          <button>1.80</button>
+          <button>1.80</button>
+
+        </view>
+      </view>
+      <view class="alert_count_box">
+      <view class="alert_count_title">数量</view>
+        <view class="alert_count_calc">
+          <button>-</button>
+            <input value="{{1}}"></input>
+          <button>+</button>
+      </view>
+      </view>
+      <text class="alertYes">确认</text>
+      <view class="closeWindow" hover-class="closeWindowActive"
+        bindtap="handleCloseAlert"
+      
+      >X</view>
+
+  </view>
 	
 	
 	
@@ -95,7 +133,11 @@
 				</view>
 			</view>
 		
-		<view class="detail-bar-list detail-bar-addCar" hover-class="active-bar">
+		<view 
+      class="detail-bar-list detail-bar-addCar" 
+      hover-class="active-bar"
+      bindtap="hanldeAddCarAlert"
+    >
 			加入购物车
 		</view>
 		<view class="detail-bar-list detail-bar-quickPay" hover-class="active-bar">立即购买</view>

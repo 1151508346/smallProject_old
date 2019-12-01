@@ -20,7 +20,7 @@
 .fenlei_img {
 	width: 50rpx;
 	height: 50rpx;
-	
+  /* border:1px solid red; */
 }
 .fenlei:active{
 	opacity: 0.8;
@@ -29,11 +29,13 @@
 	flex: 1;
 }
 .search button{
-	height: 100%;
-	border-radius:20rpx;
-	padding-top:14rpx;
-	line-height: 30rpx;
+	height: 50rpx;
+	border-radius:30rpx;
+	/* padding-top:0rpx; */
+  
+	line-height: 50rpx;
 	margin-right: 20rpx;
+  
 	background-color:rgba(225,225,225,1);
 }
 .search button:active{

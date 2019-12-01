@@ -6,7 +6,7 @@
 	<view class="yiyoumei-discount">
 		<view class="yym-discount-item checked-window">
 			<radio class="default-checkbox" 
-			value="aa"  
+			
 			color="#f00" 
 			checked = "{{checkedStatus}}"
 			bindtap = "allSelectStatusToggle"
@@ -21,7 +21,7 @@
 			
 				<view class="class-list-item car-list-checked">
 					<radio class="default-checkbox" 
-					value="aa"  color="#f00" 
+					color="#f00" 
 					bindtap = "toggleCheck" 
 					checked= "{{item.selectStatus == true ? 'selected' : ''}}"
 					data-index="{{index}}"
@@ -53,7 +53,21 @@
 
 
 
-
+	<view class="tabbar_car">
+		<view class="yym-discount-item checked-window">
+			<radio id="allselect_bar" class="default-checkbox" 
+			
+			color="#f00" 
+			checked = "{{checkedStatus}}"
+			bindtap = "allSelectStatusToggle"
+			 />
+		</view>
+		<view>全选</view>
+		<view>删除</view>
+		<view>总计：<text>￥{{allPriceValue}}</text></view>
+		<view>结算</view>
+	</view>
 
 
 </view>
+

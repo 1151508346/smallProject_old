@@ -4,7 +4,10 @@
     "pages/shopping/index",
     "pages/car/index",
     "pages/ownCenter/index",
-	"pages/shoppingDetail/index"
+    "pages/shoppingDetail/index",
+    "pages/search/index",
+    "pages/login/index",
+    "pages/register/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

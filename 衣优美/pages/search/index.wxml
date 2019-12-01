@@ -1,0 +1,28 @@
+<view class="container">
+  <view class="search_box">
+    
+    <view class="search_window">
+      <view class="search_icon">
+    <image src="/static/sousuo.png"></image>
+    </view> 
+      <input value="" placeholder="请搜索您的商品名"></input>
+    </view>
+    <view class="cancel">取消</view>
+  </view>
+  <view class="zuijinsearch">
+      <text class="zuijinsearch_title">最近搜索</text>
+      <view class="zuijinsearch_list">
+          <button>dsfd</button>
+          <button>dsfd</button>
+          <button>dsfd</button>
+          <button>dsfd</button>
+          <button>dsfd</button>
+          <button>dsfd</button>
+          <button>dsfd</button>
+          <button>dsdfdshfksdkfhsdkhfksfd</button>
+          <button>dsfd</button>
+
+      </view>
+  </view>
+
+</view>

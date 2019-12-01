@@ -1,0 +1,42 @@
+
+<view class="container" style="height:{{windowHeight}}px;">
+  <view class="login_logo_bg_box">
+      <view class="login_image">
+        <image src="/static/init.jpg"></image>
+      
+      </view>
+      <view class="shoppingCity_name">衣优美</view>
+  </view>
+  <view class="login_box">
+  
+    <view class="username">
+      <view class="username_icon">
+        <image src="/static/login-register/yonghu.png"></image>
+      </view>
+      <input type="text" placeholder="请输入您的用户名" value=""
+          
+      />
+      <view class="clear_content" hover-class="clear_content_active">x</view>
+
+    </view>
+    <view class="password">
+      <view class="password_icon">
+        <image src="/static/login-register/mima.png"></image>
+      </view>
+      <input type="text" placeholder="请输入您的密码" value=""/>
+      <view class="clear_content" hover-class="clear_content_active">x</view>
+
+    </view>
+    <view class="login-button">
+      <navigator >登录</navigator>
+    </view>
+
+  </view> 
+  <view class="forgetLogin-newRegister">
+    <navigator  hover-class="navigator_active">忘记密码？</navigator>
+    <text>|</text>
+    <navigator hover-class="navigator_active">新会员注册></navigator>
+
+  </view>
+
+</view>

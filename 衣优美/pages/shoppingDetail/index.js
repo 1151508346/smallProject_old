@@ -1,4 +1,5 @@
 Page({
+  
   onShareAppMessage() {
     return {
       title: 'swiper',
@@ -13,7 +14,7 @@ Page({
     autoplay: false,
     interval: 2000,
     duration: 500,
-	
+    toggleAddCarAlert:false
   },
 
   changeIndicatorDots() {
@@ -38,5 +39,16 @@ Page({
     this.setData({
       duration: e.detail.value
     })
+  },
+  hanldeAddCarAlert(){
+      this.setData({
+        toggleAddCarAlert:true
+      });
+  },
+  handleCloseAlert(){
+    this.setData({
+      toggleAddCarAlert:false
+    })
   }
+  
 })
