@@ -7,7 +7,7 @@
       <view class="username_icon">
         <image src="/static/login-register/yonghu.png"></image>
       </view>
-      <input type="text" placeholder="请输入您的用户名" 
+      <input type="text" placeholder="以字母开头任意字母、数字8到20位" 
         value="{{username_input}}"
         bindinput="handleUserNameInputValue"
       />
@@ -23,7 +23,9 @@
       <view class="password_icon">
         <image src="/static/login-register/mima.png"></image>
       </view>
-      <input type="password" placeholder="请输入您的密码" value=""/>
+      <input type="password" placeholder="以字母开头、常用字符8到20位" value="{{password_input}}"
+        bindinput = "handlePasswordInputValue"
+      />
       <!-- <view class="clear_content" hover-class="clear_content_active">x</view> -->
 
     </view>
@@ -31,24 +33,57 @@
       <view class="password_icon">
         <image src="/static/login-register/mima.png"></image>
       </view>
-      <input type="password" placeholder="请重新输入您的密码" value=""/>
+      <input type="password" placeholder="请重新输入您的密码" value="{{password2_input}}"
+        bindinput = "handlePasswordInputValue2"
+      />
       <!-- <view class="clear_content" hover-class="clear_content_active">x</view> -->
     </view>
     <view class="email">
       <view class="email_icon">
         <image src="/static/login-register/email-line.png"></image>
       </view>
-      <input type="text" placeholder="请重新输入电子邮件" value="{{email_input}}"
-        bindtap="handleEmailInputValue"
+      <input type="text" placeholder="请输入您的电子邮件" value="{{email_input}}"
+        bindinput="handleEmailInputValue"
       
       />
       <view class="clear_content" hover-class="clear_content_active"
       wx:if="{{clearButtonStatus2}}"
         bindtap="handleInputEmailClearValue"
       >x</view>
+      
     </view>
+    <!--<view class="email">
+      <view class="email_icon">
+        <image src="/static/login-register/shouji_1.png"></image>
+      </view>
+      <input type="text" placeholder="请输入您的手机号" value="{{telphone_input}}"
+        bindinput="handleTelphoneInputValue"
+      
+      />
+      <view class="clear_content" hover-class="clear_content_active"
+      wx:if="{{clearButtonStatus3}}"
+        bindtap="handleInputTelphoneClearValue"
+      >x</view>
+      
+    </view>-->
+    <!-- <view class="email">
+      <view class="email_icon">
+        <image src="/static/login-register/email-line.png"></image>
+      </view>
+      <input type="text" placeholder="请输入您手机号" value="{{email_input}}"
+        bindinput="handleEmailInputValue"
+      
+      />
+      <view class="clear_content" hover-class="clear_content_active"
+      wx:if="{{clearButtonStatus2}}"
+        bindinput="handleInputEmailClearValue"
+      >x</view>
+      
+    </view>-->
     <view class="register-button">
-      <navigator> 注册 </navigator>
+      <navigator url="/"
+        bindtap="handleRegisterFunc"
+      > 注册 </navigator>
     </view>
 
   </view> 
