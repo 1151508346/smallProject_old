@@ -100,6 +100,13 @@
 					"id": -1,
 					"name": "pages/register/index",
 					"pathName": "pages/register/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/forget/index",
+					"pathName": "pages/forget/index",
 					"scene": null
 				}
 			]

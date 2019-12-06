@@ -271,7 +271,7 @@ Page({
             icon: 'success',
             duration: 1500,
             mask: false,
-             })
+             });
              //登陆成功后跳转
                 // wx.navigateTo({
                 //   url: 'test?id=1',
@@ -292,9 +292,9 @@ Page({
                 // })
              return ;
         }
-        if( res.data.status == "500" && res.data.type == "fail"){
+        if( res.data.status == "500" && res.data.type == "updateFail"){
           wx.showToast({
-            title: '注册失败',
+            title: '密码更新失败',
             icon: 'none',
             duration: 1500,
             mask: false,

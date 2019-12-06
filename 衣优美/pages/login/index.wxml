@@ -1,53 +1,54 @@
-
 <view class="container" style="height:{{windowHeight}}px;">
-  <view class="login_logo_bg_box">
-      <view class="login_image">
-        <image src="/static/init.jpg"></image>
-      
-      </view>
-      <view class="shoppingCity_name">衣优美</view>
-  </view>
-  <view class="login_box">
-  
-    <view class="username">
-      <view class="username_icon">
-        <image src="/static/login-register/yonghu.png"></image>
-      </view>
-      <input type="text"placeholder="以字母开头常用字母、数字8到20位" 
-             value="{{username_input}}"
-              bindinput="handleUserNameInputValue"
-      />
-      <view class="clear_content" 
-        wx:if="{{clearButtonStatus}}"
-        hover-class="clear_content_active"
-        bindtap="handleInputUsernameClearValue"
-      >x</view>
-    </view>
-    <view class="password">
-      <view class="password_icon">
-        <image src="/static/login-register/mima.png"></image>
-      </view>
-      <input type="password" 
-        placeholder="以字母开头、常用字符8到20位" 
-        value="{{password_input}}"
-        bindinput = "handlePasswordInputValue"
-      />
-     <!-- <view class="clear_content" hover-class="clear_content_active">x</view> -->
-    </view>
-    <view class="login-button" 
-      bindtap="handleLoginFunc"
-    >
-      <navigator >登录</navigator>
-    </view>
+	<view class="login_logo_bg_box">
+		<view class="login_image">
+			<image src="/static/init.jpg" />
 
-  </view> 
-  <view class="forgetLogin-newRegister">
-    <navigator  hover-class="navigator_active">忘记密码？</navigator>
-    <text>|</text>
-    <navigator hover-class="navigator_active"
-      url="/pages/register/index"
-    >新会员注册></navigator>
+		</view>
+		<view class="shoppingCity_name">衣优美</view>
+	</view>
+	<view class="login_box">
 
-  </view>
+		<view class="username">
+			<view class="username_icon">
+				<image src="/static/login-register/yonghu.png" />
+			</view>
+			<input
+			 type="text"
+			 placeholder="以字母开头常用字母、数字8到20位"
+			 value="{{username_input}}"
+			 bindinput="handleUserNameInputValue"
+			/>
+			<view
+			 class="clear_content"
+			 wx:if="{{clearButtonStatus}}"
+			 hover-class="clear_content_active"
+			 bindtap="handleInputUsernameClearValue"
+			>x
+			</view>
+		</view>
+		<view class="password">
+			<view class="password_icon">
+				<image src="/static/login-register/mima.png" />
+			</view>
+			<input
+			 type="password"
+			 placeholder="以字母开头、常用字符8到20位"
+			 value="{{password_input}}"
+			 bindinput="handlePasswordInputValue"
+			/>
+			<!-- <view class="clear_content" hover-class="clear_content_active">x</view> -->
+		</view>
+		<view class="login-button" bindtap="handleLoginFunc">
+			<navigator>登录</navigator>
+		</view>
+
+	</view>
+	<view class="forgetLogin-newRegister">
+		<navigator hover-class="navigator_active" url="/pages/forget/index">忘记密码？</navigator>
+		<text>|</text>
+		<navigator hover-class="navigator_active" url="/pages/register/index">新会员注册></navigator>
+
+	</view>
 
 </view>
+

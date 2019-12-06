@@ -62,11 +62,12 @@ function getUpdate(con,sql,params,callback){
     params = params || []
     callback  = callback || function (){};
     con.query(sql,params,function(err,result){
-        if(err){
-            callback({"status":400,"type":"failure"})
-            return;
-        }
-        callback(result.affectedRows)
+        // console.log("------------update----------");
+        // if(err){
+        //     // callback({"status":400,"type":"failure"})
+        //     return;
+        // }
+        callback(err,result)
     })
 }
 

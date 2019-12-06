@@ -16,11 +16,28 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`yiyoumei` /*!40100 DEFAULT CHARACTER SE
 
 USE `yiyoumei`;
 
-/*Table structure for table `user` */
+/*Table structure for table `user_address` */
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `user_address`;
 
-CREATE TABLE `user` (
+CREATE TABLE `user_address` (
+  `username` varchar(20) NOT NULL COMMENT '用户名',
+  `userphone` varchar(11) NOT NULL COMMENT '手机号',
+  `areapath` varchar(255) NOT NULL COMMENT '区域路径',
+  `useraddress` varchar(255) NOT NULL COMMENT '详细地址',
+  `isdefault` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否默认地址',
+  `createtime` datetime DEFAULT NULL COMMENT '创建时间',
+  KEY `username` (`username`),
+  CONSTRAINT `FK_user_address` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `user_address` */
+
+/*Table structure for table `users` */
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
   `userid` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) DEFAULT NULL,
   `password` varbinary(32) DEFAULT NULL,
@@ -29,12 +46,13 @@ CREATE TABLE `user` (
   `telphone` varchar(11) DEFAULT NULL,
   `sex` enum('男','女') DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`userid`)
+  PRIMARY KEY (`userid`),
+  KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
-/*Data for the table `user` */
+/*Data for the table `users` */
 
-insert  into `user`(`userid`,`username`,`password`,`avatar`,`email`,`telphone`,`sex`,`address`) values (18,'aa123456','fa8549d6a6ed212fc277f65c6d8cc403','default','11515083@qq.com',NULL,NULL,NULL),(19,'a123456789','46b94547e01ea9ed21450ec3233e7136','default','a123456@qq.com',NULL,NULL,NULL),(20,'aaaa','bbbb','default',NULL,NULL,NULL,NULL);
+insert  into `users`(`userid`,`username`,`password`,`avatar`,`email`,`telphone`,`sex`,`address`) values (18,'aa123456','fa8549d6a6ed212fc277f65c6d8cc403','default','11515083@qq.com',NULL,NULL,NULL),(19,'a123456789','46b94547e01ea9ed21450ec3233e7136','default','a123456@qq.com',NULL,NULL,NULL),(20,'aaaa','bbbb','default',NULL,NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
