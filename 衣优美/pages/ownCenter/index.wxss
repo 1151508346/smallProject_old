@@ -92,6 +92,10 @@
   height: 80rpx;
 
 }
+
+.navigator-hover{
+  background-color: #eee;
+}
 .qb_address_about_exit_list{
    display: flex;
   justify-content: space-between;
@@ -103,8 +107,6 @@
 .qb_address_about_exit_list:last-child{
   border-bottom: transparent;
 }
-
-
 .qb_address_about_exit_list text:last-child{
   margin-right:30rpx;
   color:#999;

@@ -1,0 +1,66 @@
+<!-- pages/add_address/index.wxml -->
+<view class="container" style="height:{{windowHeight}}px">
+    <view class="name_phone_box">
+        <view class="add_item">
+            <view>收货人姓名</view>
+            <view>
+                <input type="text"
+                 placeholder="收货人姓名" 
+                 value = "{{receiver}}"
+                 bindinput="handleReceiverInput"
+                 />
+            </view>
+        </view>
+        <view class="add_item">
+            <view>联系电话</view>
+            <view>
+                <input type="text"
+                bindinput="handleReceivePhoneInput"
+                value="{{receivePhone}}"
+                placeholder="联系人电话" />
+            </view>
+        </view>
+    </view>
+    <view class="area_address_email_box">
+        <view class="add_item">
+            <view>所在区域</view>
+            <view class="picker_box">
+                <picker mode="region"
+                 bindchange="bindRegionChange" 
+                 value="{{region}}" 
+                 custom-item="{{customItem}}">
+            {{region[0]}}，{{region[1]}}，{{region[2]}}
+                </picker>
+            </view>
+        </view>
+        <view class="add_item">
+            <view>详细地址</view>
+            <view>
+                <input type="text" 
+                value="{{detailAddress}}"
+                bindinput="handleDetailAddressInput"
+                placeholder="详细地址" />
+            </view>
+        </view>
+        <view class="add_item">
+            <view>邮政编码</view>
+            <view>
+                <input type="text"
+                value="{{zipCode}}"
+                bindinput="handleZipCodeInput"
+                placeholder="邮政编码" />
+            </view>
+        </view>
+    </view>
+    <view class="default_box add_item">
+        <view>设置默认地址</view>
+        <view class="switch_body">
+            <switch checked="{{switchChecked}}" bindchange="switchChange" />
+        </view>
+    </view>
+    <view class="save_box" 
+    hover-class="save_box_active"
+    bindtap = "handleSaveUserInfo"
+    >保存</view>
+    
+</view>

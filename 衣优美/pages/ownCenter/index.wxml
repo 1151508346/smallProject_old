@@ -73,10 +73,18 @@
     <text>我的钱包</text>
     <text >￥0.00</text>
    </view>
-   <view class="qb_address_about_exit_list">
-   <text>收获地址</text><text>></text> </view>
-   <view class="qb_address_about_exit_list">
-   <text>关于</text> <text>></text></view>
+   <navigator url="/pages/user_address/index" 
+    hover-class="navigator-hover" open-type="navigate">
+    <view class="qb_address_about_exit_list">
+        <text>收获地址</text><text>></text> 
+    </view>
+   </navigator>
+    <navigator url="/pages/user_address/index" 
+        hover-class="navigator-hover" open-type="navigate">
+      <view class="qb_address_about_exit_list">
+        <text>关于</text> <text>></text>
+      </view>
+     </navigator>
    <view class="qb_address_about_exit_list">
    <text>退出</text> <text>></text></view>
 

@@ -1,0 +1,42 @@
+/* pages/user_address/index.wxss */
+.container{
+    background-color: #eee;
+}
+.add_address{
+    /* border:1px  solid red; */
+    background-color:#fff;
+    height: 180rpx; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+.address_list{
+    /* border:1px solid red; */
+    margin-top:20rpx;
+}
+.address_item{
+    height: 100rpx;
+    background-color:#fff;
+    margin-top:8rpx;
+    margin-left: 10rpx;
+    line-height: 100rpx;
+    padding-left: 20rpx;
+}
+.operate_address{
+    display: flex;
+   
+}
+.operate_address view:nth-of-type(1){
+    flex: 1;
+}
+.operate_address view:nth-of-type(2),
+.operate_address view:nth-of-type(3){
+    margin-right: 30rpx;
+}
+.operate_edit_delete{
+    color: #f00;
+}
+.operate_address radio {
+    transform:scale(0.7);
+  }

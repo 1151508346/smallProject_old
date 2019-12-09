@@ -107,6 +107,20 @@
 					"id": -1,
 					"name": "pages/forget/index",
 					"pathName": "pages/forget/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/user_address/index",
+					"pathName": "pages/user_address/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/add_address/index",
+					"pathName": "pages/add_address/index",
 					"scene": null
 				}
 			]

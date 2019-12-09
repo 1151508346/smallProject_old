@@ -19,8 +19,12 @@ module.exports = {
         var Rex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
        return Rex.test(email);
     },
-    // checkTelphone(tel){
-    //     var Rex = /^[1][0-9]{10}$/;
-    //     return Rex.test(tel)
-    // }
+    checkTelphone(tel){
+        var Rex = /^[1][0-9]{10}$/;
+        return Rex.test(tel)
+    },
+    checkZipCode(zipCode){
+        var Rex = /^[0-9]{6}$/;
+        return Rex.test(zipCode);
+    }
 }

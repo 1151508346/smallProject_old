@@ -8,7 +8,9 @@
     "pages/search/index",
     "pages/login/index",
     "pages/register/index",
-    "pages/forget/index"
+    "pages/forget/index",
+    "pages/user_address/index",
+    "pages/add_address/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
