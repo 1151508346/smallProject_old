@@ -1,5 +1,5 @@
 /*
-SQLyog Ultimate v8.32 
+SQLyog Ultimate v10.51 
 MySQL - 5.5.60 : Database - yiyoumei
 *********************************************************************
 */
@@ -22,10 +22,12 @@ DROP TABLE IF EXISTS `user_address`;
 
 CREATE TABLE `user_address` (
   `username` varchar(20) NOT NULL COMMENT '用户名',
-  `userphone` varchar(11) NOT NULL COMMENT '手机号',
+  `receiver` varchar(20) DEFAULT NULL COMMENT '收货人',
+  `receivephone` varchar(11) NOT NULL COMMENT '手机号',
   `areapath` varchar(255) NOT NULL COMMENT '区域路径',
-  `useraddress` varchar(255) NOT NULL COMMENT '详细地址',
+  `detailaddress` varchar(255) NOT NULL COMMENT '详细地址',
   `isdefault` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否默认地址',
+  `zipcode` char(6) DEFAULT NULL COMMENT '邮编',
   `createtime` datetime DEFAULT NULL COMMENT '创建时间',
   KEY `username` (`username`),
   CONSTRAINT `FK_user_address` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
