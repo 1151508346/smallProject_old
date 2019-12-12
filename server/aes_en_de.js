@@ -1,4 +1,5 @@
 var crypto = require("crypto");
+
 function aesEncrypt(data, key) {
     if(!key) key = "1qaz!QAZ";
     const cipher = crypto.createCipher('aes128', key);

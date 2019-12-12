@@ -1,5 +1,8 @@
 {
 	"usingComponents": {
 		  "ShoppingList":"/component/shoppingList/index"
-	}
+	},
+	"enablePullDownRefresh":true,
+	"backgroundColor":"#ddd",
+	"backgroundTextStyle":"light"
 }

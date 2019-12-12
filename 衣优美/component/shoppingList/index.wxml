@@ -1,15 +1,15 @@
 <!--component/shoppingList/index.wxml-->
-<view class="shoppingListBox">
-	<navigator url="/pages/shoppingDetail/index" >
+<view class="shoppingListBox" >
+	<navigator url="/pages/shoppingDetail/index?goodsid={{shoppingData}}"  >
 		<view class="shopping_img">
-			<image src="../../static/init.jpg"></image>
+			<image src="{{shoppingData.goodsimage[0]}}"></image>
 		</view>
 		<view>
-			<text class="shopping_content">小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序小程序</text>
+			<text class="shopping_content">{{shoppingData.goodsname}}</text>
 		</view>
 		<view class="shoppping_property">
-			<text class="shopping_price">￥56.0</text>
-			<text class="isHot">Hot</text>
+			<text class="shopping_price">￥{{shoppingData.goodsprice}}</text>
+			<text class="isHot">hot</text>
 		</view>
 	</navigator>
 	

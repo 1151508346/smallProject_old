@@ -1,5 +1,14 @@
 Page({
   
+  onLoad:function(options){
+    var goodsid = options["goodsid"];
+
+    
+
+
+
+
+  },
   onShareAppMessage() {
     return {
       title: 'swiper',

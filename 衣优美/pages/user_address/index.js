@@ -62,5 +62,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  handelNavigatorToAdd_address(){
+    wx.navigateTo({
+      url: '/pages/add_address/index',
+    })
   }
+  
 })

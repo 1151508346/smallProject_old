@@ -39,15 +39,14 @@
 		  <image class="fenlei_img" src="/static/分类.png" />
 	  </view>
       <view class="fs_list search">
-		  <button>搜索</button>
+		  <button bindtap = "handleNavigatorToSearchPage">搜索</button>
 	  </view>
    </view>
 	<view>
-		
-			<ShoppingList/>
-			<ShoppingList/>
-			<ShoppingList/>
-			<ShoppingList/>
+			<block wx:for = "{{shoppingData}}"  wx:key = "{{index}}">
+				<ShoppingList shoppingData = "{{item}}"/>
+			</block>
+			
 	</view>
 	
 	

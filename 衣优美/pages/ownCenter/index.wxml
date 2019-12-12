@@ -3,7 +3,10 @@
         <view class="login_icon">
             <image src="/static/init.jpg"></image></view>
         <view class="login_name">
-          <text>王国晗</text>
+          <text 
+            bindtap = "handelNavigatorToLoginPage">{{!loginStatus ? "登 录" : username}}</text>
+                
+
         </view>
         <view class="sign_come">
           <text>签到</text>
@@ -85,7 +88,9 @@
         <text>关于</text> <text>></text>
       </view>
      </navigator>
-   <view class="qb_address_about_exit_list">
+   <view class="qb_address_about_exit_list"
+    bindtap = "userExitLogin"
+   >
    <text>退出</text> <text>></text></view>
 
 

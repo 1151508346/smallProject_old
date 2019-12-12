@@ -2,7 +2,7 @@
 	"童装":{
 		"裤子":[
 			{
-				"goodsId":"T0001",
+				"goodsId":"C00001",
 				"goodsName":"童装/男童/女童 仿羊羔绒运动长裤 421494 优衣库",
 				"goodPrice":99.00,
 				"goodCount":100,
@@ -14,7 +14,7 @@
 			},
 			
 			{
-				"goodsId":"T0002",
+				"goodsId":"C00002",
 				"goodsName":"童装小中大童加绒加厚冬款春秋款2019新款迷彩战狼长裤",
 				"goodPrice":19.90,
 				"goodCount":100,
@@ -25,7 +25,7 @@
 				
 			},
 			{
-				"goodsId":"T0003",
+				"goodsId":"C00003",
 				"goodsName":"女童裤子2019新款洋气韩版儿童工装裤休闲秋冬外穿中大童加绒运动",
 				"goodPrice":59.00,
 				"goodCount":100,
@@ -36,7 +36,7 @@
 				
 			},
 			{
-				"goodsId":"T0004",
+				"goodsId":"C00004",
 				"goodsName":"儿童工装裤潮牌韩版男童加绒裤子棉裤外穿一体绒秋冬加厚款中大童",
 				"goodPrice":49.00,
 				"goodCount":100,
@@ -47,7 +47,7 @@
 				
 			},
 			{
-				"goodsId":"T0005",
+				"goodsId":"C00005",
 				"goodsName":"十岁女童裤子秋冬外穿宽松中大童灯芯绒条绒加绒工装裤女孩束口裤",
 				"goodPrice":69.00,
 				"goodCount":100,
@@ -59,7 +59,7 @@
 		],
 		"上衣":[
 			{
-				"goodsId":"T10001",
+				"goodsId":"C10001",
 				"goodsName":"巴拉巴拉儿童羽绒服女童宝宝冬2019新款羽绒外套",
 				"goodPrice":650.00,
 				"goodCount":100,
@@ -70,7 +70,7 @@
 				
 			},
 			{
-				"goodsId":"T10002",
+				"goodsId":"C10002",
 				"goodsName":"女童加绒外套2019新款洋气儿童装12-15岁秋冬装拼色加厚保暖风衣",
 				"goodPrice":198.00,
 				"goodCount":100,
@@ -80,7 +80,7 @@
 				]
 			},
 			{
-				"goodsId":"T10003",
+				"goodsId":"C10003",
 				"goodsName":"校服小学生冲锋衣加绒三件套秋冬装幼儿园园服儿童运动班服单上衣",
 				"goodPrice":75.00,
 				"goodCount":100,
@@ -89,7 +89,7 @@
 					"01.jpg","02.jpg","03.jpg","04.jpg"
 				]
 			},{
-				"goodsId":"T10004",
+				"goodsId":"C10004",
 				"goodsName":"童大衣2019新款洋气儿童外套秋冬装中大童加厚保暖毛呢子上衣潮",
 				"goodPrice":295.00,
 				"goodCount":100,
@@ -99,7 +99,7 @@
 				]
 			},
 			{
-				"goodsId":"T10005",
+				"goodsId":"C10005",
 				"goodsName":"小童装冬装女童毛毛衣外套加绒加厚女宝宝冬季上衣可爱卡通衣服潮",
 				"goodPrice":65.00,
 				"goodCount":100,
@@ -112,7 +112,7 @@
 		],
 		"连衣裙":[
 			{
-				"goodsId":"T20001",
+				"goodsId":"C20001",
 				"goodsName":"女童毛衣连衣裙2019新款秋冬加绒毛衣裙儿童针织公主裙长袖裙子冬",
 				"goodPrice":58.00,
 				"goodCount":100,
@@ -122,7 +122,7 @@
 				]
 			},
 			{
-				"goodsId":"T20002",
+				"goodsId":"C20002",
 				"goodsName":"香港靓妞女童连衣裙秋冬装2019新款洋气宝宝儿童针织长袖公主裙子",
 				"goodPrice":85.36,
 				"goodCount":100,
@@ -131,7 +131,7 @@
 					"01.jpg","02.jpg","03.jpg","04.jpg"
 				]
 			},{
-				"goodsId":"T20003",
+				"goodsId":"C20003",
 				"goodsName":"童装韩版2019春秋季女童连衣裙中大童长袖蕾丝波点+网纱两件套装",
 				"goodPrice":78.00,
 				"goodCount":100,
@@ -140,7 +140,7 @@
 					"01.jpg","02.jpg","03.jpg","04.jpg"
 				]
 			},{
-				"goodsId":"T20004",
+				"goodsId":"C20004",
 				"goodsName":"女童连衣裙秋冬装2019新款中大童中国风大红色网纱裙公主裙加绒裙",
 				"goodPrice":95.00,
 				"goodCount":100,
@@ -149,7 +149,7 @@
 					"01.jpg","02.jpg","03.jpg","04.jpg"
 				]
 			},{
-				"goodsId":"T20005",
+				"goodsId":"C20005",
 				"goodsName":"2019夏装新款女童拖尾连衣裙礼服婚纱裙儿童生日公主裙钢琴演出服",
 				"goodPrice":78.00,
 				"goodCount":100,
@@ -163,7 +163,7 @@
 	"男装":{
 		"外套":[
 			{
-				"goodsId":"B0001",
+				"goodsId":"B00001",
 				"goodsName":"春秋休闲夹克男装青年韩版外衣加厚2019新款连帽修身机能外套潮流",
 				"goodPrice":128.00,
 				"goodCount":100,
@@ -175,7 +175,7 @@
 			},
 			
 			{
-				"goodsId":"B0002",
+				"goodsId":"B00002",
 				"goodsName":"花花公子男士外套秋季上衣韩版潮流工装休闲夹克男装加大码春秋装",
 				"goodPrice":158.00,
 				"goodCount":100,
@@ -186,7 +186,7 @@
 				
 			},
 			{
-				"goodsId":"B0003",
+				"goodsId":"B00003",
 				"goodsName":"路伊梵新款男外套春秋季男装韩版潮牌潮流百搭帅气宽松夹克上衣服",
 				"goodPrice":118.00,
 				"goodCount":100,
@@ -197,7 +197,7 @@
 				
 			},
 			{
-				"goodsId":"B0004",
+				"goodsId":"B00004",
 				"goodsName":"秋装外套男韩版潮流宽松2019新款休闲百搭棒球服加绒加厚连帽夹克",
 				"goodPrice":108.00,
 				"goodCount":100,
@@ -208,7 +208,7 @@
 				
 			},
 			{
-				"goodsId":"B0005",
+				"goodsId":"B00005",
 				"goodsName":"花花公子外套男士潮流韩版春秋潮牌秋冬加绒工装休闲夹克男装秋装",
 				"goodPrice":169.00,
 				"goodCount":100,

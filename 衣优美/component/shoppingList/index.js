@@ -4,7 +4,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    shoppingData:{
+      type:Object,
+      value:{}
+    }
   },
 
   /**
@@ -13,7 +16,9 @@ Component({
   data: {
 
   },
-
+  onShow(){
+    console.log(this)
+  },
   /**
    * 组件的方法列表
    */

@@ -5,7 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    isSearchInputFill:false,
+    searchInput:"",
+    searchList:false,
+    searchHistoryList:[],
+    isClearButtonShow:false
   },
 
   /**
@@ -27,6 +31,32 @@ Page({
    */
   onShow: function () {
 
+      // wx.getStorage({
+      //   key: 'searchHistoryList',
+      //   success: (result)=>{
+      //       // console.log(result+"asdasdassds")
+      //       this.setData({
+      //         searchHistoryList: result.data
+      //       })
+          
+      //   },
+      //   fail: (err)=>{
+      //     // console.log(err)
+      //   },
+      //   complete: ()=>{}
+      // });
+    // console.log(wx.getStorageSync("searchHistoryList"))
+      if( wx.getStorageSync("searchHistoryList").length !=0){
+          this.setData({
+            searchHistoryList: wx.getStorageSync("searchHistoryList")
+        })
+      }
+      // console.log(this.data.searchHistoryList.length)
+      if(this.data.searchHistoryList.length != 0){
+          this.setData({
+            isClearButtonShow :true
+          })
+      }
   },
 
   /**
@@ -62,5 +92,84 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  handleShoppingInput(e){
+    // console.log(e)
+    var value = e.detail.value;
+    this.setData({
+      searchInput:value
+    });
+    if(value != ""){
+      this.setData({
+        isSearchInputNotFill :true
+      })
+     
+    } else{
+      this.setData({
+        isSearchInputNotFill :false
+      })
+    }
+
+
+  },
+  handelClearSearchInput(){
+    this.setData({
+      isSearchInputNotFill :false,
+      searchInput:""
+    })
+  },
+  searchShoppingName(){
+    if(this.data.searchInput != ""){
+      // console.log(typeof this.data.searchHistoryList)
+        var value = this.data.searchInput;
+        var searchHistoryList = this.data.searchHistoryList;
+        // console.log(searchHistoryList)
+        searchHistoryList.unshift(value);
+        if(searchHistoryList.length >5){
+          searchHistoryList.length = 5
+        }
+        wx.setStorage({
+          key: 'searchHistoryList',
+          data: searchHistoryList,
+          success: (result)=>{
+            
+          },
+          fail: ()=>{},
+          complete: ()=>{}
+        });
+        if(searchHistoryList.length !=0){
+          this.setData({
+            isClearButtonShow:true
+          });
+        }
+        
+        this.setData({
+          searchHistoryList:searchHistoryList,
+          searchInput:"",
+          isSearchInputNotFill:false
+        })
+    }
+    // console.log(this.data.searchHistoryList)
+
+  },
+  clearSearchHistoryList(){
+    this.setData({
+      searchHistoryList:[],
+      isClearButtonShow:false
+    });
+    wx.getStorage({
+      key:"searchHistoryList",
+      success(result){
+        wx.removeStorage({
+          key: 'searchHistoryList',
+          success: (result)=>{
+              
+          },
+          fail: ()=>{},
+          complete: ()=>{}
+        });
+      }
+    })
   }
+ 
 })

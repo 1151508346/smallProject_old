@@ -69,10 +69,10 @@
 
 		</view>
 		<view class="login-button" bindtap="handleEnterFunc" wx:if="{{checkEndStatus}}">
-			<navigator>enter</navigator>
+			<navigator>确定</navigator>
 		</view>
 		<view class="login-button" bindtap="handleSubmitFunc" wx:else="{{checkEndStatus}}">
-			<navigator>submit</navigator>
+			<navigator>提交</navigator>
 		</view>
 
 	</view>

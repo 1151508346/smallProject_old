@@ -1,10 +1,11 @@
 /* component/shoppingList/index.wxss */
 .shoppingListBox{
 	float:left;
-	/* height: 420rpx; */
+	height: 630rpx;
 	width: 373rpx;
 	margin-right:50prx;
-	/* border:1px solid red; */
+	border:1px solid #eee;
+	box-sizing:border-box;
 
 }
 .shoppingListBox::after{

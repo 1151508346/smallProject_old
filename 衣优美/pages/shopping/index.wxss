@@ -1,6 +1,7 @@
 .container{
 	width: 750rpx;
 	overflow-x: hidden;
+	background-color:#eee;
 }
 .fenlei_search_box{
 	/* border:1px solid red; */

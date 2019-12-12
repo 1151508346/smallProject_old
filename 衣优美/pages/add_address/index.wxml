@@ -16,6 +16,7 @@
             <view>
                 <input type="text"
                 bindinput="handleReceivePhoneInput"
+                
                 value="{{receivePhone}}"
                 placeholder="联系人电话" />
             </view>

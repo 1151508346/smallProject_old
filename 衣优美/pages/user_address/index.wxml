@@ -1,6 +1,8 @@
 <!-- 用户收货地址 -->
 <view class="container" style="height:{{windowHeight}}px">
-  <view class="add_address">新增收货地址</view>
+  <view class="add_address"
+    bindtap = "handelNavigatorToAdd_address"
+  >新增收货地址</view>
   <view class="address_list">
     <view class="address_title address_item">收货地址 : </view>
     <view class="operate_address address_item">

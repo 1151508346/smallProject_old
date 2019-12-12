@@ -121,6 +121,20 @@
 					"id": -1,
 					"name": "pages/add_address/index",
 					"pathName": "pages/add_address/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/ownCenter/index",
+					"pathName": "pages/ownCenter/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/search/index",
+					"pathName": "pages/search/index",
 					"scene": null
 				}
 			]

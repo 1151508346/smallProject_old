@@ -2,10 +2,10 @@ var con = require("./connectObj"); //获取数据库连接对象
 
 // var con = require("../appmysql.js");
 
-
 function getFind(con,sql,callback){
      con.query(sql,function(err,data){
-         console.log(err)
+         console.log("sdfasfds")
+        //  console.log(err)
         // if(err){
         //     console.log(err);
         //     throw new Error(err);

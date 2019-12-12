@@ -1,5 +1,8 @@
 // pages/login/index.js
 var { checkUserName , checkPassword,isEmpty }= require("../../tools/check.js")
+var  Domain = require("../../tools/domain")
+
+
 Page({
 
   /**
@@ -98,8 +101,9 @@ Page({
       //   mask: false,
       // })
       //表示用户名和密码校验成功
+      console.log(Domain+'frontLogin')
       wx.request({
-        url: 'http://localhost:3000/frontLogin',
+        url: Domain+'frontLogin',
         data: JSON.stringify(userInfo),
         header: {
           "content-type": "application/x-www-form-urlencoded",
@@ -128,6 +132,12 @@ Page({
             return ;
           }
           if(res.data.status == 200 && res.data.type == "success"){
+            // console.log(res);
+            //将用户登录的信息保存在本地缓存中
+            wx.setStorage({
+              key:"username",
+              data:res.data.username
+            });
             wx.showToast({
               title: '登录成功',
               icon: 'success',
@@ -194,15 +204,7 @@ Page({
     this.setData({
       password_input: e.detail.value
     })
-    // if (e.detail.value != "") {
-    //   this.setData({
-    //     clearButtonStatus2: true
-    //   })
-    // } else {
-    //   this.setData({
-    //     clearButtonStatus2: false
-    //   })
-    // }
+    
   },
  
   handleInputUsernameClearValue(){

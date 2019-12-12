@@ -11,17 +11,20 @@
 // module.exports = router;
 
 // console.log("-------------------------------------------------")
+var baseURL = "http://localhost:3000/public/static/"; //访问静态资源基础目录
 var con = require("../db/connectObj");
 var { getInsert, getFind ,getUpdate} = require("../db/curd.js");
 var { aesEncrypt, aesDecrypt } = require("../aes_en_de.js");
-var URL = {
+var Url = {
     register: "/frontRegister",
     login:"/frontLogin",
     forgetCheck:"/frontForgetCheck",
-    updatePassword:"/frontUpdatePassword"
+    updatePassword:"/frontUpdatePassword",
+    add_address:"/add_address",  //添加收货地址
+    getGoods:"/getGoods"
 }
 module.exports = function(router){
-    router.post(URL.register, function (req, res) {
+    router.post(Url.register, function (req, res) {
         var password = req.body.password;
         //加密后的密码
         var username = req.body.username; //注册的用户名
@@ -100,9 +103,11 @@ module.exports = function(router){
             }
         })
     });
-    router.post(URL.login,function(req,res){
+    router.post(Url.login,function(req,res){
         var username = req.body.username;
+
         var passwordAES = aesEncrypt(req.body.password); //加密后的密码
+
         var selectSQL = "select username,password from  user where username = \'"+username + "\'and password=\'"+passwordAES+"\'";
         getFind(con, selectSQL, function (err, data) {
             if (err) {
@@ -129,15 +134,20 @@ module.exports = function(router){
                 // console.log("email已被注册过");
                 // res.statusMessage = "fail"
                 res.json({
-                    status: "200",
-                    type: "success"
+                    status:"200",
+                    type:"success",
+                    username:username
+                      
+                    
                 })
+                //登录成功将用户名保存在session
+               
             }
         })
         // console.log(username, passwordAES) 
     });
-
-    router.post(URL.forgetCheck,function(req,res){
+       //忘记密码，检查注册的用户和邮箱是否存在 
+    router.post(Url.forgetCheck,function(req,res){
 
         var username = req.body.username;
         var email = req.body.email;
@@ -171,8 +181,8 @@ module.exports = function(router){
             }
         })
        
-    })
-    router.post(URL.updatePassword,function(req,res){
+    });
+    router.post(Url.updatePassword,function(req,res){
         var username = req.body.username;
         var password = req.body.password;
         console.log(username,password)
@@ -200,16 +210,123 @@ module.exports = function(router){
                         console.log("更新成功")
                 }
         })
+    });
+    // router.get("/login",function(req,res){
+    //     req.session.username = req.query.username;
+    //     res.send(JSON.stringify(req.session));
+    // })
+    
+    // router.get("/getSession",function(req,res){
+    //     console.log(req);
+    //     res.send(JSON.stringify(req.session));
+    // });
+    //用户添加收货地址
+    router.post(Url.add_address,  function(req,res) {
+        /**
+         * 1.获取登录的用户名
+         * 2.将前端添加的收货地址插入在数据库中
+         */
+        // 
+        // res.redirect("/getSession");
+        var username = "aa123456"; //登录的用户名
+        var createTime = new Date().toLocaleString();
+        var {receiver,receivePhone,areaPath,detailAddress,isDefault,zipCode} = req.body;
+        var insertSQL = `insert into user_address value(\'${username}\',\'${receiver}\',\'${receivePhone}\',\'${areaPath}\',\'${detailAddress}\',\'${isDefault}\',\'${zipCode}\',\'${createTime}\'  )`;
+            getFind(con,insertSQL,function(err,data){
+                if(err){
+                    res.json({
+                        status:"200",
+                        type:"fail"
+                    })
+                    console.log("--------error---------");
+                    throw new Error(err);
+                    // return;
+                }
+                if(data.affectedRows == 1){
+                    res.json({
+                        status:"200",
+                        type:"success"
+                    })
+                }
+            })
+    
+    });
 
+    router.get(Url.getGoods,function(req,res){
+        console.log(req.query)
+        // { pageNum: '29', limit: '10' }
+        var pageNum = req.query.pageNum; //请求页数
+        var limit = req.query.limit; //每次请求数量
+
+        // res.json(req.query)
+        // var point = 35;
+        // var limit = 10;
+        var selectSQL = `select * from goods limit ${(pageNum-1)*limit},${limit} `;
+        getFind(con,selectSQL,function(err, data){
+            if(err){
+                throw new Error("database operate error")
+            }
+           
+            if(data.length===0){
+                console.log("加载完整");
+                res.send("over");
+                return ;
+            }
+            
+            for (let i = 0; i < data.length; i++) {
+                var imageURL = `${baseURL}${data[i].typeid}/${data[i].category}/${data[i].goodsid}/`;
+                data[i].goodsimage = [];
+                for(var j = 1; j<5;j++){
+                    data[i].goodsimage.push(imageURL+"0"+j+".jpg");
+                }
+                
+            }
+            res.json(data);
+
+
+            // console.log("第"+pageNum+"数据")
+        })
     })
+    
 
 
 }
 
+function insertDemo(goodsid,size,goodssizenum){
+    var  insertSQL  = `insert into goodsdetail value (\'${goodsid}\',\'${size}\',\'${goodssizenum}\')`
+    getInsert(con,insertSQL,function(err,result){
+        if(err){
+            console.log("--------error--------");
+            return;
+        }
+        insertSQL
+    })
 
+}
 
+// insertDemo("B10005",170,30)
 
+var id = ["C20001","C20002","C20003","C20004","C20005"];
+var obj = [
+    {
+        size:170,
+        num:30
+    },{
+        size:175,
+        num:30
+    },
+    {
+        size:180,
+        num:40
+    }
 
+];
+for(var i = 0 ;i<id.length;i++){
+   for(var j = 0;j<obj.length;j++){
+        insertDemo(id[i],obj[j].size,obj[j].num);
+   }
+}
+ 
 
 
 
