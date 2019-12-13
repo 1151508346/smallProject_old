@@ -24,6 +24,16 @@ var Url = {
     getGoods:"/getGoods",
     getGoodsDetail:"/getGoodsDetail"
 }
+    function handleImageURL(data){
+        for (let i = 0; i < data.length; i++) {
+            var imageURL = `${baseURL}${data[i].typeid}/${data[i].category}/${data[i].goodsid}/`;
+            data[i].goodsimage = [];
+            for(var j = 1; j<5;j++){
+                data[i].goodsimage.push(imageURL+"0"+j+".jpg");
+            }
+            
+        }
+    }
 module.exports = function(router){
     router.post(Url.register, function (req, res) {
         var password = req.body.password;
@@ -274,14 +284,7 @@ module.exports = function(router){
                 return ;
             }
             
-            for (let i = 0; i < data.length; i++) {
-                var imageURL = `${baseURL}${data[i].typeid}/${data[i].category}/${data[i].goodsid}/`;
-                data[i].goodsimage = [];
-                for(var j = 1; j<5;j++){
-                    data[i].goodsimage.push(imageURL+"0"+j+".jpg");
-                }
-                
-            }
+            handleImageURL(data);
             res.json(data);
 
 
@@ -290,20 +293,22 @@ module.exports = function(router){
     })
     // SELECT * FROM goods,goodsdetail WHERE  goods.`goodsid` = 'B00001' AND goods.goodsid = goodsdetail.goodsid
     router.get(Url.getGoodsDetail,function(req,res){
+            var  goodsid = req.query.goodsid;
+            var selectSQL = `SELECT * FROM goods,goodsdetail WHERE  goods.goodsid = \'${goodsid}\' AND goods.goodsid = goodsdetail.goodsid`
+            getFind(con,selectSQL,function(err,data){
+                if(err){
+                    console.log("哈哈~~,亲出错了");
+                    throw new Error("error");
+                }
+                handleImageURL(data);
+                res.json(data)
+            })
+
        
     })
 
 
 }
-var  goodsid = "B0001"
-var selectSQL = `SELECT * FROM goods,goodsdetail WHERE  goods.goodsid = 'B00001' AND goods.goodsid = goodsdetail.goodsid`
-getFind(con,selectSQL,function(err,data){
-    if(err){
-        console.log("哈哈~~,亲出错了");
-        throw new Error("error");
-    }
-    console.log(data);
-})
 
 
 

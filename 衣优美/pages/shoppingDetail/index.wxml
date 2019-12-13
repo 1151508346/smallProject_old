@@ -4,7 +4,7 @@
 	 <view class="page-section page-section-spacing swiper">
 	   <swiper 
 		 autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-		 <block wx:for="{{background}}" wx:key="*this">
+		 <block wx:for="{{goodsImage}}" wx:key="*this">
 		   <swiper-item>
 			 <view class="swiper-item {{item}}">
 				 <image src="{{item}}">
@@ -16,12 +16,12 @@
 	 </view>
 	</view>
 	<view class = "detail-title-share">
-		<text class="detail-title">大水坑恢复开始恢复卡山东矿机卡算法开始开发好看顺丰快递首付款刘德华斯卡迪分开了阿达上看见</text>
+		<text class="detail-title">{{goodsName}}</text>
 		<text class="detail-share">分享</text>
 	</view>
 	
 	<view class="detail-price">
-		<text>销售价</text><text>￥139.00</text>
+		<text>销售价</text><text>￥{{goodsPrice}}</text>
 	</view>
 	<view class="detail-size-count"
     bindtap="hanldeAddCarAlert"
@@ -33,27 +33,15 @@
 		<view class="detail-photo-show">
 			<text>图文展示</text>
 		</view>
-		<view class="detail-photo-show-img">
-			<image src="/static/init.jpg">
-				
-			</image>
-		</view>
-		<view class="detail-photo-show-img">
-			<image src="/static/init.jpg">
-				
-			</image>
-		</view>
-		<view class="detail-photo-show-img">
-			<image src="/static/init.jpg">
-				
-			</image>
-		</view>
+		<block wx:for="{{goodsImage}}" wx:key="index">
+			<view class="detail-photo-show-img">
+				<image src="{{item}}">
+					
+				</image>
+			</view>
+		</block>
 		
-		<view class="detail-photo-show-img">
-			<image src="/static/init.jpg">
-				
-			</image>
-		</view>
+		
 	</view>
 	
 	<view class="{{toggleAddCarAlert ? 'select-size-count-alert_end' : 'select-size-count-alert' }}" >
@@ -61,51 +49,48 @@
           <image src="{{background[0]}}"></image>
       </view>
       <view class="alertPrice_box">
-        <view class = "alertPrice">￥0.00</view>
-        <view class="alertCount">库存数量100</view>
+        <view class = "alertPrice">￥{{goodsPrice}}</view>
+        <view class="alertCount">库存数量{{totalNum}}</view>
         <view class="alertSize">请选择你的尺寸</view>
       </view>
       <view class="alert_size_box">
         <view class="alert_size_title">尺寸</view>
         <view class="alert_size">
-          <button>1.75</button>
-          <button>1.80</button>
-          <button>1.80</button>
-          <button>1.80</button>
-          <button>1.80</button>
-          <button>1.80</button>
-          <button>1.80</button>
-          <button>1.80</button>
+          <button 
 
+		  	wx:for="{{sizeNum}}" wx:key="index"
+		  	bindtap = "handleGetSize"
+			data-size = "{{item.size}}"
+			class = "{{activeSize == item.size ? 'active-size':''}}"
+		  >{{item.size}}</button>
+         
         </view>
       </view>
       <view class="alert_count_box">
-      <view class="alert_count_title">数量</view>
+      <view class="alert_count_title">{{goodsNum}}</view>
         <view class="alert_count_calc">
-          <button>-</button>
-            <input value="{{1}}"></input>
-          <button>+</button>
+          <button 
+		  	bindtap = "handleCalculateGoodsNum"
+			  data-calType = "reduce"
+		  >-</button>
+            <input value="{{saleNum}}"
+			bindinput = "handleInputGoodsNum"
+			></input>
+          <button 
+		  	bindtap = "handleCalculateGoodsNum"
+			  data-calType = "add"
+		  >+</button>
       </view>
       </view>
-      <text class="alertYes">确认</text>
+      <text class="alertYes"
+	  	bindtap = "submitBuyInfo"
+	  >确认</text>
       <view class="closeWindow" hover-class="closeWindowActive"
         bindtap="handleCloseAlert"
       
       >X</view>
 
   </view>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	<view class="detail-bar">

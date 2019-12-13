@@ -254,6 +254,10 @@ swiper{
   position: absolute;
   bottom: 0rpx;
 }
+.active-size{
+  background-color:#f00 !important;
+  color:#fff;
+}
 
 
 
