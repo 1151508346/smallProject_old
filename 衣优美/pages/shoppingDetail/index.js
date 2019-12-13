@@ -2,11 +2,7 @@ Page({
   
   onLoad:function(options){
     var goodsid = options["goodsid"];
-
-    
-
-
-
+console.log( goodsid)
 
   },
   onShareAppMessage() {

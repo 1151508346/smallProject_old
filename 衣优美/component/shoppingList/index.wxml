@@ -1,6 +1,6 @@
 <!--component/shoppingList/index.wxml-->
 <view class="shoppingListBox" >
-	<navigator url="/pages/shoppingDetail/index?goodsid={{shoppingData}}"  >
+	<navigator url="/pages/shoppingDetail/index?goodsid={{shoppingData.goodsid}}"  >
 		<view class="shopping_img">
 			<image src="{{shoppingData.goodsimage[0]}}"></image>
 		</view>

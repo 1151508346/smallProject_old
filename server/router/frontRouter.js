@@ -21,7 +21,8 @@ var Url = {
     forgetCheck:"/frontForgetCheck",
     updatePassword:"/frontUpdatePassword",
     add_address:"/add_address",  //添加收货地址
-    getGoods:"/getGoods"
+    getGoods:"/getGoods",
+    getGoodsDetail:"/getGoodsDetail"
 }
 module.exports = function(router){
     router.post(Url.register, function (req, res) {
@@ -287,47 +288,22 @@ module.exports = function(router){
             // console.log("第"+pageNum+"数据")
         })
     })
-    
-
-
-}
-
-function insertDemo(goodsid,size,goodssizenum){
-    var  insertSQL  = `insert into goodsdetail value (\'${goodsid}\',\'${size}\',\'${goodssizenum}\')`
-    getInsert(con,insertSQL,function(err,result){
-        if(err){
-            console.log("--------error--------");
-            return;
-        }
-        insertSQL
+    // SELECT * FROM goods,goodsdetail WHERE  goods.`goodsid` = 'B00001' AND goods.goodsid = goodsdetail.goodsid
+    router.get(Url.getGoodsDetail,function(req,res){
+       
     })
 
+
 }
-
-// insertDemo("B10005",170,30)
-
-var id = ["C20001","C20002","C20003","C20004","C20005"];
-var obj = [
-    {
-        size:170,
-        num:30
-    },{
-        size:175,
-        num:30
-    },
-    {
-        size:180,
-        num:40
+var  goodsid = "B0001"
+var selectSQL = `SELECT * FROM goods,goodsdetail WHERE  goods.goodsid = 'B00001' AND goods.goodsid = goodsdetail.goodsid`
+getFind(con,selectSQL,function(err,data){
+    if(err){
+        console.log("哈哈~~,亲出错了");
+        throw new Error("error");
     }
-
-];
-for(var i = 0 ;i<id.length;i++){
-   for(var j = 0;j<obj.length;j++){
-        insertDemo(id[i],obj[j].size,obj[j].num);
-   }
-}
- 
-
+    console.log(data);
+})
 
 
 
