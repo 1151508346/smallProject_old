@@ -16,7 +16,8 @@
 		<view class="yym-discount-item discount" >优惠卷</view>
 	</view>
 	
-	<block wx:for="{{car_shopping_list}}" >
+	<view class="car-list-box">
+		<block wx:for="{{car_shopping_list}}" >
 		<view class="car-list">
 			
 				<view class="class-list-item car-list-checked">
@@ -28,18 +29,18 @@
 					/>
 				</view>
 				<view class="class-list-item car-list-image">
-					<image src= "{{item.goodsImage}}" >
+					<image src= "{{item.goodsimage[0]}}" >
 					</image>
 				</view>
-				<view class="class-list-item car-list-name">{{item.goodsName}}
+				<view class="class-list-item car-list-name">{{item.goodsname}}
 				
 				
-					<view class = "car-list_price"> ￥{{item.goodsPrice}}</view>
+					<view class = "car-list_price"> ￥{{item.goodsprice}}</view>
 					<view class = "car-list_input_num" >
 						
 						<view>
 							<button bindtap = "reduceBuyNum" data-index="{{index}}">-</button>
-							<input type="text" value="{{item.defaultValue}}" />
+							<input type="text" value="{{item.buycount}}" />
 							<button bindtap = "addBuyNum" data-index="{{index}}">+</button>
 						</view>
 					</view>
@@ -48,6 +49,8 @@
 			
 		</view>
 	</block>
+	</view>
+	  
 	
 
 
@@ -62,8 +65,12 @@
 			bindtap = "allSelectStatusToggle"
 			 />
 		</view>
-		<view>全选</view>
-		<view>删除</view>
+		<view
+			bindtap = "allSelectStatusToggle"
+		>全选</view>
+		<view 
+			bindtap="deleteSelectedGoodsList"
+		>删除</view>
 		<view>总计：<text>￥{{allPriceValue}}</text></view>
 		<view>结算</view>
 	</view>

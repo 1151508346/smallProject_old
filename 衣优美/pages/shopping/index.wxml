@@ -24,7 +24,7 @@
 					 <view 
 							class="{{item == shoppingType?'activeShoppingStatus_items':'defaultShoppingStatus_items'}}"
 							 bindtap = "handleShoppingListToggleItem"
-							 data-listNameItem="{{item}}"
+							 data-listNameItem="{{indexs}}-{{item}}"
 							>
 							{{item}}
 						</view>

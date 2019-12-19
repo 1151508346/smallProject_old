@@ -77,12 +77,12 @@ function getDelete(con,sql,params,callback){
     params = params || []; //用来替换元字符的数组
     callback = callback || function(){}
     con.query(sql,[],function(err,result){
-        if(err){
-            console.log("删除失败")
-        throw new Error("delete error");
-        }
+        // if(err){
+        //     console.log("删除失败")
+        //     throw new Error("delete error");
+        // }
         // callback(result.affectedRows);
-        callback(result.affectedRows)
+        callback(err,result);
     });
 }
 // getDelete(sql,function(result){

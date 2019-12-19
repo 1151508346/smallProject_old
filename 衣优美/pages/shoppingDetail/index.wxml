@@ -103,17 +103,23 @@
 			</view>
 		</navigator>
 		
-		<navigator>
-			<view class="detail-bar-list detail-bar-car">
+		<navigator url="null">
+			<view class="detail-bar-list detail-bar-car"
+				bindtap = "switchTabCar"
+			>
 				<image src="/static/shoppingDedail/defaultCar.png"></image>
 				<view class="detail-bar-list-title">
 					<text>购物车</text>
 				</view>
 			</view>
 		</navigator>
-			<view class="detail-bar-list detail-bar-collect">
-				<image src="/static/shoppingDedail/defaultCollect.png"></image>
-				<view class="detail-bar-list-title">
+			<view class="detail-bar-list detail-bar-collect"
+				bindtap = "handleCollectGoods"
+			>
+				<image src="{{isCollect?'/static/shoppingDedail/selectedCollect.png':'/static/shoppingDedail/defaultCollect.png'}}"></image>
+				<view class="detail-bar-list-title"
+					
+				>
 					<text>收藏</text>
 				</view>
 			</view>
