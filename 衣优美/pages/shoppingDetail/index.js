@@ -1,4 +1,6 @@
-var Domain = require("../../tools/domain.js");
+var getNativeUserId = require("../../tools/getNativeUserId.js");
+var { getRequest, postRequest } = require("../../tools/request.js");
+var Domain = require("../../tools/domain");
 Page({
   data: {
     background: ['/static/init.jpg', '/static/init.jpg', '/static/init.jpg'],
@@ -52,9 +54,40 @@ Page({
             }
 
         })
+    });
+  
+    getNativeUserId(function(res){
+      console.log(res);
+      if(res.data){
+          _that.sendInsertVisitedTableInfo(res.data,goodsid)
+      }
     })
+  
+
 
   },
+  sendInsertVisitedTableInfo(userid,goodsid){
+    console.log("================");
+      var url = Domain+"insertVisited?userid="+userid+"&goodsid="+goodsid;
+      console.log(url)
+      getRequest(url,function(res){
+          // console.log(res)
+          if(res.data.type === "insertSuccess" && res.data.status === "200"){
+          }
+          if(res.data.type === "fail" && res.data.status === "400"){
+            wx.showToast({
+              title: "服务端出现故障",
+              icon: 'none',
+              image: '',
+              duration: 1500,
+              mask: false,
+            });
+          }
+      })
+
+
+  },
+
   requestData(url,callback){
     wx.showLoading({
       title: '加载中',

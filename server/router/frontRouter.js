@@ -110,7 +110,7 @@ module.exports = function (router) {
 
     var passwordAES = aesEncrypt(req.body.password); //加密后的密码
 
-    var selectSQL = "select username,password from  user where username = \'" + username + "\'and password=\'" + passwordAES + "\'";
+    var selectSQL = "select userid, username,password from  user where username = \'" + username + "\'and password=\'" + passwordAES + "\'";
     getFind(con, selectSQL, function (err, data) {
       if (err) {
         res.json({
@@ -138,9 +138,8 @@ module.exports = function (router) {
         res.json({
           status: "200",
           type: "success",
-          username: username
-
-
+          username: username,
+          userid: data[0].userid
         })
         //登录成功将用户名保存在session
 
@@ -791,15 +790,15 @@ module.exports = function (router) {
     var { addressid } = req.query;
 
     var updateSQLAll = `UPDATE	user_address SET isdefault = 0 `;
-      getUpdate(con, updateSQLAll, [], function (err, updateRes) {
-        if (err) {
-          throw new Error("server error");
-        }
-        console.log("**************");
-        console.log(updateRes.affectedRows)
-        if (updateRes.affectedRows === 1) {
-        }
-      });
+    getUpdate(con, updateSQLAll, [], function (err, updateRes) {
+      if (err) {
+        throw new Error("server error");
+      }
+      console.log("**************");
+      console.log(updateRes.affectedRows)
+      if (updateRes.affectedRows === 1) {
+      }
+    });
 
     var updateSQL = ` update user_address set isdefault=1 where addressid=\'${addressid}\'`;
     getUpdate(con, updateSQL, [], function (err, updateRes) {
@@ -811,34 +810,34 @@ module.exports = function (router) {
           type: "updateSuccess",
           status: "200"
         });
-      }else{
+      } else {
         res.json({
           type: "fail",
           status: "404"
         })
       }
-      
+
     });
 
   });
-  router.get(Url.getOrderList,function(req,res){
+  router.get(Url.getOrderList, function (req, res) {
     console.log(req.query);
-    var {username,goodsstatus} = req.query;
-      var selectSQL = `
+    var { username, goodsstatus } = req.query;
+    var selectSQL = `
 SELECT * FROM  goods , orders WHERE orders.goodsid = goods.goodsid AND 
 orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') AND goodsstatus = ${goodsstatus}
       `
-    getFind(con,selectSQL,function(err,data){
-        if(err){
-          throw new Error("server error");
-        }
-        // console.log(data)
-        handleImageURL(data);
-        res.json(data);
+    getFind(con, selectSQL, function (err, data) {
+      if (err) {
+        throw new Error("server error");
+      }
+      // console.log(data)
+      handleImageURL(data);
+      res.json(data);
     })
   });
-  router.post(Url.cancelOrder,function(req,res){
-    var  { goodsid, size, goodsstatus, userid} = req.body;
+  router.post(Url.cancelOrder, function (req, res) {
+    var { goodsid, size, goodsstatus, userid } = req.body;
     var deleteSQL = `
       delete from orders where goodsid = \'${goodsid}\' and
       size = \'${size}\' and
@@ -846,19 +845,94 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
       userid = \'${userid}\' 
 
     `
-    getDelete(con,deleteSQL,[],function(err,data){
-      if(err){
+    getDelete(con, deleteSQL, [], function (err, data) {
+      if (err) {
         throw new Error("server error");
       }
-     if( data.affectedRows !==0){
-       res.json({
-         status:"200",
-         type:"success"
-       })
-     }
+      if (data.affectedRows !== 0) {
+        res.json({
+          status: "200",
+          type: "success"
+        })
+      }
     });
   });
+  router.get(Url.toCollect, function (req, res) {
+    var { userid } = req.query;
+    var selectSQL = `SELECT * FROM goods,collecgoods 
+      WHERE collecgoods.userid = \'${userid}\' AND goods.goodsid = collecgoods.goodsid`;
+
+    getFind(con, selectSQL, function (err, data) {
+      if (err) {
+        throw new Error("serve error");
+      }
+      handleImageURL(data);
+      res.json(data);
+
+    })
+
+  });
+  router.get(Url.toVisited, function (req, res) {
+    var { userid } = req.query;
+    var selectSQL = `SELECT * FROM goods,visited 
+    WHERE visited.userid = \'${userid}\' AND goods.goodsid = visited.goodsid`;
+    getFind(con, selectSQL, function (err, data) {
+      if (err) {
+        throw new Error("serve error");
+      }
+      handleImageURL(data);
+      res.json(data);
+
+    });
+  })
+
+  router.get(Url.insertVisited,function(req,res){
+    var  { userid,goodsid} = req.query;
+    console.log(userid,goodsid)
+      var insertSQL = `insert into visited  value(\'${goodsid}\',\'${userid}\')`;
+      getInsert(con,insertSQL,[],function(err,data){
+        if(err){
+          throw new Error("server error");
+        }
+        if(data.affectedRows === 1){
+          res.json({
+            type:"insertSuccess",
+            status:"200"
+          })
+        }else{
+          res.json({
+            type:"fail",
+            status:"400"
+          })
+        }
+      })
+  });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // router.post("/test",function(req,res){
   //   console.log(req.body);

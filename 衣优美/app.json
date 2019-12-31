@@ -12,7 +12,9 @@
     "pages/user_address/index",
     "pages/add_address/index",
     "pages/payfor/index",
-    "pages/order/index"
+    "pages/order/index",
+    "pages/collectGoods/index",
+     "pages/visited/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

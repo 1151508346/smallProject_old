@@ -132,6 +132,7 @@ Page({
             return ;
           }
           if(res.data.status == 200 && res.data.type == "success"){
+            console.log(res.data)
             // console.log(res);
             //将用户登录的信息保存在本地缓存中
             wx.setStorage({
@@ -143,7 +144,12 @@ Page({
               icon: 'success',
               duration: 1500,
               mask: false,
-            })
+            });
+            wx.setStorage({
+              key:"userid",
+              data:res.data.userid
+            });
+            
           }
         },
         fail: function(res) {

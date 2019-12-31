@@ -23,7 +23,10 @@ var Url = {
     payForToOrder:"/payForToOrder",
     updateDefaultAddress:"/updateDefaultAddress",
     getOrderList:"/getOrderList",
-    cancelOrder:"/cancelOrder"
+    cancelOrder:"/cancelOrder",
+    toCollect:"/toCollect",
+    toVisited:"/toVisited",
+    insertVisited:"/insertVisited"
   }
 
   module.exports = Url;

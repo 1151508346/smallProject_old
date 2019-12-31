@@ -1,3 +1,6 @@
+var getNativeUserId = require("../../tools/getNativeUserId.js");
+var { getRequest, postRequest } = require("../../tools/request.js");
+var Domain = require("../../tools/domain");
 Page({
 
   /**
@@ -84,6 +87,40 @@ Page({
       url: '/pages/order/index?goodsStatus='+goodsStatus,
       
      })
+  },
+  navigateToCollectPage(){
+    getNativeUserId(function(res){
+        if(!res.data){
+          wx.showToast({
+            title: '您还未登录',
+            icon: 'none',
+            duration: 1500,
+            mask: false,
+          });
+          return ;
+        }
+        wx.navigateTo({
+          url:"/pages/collectGoods/index?userid="+res.data
+        })
+    })
+
+  },
+ 
+  navigateToVisitedPage(){
+    getNativeUserId(function(res){
+      if(!res.data){
+        wx.showToast({
+          title: '您还未登录',
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+        return ;
+      }
+      wx.navigateTo({
+        url:"/pages/visited/index?userid="+res.data
+      })
+  })
   }
 
 
