@@ -10,7 +10,9 @@
     "pages/register/index",
     "pages/forget/index",
     "pages/user_address/index",
-    "pages/add_address/index"
+    "pages/add_address/index",
+    "pages/payfor/index",
+    "pages/order/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

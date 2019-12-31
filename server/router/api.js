@@ -3,6 +3,7 @@ var Url = {
     login: "/frontLogin",
     forgetCheck: "/frontForgetCheck",
     updatePassword: "/frontUpdatePassword",
+    initAddress:'/initAddress',
     add_address: "/add_address",  //添加收货地址
     getGoods: "/getGoods",
     getGoodsDetail: "/getGoodsDetail",
@@ -18,7 +19,11 @@ var Url = {
     girlCloth:"/girlCloth",
     suit:"/suit",
     start:'/start',
-    gravida:"/gravida"
+    gravida:"/gravida",
+    payForToOrder:"/payForToOrder",
+    updateDefaultAddress:"/updateDefaultAddress",
+    getOrderList:"/getOrderList",
+    cancelOrder:"/cancelOrder"
   }
 
   module.exports = Url;

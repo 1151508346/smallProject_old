@@ -16,7 +16,7 @@
     margin-top:20rpx;
 }
 .address_item{
-    height: 100rpx;
+    min-height: 100rpx;
     background-color:#fff;
     margin-top:8rpx;
     margin-left: 10rpx;

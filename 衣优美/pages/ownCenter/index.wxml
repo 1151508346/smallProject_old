@@ -37,22 +37,34 @@
           订单管理
       </view>
       <view class="dingdan_list">
-          <view class="dingdan_item">
+          <view class="dingdan_item"
+            bindtap = "navigateToOrderListPage"
+            data-goodsstatus="0"
+          >
               <image src="/static/dingdanmanage/daifukuan.png"></image>
               <view>待付款</view>
 
             </view>
-           <view class="dingdan_item">
+           <view class="dingdan_item"
+            bindtap = "navigateToOrderListPage"
+            data-goodsstatus="1"
+           >
               <image src="/static/dingdanmanage/daishouhuo.png"></image>
               <view>待收货</view>
 
              </view>
-            <view class="dingdan_item">
+            <view class="dingdan_item"
+              bindtap = "navigateToOrderListPage"
+              data-goodsstatus="2"
+            >
               <image src="/static/dingdanmanage/icon4.png"></image>
               <view>待评价</view>
 
             </view>
-             <view class="dingdan_item">
+             <view class="dingdan_item"
+              bindtap = "navigateToOrderListPage"
+              data-goodsstatus="3"
+             >
              <image src="/static/dingdanmanage/quanbudingdan.png"></image>
               <view>全部商品</view>
 

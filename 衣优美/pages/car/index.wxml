@@ -1,8 +1,6 @@
 <view class="container">
 <!-- <button bindtap = "handleSwitchBarShoppingPage">shopping Page</button> -->
 
-
-
 	<view class="yiyoumei-discount">
 		<view class="yym-discount-item checked-window">
 			<radio class="default-checkbox" 
@@ -72,7 +70,9 @@
 			bindtap="deleteSelectedGoodsList"
 		>删除</view>
 		<view>总计：<text>￥{{allPriceValue}}</text></view>
-		<view>结算</view>
+		<view 
+			bindtap = "handelPayforSelectedGoods"
+		>结算</view>
 	</view>
 
 

@@ -222,6 +222,57 @@ module.exports = function (router) {
   //     console.log(req);
   //     res.send(JSON.stringify(req.session));
   // });
+
+  router.get(Url.initAddress, function (req, res) {
+    var { username } = req.query;
+    // console.log(username);
+    var selectSQL = `
+        select * from user_address where username=\'${username}\' 
+      `
+    getFind(con, selectSQL, function (err, data) {
+      if (err) {
+        throw new Error("serve error")
+      }
+      res.json(data);
+    })
+
+
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //用户添加收货地址
   router.post(Url.add_address, function (req, res) {
     /**
@@ -230,27 +281,46 @@ module.exports = function (router) {
      */
     //
     // res.redirect("/getSession");
-    var username = "aa123456"; //登录的用户名
+    // var username = "aa123456"; //登录的用户名
     var createTime = new Date().toLocaleString();
-    var { receiver, receivePhone, areaPath, detailAddress, isDefault, zipCode } = req.body;
+
+    var { username, receiver, receivePhone, areaPath, detailAddress, isDefault, zipCode } = req.body;
+    // console.log(username)
     var insertSQL = `insert into user_address value(\'${username}\',\'${receiver}\',\'${receivePhone}\',\'${areaPath}\',\'${detailAddress}\',\'${isDefault}\',\'${zipCode}\',\'${createTime}\'  )`;
-    getFind(con, insertSQL, function (err, data) {
-      if (err) {
-        res.json({
-          status: "200",
-          type: "fail"
-        })
-        console.log("--------error---------");
-        throw new Error(err);
-        // return;
-      }
-      if (data.affectedRows == 1) {
-        res.json({
-          status: "200",
-          type: "success"
-        })
-      }
-    })
+    // UPDATE	buycar SET buycount=buycount+\'${buycount}
+    if (isDefault === 1) {
+      var updateSQL = `UPDATE	user_address SET isdefault = 0 `;
+      getUpdate(con, updateSQL, [], function (err, updateRes) {
+        if (err) {
+          throw new Error("server error");
+        }
+        console.log("**************");
+        console.log(updateRes.affectedRows)
+        if (updateRes.affectedRows === 1) {
+        }
+      });
+    }
+    insert_Address();
+
+    function insert_Address() {
+      getInsert(con, insertSQL, [], function (err, data) {
+        if (err) {
+          res.json({
+            status: "500",
+            type: "fail"
+          })
+          console.log("--------error---------");
+          throw new Error(err);
+          // return;
+        }
+        if (data.affectedRows == 1) {
+          res.json({
+            status: "200",
+            type: "success"
+          })
+        }
+      });
+    }
 
   });
 
@@ -686,7 +756,111 @@ module.exports = function (router) {
     });
   });
 
-  // router.post("/test",function(req,res){
+  // payForToOrder
+  router.post(Url.payForToOrder, function (req, res) {
+    req.body.forEach(function (item, index) {
+      var { userid, goodsid, count, size, purchasetime, goodsstatus } = item;
+      console.log(item)
+      // console.log(userid, goodsid, count, size, purchasetime, goodsstatus);
+      // ,\'${userid}\',\'${purchasetime}\',\'${count}\',\'${size}\',\'${goodsstatus}\'
+      var insertSQL = `insert into orders (goodsid,userid,purchasetime,count,size,goodsstatus) value(\'${goodsid}\',\'${userid}\' ,\'${purchasetime}\' ,\'${count}\'  ,\'${size}\',\'${goodsstatus}\')`;
+      var deleteSQL = ` delete from buycar where goodsid = \'${goodsid}\' and userid = \'${userid}\' and buycount = \'${count}\' and buysize = \'${size}\'`
+      getInsert(con, insertSQL, [], function (err, insertData) {
+        if (insertData.affectedRows === 1) {
+          getDelete(con, deleteSQL, [], function (err, deleteData) {
+            console.log(deleteData);
+            if (deleteData.affectedRows === 1) {
+              res.json({
+                type: "success",
+                status: "200"
+              });
+            } else {
+              res.json({
+                type: "fail",
+                status: "200"
+              })
+            }
+          })
+
+        }
+      })
+    });
+  });
+  router.get(Url.updateDefaultAddress, function (req, res) {
+    console.log();
+    var { addressid } = req.query;
+
+    var updateSQLAll = `UPDATE	user_address SET isdefault = 0 `;
+      getUpdate(con, updateSQLAll, [], function (err, updateRes) {
+        if (err) {
+          throw new Error("server error");
+        }
+        console.log("**************");
+        console.log(updateRes.affectedRows)
+        if (updateRes.affectedRows === 1) {
+        }
+      });
+
+    var updateSQL = ` update user_address set isdefault=1 where addressid=\'${addressid}\'`;
+    getUpdate(con, updateSQL, [], function (err, updateRes) {
+      if (err) {
+        throw new Error("server error");
+      }
+      if (updateRes.affectedRows === 1) {
+        res.json({
+          type: "updateSuccess",
+          status: "200"
+        });
+      }else{
+        res.json({
+          type: "fail",
+          status: "404"
+        })
+      }
+      
+    });
+
+  });
+  router.get(Url.getOrderList,function(req,res){
+    console.log(req.query);
+    var {username,goodsstatus} = req.query;
+      var selectSQL = `
+SELECT * FROM  goods , orders WHERE orders.goodsid = goods.goodsid AND 
+orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') AND goodsstatus = ${goodsstatus}
+      `
+    getFind(con,selectSQL,function(err,data){
+        if(err){
+          throw new Error("server error");
+        }
+        // console.log(data)
+        handleImageURL(data);
+        res.json(data);
+    })
+  });
+  router.post(Url.cancelOrder,function(req,res){
+    var  { goodsid, size, goodsstatus, userid} = req.body;
+    var deleteSQL = `
+      delete from orders where goodsid = \'${goodsid}\' and
+      size = \'${size}\' and
+      goodsstatus = \'${goodsstatus}\' and
+      userid = \'${userid}\' 
+
+    `
+    getDelete(con,deleteSQL,[],function(err,data){
+      if(err){
+        throw new Error("server error");
+      }
+     if( data.affectedRows !==0){
+       res.json({
+         status:"200",
+         type:"success"
+       })
+     }
+    });
+  });
+}
+
+// router.post("/test",function(req,res){
   //   console.log(req.body);
   //   console.log(req.headers.authorization)
   //   res.json({
@@ -695,25 +869,71 @@ module.exports = function (router) {
   //   })
   // })
 
-}
 
 
-var goodsid = ["S00001", "S00002", "S00003", "S00004", "S00005"];
 
-var sizenum = [
-  {
-    size: 170,
-    goodsidsizenum: 30
-  },
-  {
-    size: 175,
-    goodsidsizenum: 30
-  },
-  {
-    size: 180,
-    goodsidsizenum: 40
-  },
-]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// var goodsid = ["S00001", "S00002", "S00003", "S00004", "S00005"];
+
+// var sizenum = [
+//   {
+//     size: 170,
+//     goodsidsizenum: 30
+//   },
+//   {
+//     size: 175,
+//     goodsidsizenum: 30
+//   },
+//   {
+//     size: 180,
+//     goodsidsizenum: 40
+//   },
+// ]
 // function test() {
 //   var insertSQL = ""
 //   for (var i = 0; i < goodsid.length; i++) {

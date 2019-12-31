@@ -77,6 +77,13 @@ Page({
         });
       }
     })
+  },
+  navigateToOrderListPage(e){
+    var goodsStatus = e.currentTarget.dataset.goodsstatus;
+    wx.navigateTo({
+      url: '/pages/order/index?goodsStatus='+goodsStatus,
+      
+     })
   }
 
 

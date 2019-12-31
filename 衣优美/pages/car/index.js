@@ -1,6 +1,7 @@
 var app = getApp();
-var { getRequest,postRequest } = require("../../tools/request.js");
+var { getRequest, postRequest } = require("../../tools/request.js");
 var Domain = require("../../tools/domain");
+var getNativeUsername = require("../../tools/getNativeUsername");
 Page({
 
 	/**
@@ -24,47 +25,16 @@ Page({
 			// 	defaultValue:1
 			// }
 		],
-		allPriceValue: 0.00
+		allPriceValue: 0.00,
+		parforStatus: false,
+		userAddress:[],
+
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		
-	},
-
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-		
-	},
-	initBuyCarSelected(){
-		var length = this.data.car_shopping_list.length;
-		var newData = this.data.car_shopping_list.map((value, index) => {
-			value.selectStatus = true;
-			return value;
-		})
-		// console.log(newData);
-		this.setData({
-			car_shopping_list: newData
-		});
-		var tempPriceValue = 0.00;
-		for (var i = 0; i < this.data.car_shopping_list.length; i++) {
-			if (this.data.car_shopping_list[i].selectStatus) {
-				tempPriceValue += this.data.car_shopping_list[i].goodsprice*this.data.car_shopping_list[i].buycount;
-			}
-		}
-
-		this.setData({
-			allPriceValue: tempPriceValue
-		})
-	},
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: function () {
 		var _that = this;
 		this.getNativeUsername(function (res) {
 			//res.data ->username;
@@ -100,6 +70,118 @@ Page({
 		});
 	},
 
+	/**
+	 * 生命周期函数--监听页面初次渲染完成
+	 */
+	onReady: function () {
+
+	},
+	initBuyCarSelected() {
+		var length = this.data.car_shopping_list.length;
+		var newData = this.data.car_shopping_list.map((value, index) => {
+			value.selectStatus = true;
+			return value;
+		})
+		// console.log(newData);
+		this.setData({
+			car_shopping_list: newData
+		});
+		var tempPriceValue = 0.00;
+		for (var i = 0; i < this.data.car_shopping_list.length; i++) {
+			if (this.data.car_shopping_list[i].selectStatus) {
+				tempPriceValue += this.data.car_shopping_list[i].goodsprice * this.data.car_shopping_list[i].buycount;
+			}
+		}
+
+		this.setData({
+			allPriceValue: tempPriceValue
+		})
+	},
+	/**
+	 * 生命周期函数--监听页面显示
+	 */
+	onShow: function () {
+			
+		if(app.globalData.path === "/pages/payfor/index"){
+			/**
+			 * 没有支付进入待付款中
+			 * 获取选中的商品  
+			 * 发送ajax ，insert selected的 shopping
+			 * 
+			 */
+			var tempSendData = [];
+			var _that = this;
+			// 2019-12-11 20:24:46
+		
+			for (var i = 0; i < _that.data.car_shopping_list.length; i++) {
+				if (_that.data.car_shopping_list[i].selectStatus) {
+					tempSendData.push({
+						goodsid:_that.data.car_shopping_list[i].goodsid,
+						userid:_that.data.car_shopping_list[i].userid,
+						purchasetime:this.forMatDate(),
+						count:_that.data.car_shopping_list[i].buycount,
+						size:_that.data.car_shopping_list[i].buysize,
+						// goodsstatus = 0 表示待支付状态
+						goodsstatus:0,
+						
+					});
+				}
+			}
+			//将待支付的商品插入到order表中
+			var url = Domain+"payForToOrder"
+			postRequest(url,tempSendData,function(res){
+				console.log(res.data)
+				if(res.data.type === "success" && res.data.status==="200"){
+					wx.showToast({
+						title: '您已取消支付',
+						icon: 'none',
+						duration: 1500,
+						mask: false,
+					});
+					
+					return ;
+				}
+				
+				wx.showToast({
+					title: '服务器出现错误',
+					icon: 'none',
+					duration: 1500,
+					mask: false,
+				});
+				
+				
+			})
+
+
+		}
+	},
+	//格式化日期
+	forMatDate(){
+		var tempDate = new Date();
+		var year = tempDate.getFullYear();
+		var month = tempDate.getMonth()+1;
+		var date = tempDate.getDate();
+		var hour = tempDate.getHours();
+		var minutes = tempDate.getMinutes();
+		var seconds = tempDate.getSeconds();
+		
+		if(month<10){
+			return year+"-0"+month+"-"+date+" "+hour+":"+minutes+":0"+seconds;
+		}
+		if(date<10){
+			return year+"-"+month+"-0"+date+" "+hour+":"+minutes+":0"+seconds;
+		}
+		if(hour<10){
+			return year+"-"+month+"-"+date+" 0"+hour+":"+minutes+":0"+seconds;
+		}
+		if(minutes<10){
+			return year+"-"+month+"-"+date+" "+hour+":0"+minutes+":0"+seconds;
+		}
+		if(seconds<10){
+			return year+"-"+month+"-"+date+" "+hour+":"+minutes+":0"+seconds;
+		}
+		return year+"-"+month+"-"+date+" "+hour+":"+minutes+":"+seconds;
+	},
 	/**
 	 * 生命周期函数--监听页面隐藏
 	 */
@@ -177,7 +259,7 @@ Page({
 		var tempPrice = 0;
 		for (var i = 0; i < this.data.car_shopping_list.length; i++) {
 			if (this.data.car_shopping_list[i].selectStatus) {
-				tempPrice += this.data.car_shopping_list[i].goodsprice*this.data.car_shopping_list[i].buycount;
+				tempPrice += this.data.car_shopping_list[i].goodsprice * this.data.car_shopping_list[i].buycount;
 			}
 		}
 		// console.log(tempPrice)
@@ -190,41 +272,43 @@ Page({
 	addBuyNum(e) {
 		var index = e.currentTarget.dataset.index;
 		++this.data.car_shopping_list[index].buycount;
+		console.log(this.data.car_shopping_list[index])
 		this.setData({
 			car_shopping_list: this.data.car_shopping_list
 		});
 		// this.initBuyCarSelected();
 
-		var tempPriceValue =this.data.allPriceValue 
+		var tempPriceValue = this.data.allPriceValue
 		for (var i = 0; i < this.data.car_shopping_list.length; i++) {
-			if (this.data.car_shopping_list[i].selectStatus) {
-				this.data.allPriceValue += this.data.car_shopping_list[i].goodsprice*this.data.car_shopping_list[i].buycount;
+			if (this.data.car_shopping_list[i].selectStatus && i === index) {
+				tempPriceValue += this.data.car_shopping_list[i].goodsprice * this.data.car_shopping_list[i].buycount;
 			}
 		}
+		console.log(tempPriceValue)
 
 		this.setData({
 			allPriceValue: tempPriceValue
 		});
 		var updateInfo = {
-			userid:this.data.car_shopping_list[index].userid,
-			goodsid:this.data.car_shopping_list[index].goodsid,
-			buysize:this.data.car_shopping_list[index].buysize,
-			buycount:this.data.car_shopping_list[index].buycount,
+			userid: this.data.car_shopping_list[index].userid,
+			goodsid: this.data.car_shopping_list[index].goodsid,
+			buysize: this.data.car_shopping_list[index].buysize,
+			buycount: this.data.car_shopping_list[index].buycount,
 		}
 		this.updateBuyCarCount(updateInfo)
 		// console.log(updateInfo)
 	},
-	updateBuyCarCount(updateInfo){
-		var url = Domain + "updateBuyCarCount?userid=" + updateInfo.userid+"&goodsid="+updateInfo.goodsid+"&buysize="+updateInfo.buysize+"&buycount="+updateInfo.buycount;
-			getRequest(url, function (res) {
-				// console.log(res)
-				if (!res.data) {
-					console.log("get buyCar list error");
-					return;
-				}
-				console.log(res.data);
-				// _that.initBuyCarSelected();
-			})
+	updateBuyCarCount(updateInfo) {
+		var url = Domain + "updateBuyCarCount?userid=" + updateInfo.userid + "&goodsid=" + updateInfo.goodsid + "&buysize=" + updateInfo.buysize + "&buycount=" + updateInfo.buycount;
+		getRequest(url, function (res) {
+			// console.log(res)
+			if (!res.data) {
+				console.log("get buyCar list error");
+				return;
+			}
+			console.log(res.data);
+			// _that.initBuyCarSelected();
+		})
 	},
 	reduceBuyNum(e) {
 		var index = e.currentTarget.dataset.index;
@@ -233,8 +317,8 @@ Page({
 			当buycount-购物商品的数量小于1的时候将其改为1，并将isRequestFlag =false
 			不发送请求去更新数据库buycar中商品的数量
 		*/
-		var isRequestFlag = true;  
-		if(this.data.car_shopping_list[index].buycount<1){
+		var isRequestFlag = true;
+		if (this.data.car_shopping_list[index].buycount < 1) {
 			isRequestFlag = false;
 			this.data.car_shopping_list[index].buycount = 1
 		}
@@ -245,7 +329,7 @@ Page({
 		var tempPriceValue = 0.00;
 		for (var i = 0; i < this.data.car_shopping_list.length; i++) {
 			if (this.data.car_shopping_list[i].selectStatus) {
-				tempPriceValue += this.data.car_shopping_list[i].goodsprice*this.data.car_shopping_list[i].buycount;
+				tempPriceValue += this.data.car_shopping_list[i].goodsprice * this.data.car_shopping_list[i].buycount;
 			}
 		}
 
@@ -254,14 +338,14 @@ Page({
 		})
 
 		//  console.log(this.data.car_shopping_list[index].buycount);
-		if(!isRequestFlag){
+		if (!isRequestFlag) {
 			return;
 		}
 		var updateInfo = {
-			userid:this.data.car_shopping_list[index].userid,
-			goodsid:this.data.car_shopping_list[index].goodsid,
-			buysize:this.data.car_shopping_list[index].buysize,
-			buycount:this.data.car_shopping_list[index].buycount,
+			userid: this.data.car_shopping_list[index].userid,
+			goodsid: this.data.car_shopping_list[index].goodsid,
+			buysize: this.data.car_shopping_list[index].buysize,
+			buycount: this.data.car_shopping_list[index].buycount,
 
 		}
 		this.updateBuyCarCount(updateInfo)
@@ -320,64 +404,17 @@ Page({
 			complete: () => { }
 		})
 	},
-	deleteSelectedGoodsList(){
+	deleteSelectedGoodsList() {
 		console.log("====================delete===================");
 		// console.log(this.data.checkedStatusToggle)
-		if(this.data.car_shopping_list.length===0){
-			wx.showToast({
-				title: '购物车为空',
-				icon: 'none',
-				duration: 1500,
-				mask: false,
-			});
+		var deleteObjList = this.handleSelecedShopping("delete");
+		if (!deleteObjList) {
+			return;
 		}
-		var deleteObjList = [];
-		//表示全部商品是否被选中，选中状态下点击删除按钮会将购物车清空
-		if(this.data.checkedStatusToggle){
-			deleteObjList = this.data.car_shopping_list;
-			this.data.car_shopping_list.forEach(function(item){
-				deleteObjList.push({
-					userid:item.userid,
-					goodsid:item.goodsid,
-					buycount:item.buycount,
-					buysize:item.buysize
-				});
-			})
-			this.setData({
-				car_shopping_list:[],
-				allPriceValue:0
-			})
-		}
-		var _that = this;
-		//temp_car_shopping_list 临时使用的数组，用于将选中的数据删除掉，把删除掉数据的temp_car_shopping_list重新复制给car_shopping_list 
-		var temp_car_shopping_list = [];
-		
-			temp_car_shopping_list = this.data.car_shopping_list;
-			var new_car_shopping_list = [];
-			var length = temp_car_shopping_list.length;
-			for(var i =0 ;i<length;i++){
-				if(temp_car_shopping_list[i].selectStatus){
-					var deleteItem = temp_car_shopping_list[i];
-					// console.log(deleteItem)
-					deleteObjList.push({
-						userid:deleteItem.userid,
-						goodsid:deleteItem.goodsid,
-						buycount:deleteItem.buycount,
-						buysize:deleteItem.buysize
-					});
-				}else{
-					new_car_shopping_list.push(
-						temp_car_shopping_list[i]
-					)
-				}
-			}
-			_that.setData({
-				car_shopping_list:new_car_shopping_list
-			});
-		
-		var url = Domain+"deleteBuyCarGoods"
-		postRequest(url,deleteObjList,function(res){
-			if(!res.data){
+
+		var url = Domain + "deleteBuyCarGoods";
+		postRequest(url, deleteObjList, function (res) {
+			if (!res.data) {
 				wx.showToast({
 					title: '删除失败',
 					icon: 'none',
@@ -386,7 +423,7 @@ Page({
 				});
 				return;
 			}
-			if(res.data.type === "deleteSuccess" && res.data.status === "200"){
+			if (res.data.type === "deleteSuccess" && res.data.status === "200") {
 				wx.showToast({
 					title: '删除成功',
 					icon: 'success',
@@ -395,7 +432,200 @@ Page({
 				});
 				return;
 			}
-			
+
+		})
+	},
+	handleSelecedShopping(operateType) {
+		var _that = this;
+
+		if (this.data.car_shopping_list.length === 0) {
+			wx.showToast({
+				title: '购物车为空',
+				icon: 'none',
+				duration: 1500,
+				mask: false,
+			});
+		}
+		var handleObjList = [];
+		//表示全部商品是否被选中，选中状态下点击删除按钮会将购物车清空
+		if (operateType === "delete") {
+			if (this.data.checkedStatusToggle) {
+				handleObjList = this.data.car_shopping_list;
+				this.data.car_shopping_list.forEach(function (item) {
+					handleObjList.push({
+						userid: item.userid,
+						goodsid: item.goodsid,
+						buycount: item.buycount,
+						buysize: item.buysize
+					});
+				});
+				this.setData({
+					car_shopping_list: [],
+					allPriceValue: 0
+				});
+				return handleObjList;
+			}
+		}
+		if (operateType === "payfor") {
+			// console.log("payfor");
+			if (this.data.checkedStatusToggle) {
+				handleObjList = this.data.car_shopping_list;
+				this.data.car_shopping_list.forEach(function (item) {
+					handleObjList.push({
+						userid: item.userid,
+						goodsid: item.goodsid,
+						buycount: item.buycount,
+						buysize: item.buysize
+					});
+				});
+				// _that.payForAlert(_that);
+				return handleObjList;
+				// this.setData({
+				// 	car_shopping_list:[],
+				// 	allPriceValue:0
+				// });
+			}
+		}
+		// var _that = this;
+		//temp_car_shopping_list 临时使用的数组，用于将选中的数据删除掉，把删除掉数据的temp_car_shopping_list重新复制给car_shopping_list 
+		var temp_car_shopping_list = [];
+		temp_car_shopping_list = this.data.car_shopping_list;
+		var new_car_shopping_list = [];
+		var length = temp_car_shopping_list.length;
+		for (var i = 0; i < length; i++) {
+			if (temp_car_shopping_list[i].selectStatus) {
+				var deleteItem = temp_car_shopping_list[i];
+				// console.log(deleteItem)
+				handleObjList.push({
+					userid: deleteItem.userid,
+					goodsid: deleteItem.goodsid,
+					buycount: deleteItem.buycount,
+					buysize: deleteItem.buysize
+				});
+			} else {
+				new_car_shopping_list.push(
+					temp_car_shopping_list[i]
+				);
+			}
+		}
+
+		if (operateType === "payfor") {
+
+		} else {
+			this.setData({
+				car_shopping_list: new_car_shopping_list
+			});
+		}
+		// console.log(handleObjList.length);
+		if (handleObjList.length === 0) {
+			wx.showToast({
+				title: '~亲~,没有选中商品',
+				icon: 'none',
+				duration: 1500,
+				mask: false,
+			});
+			return;
+		}
+		return handleObjList;
+	},
+	payForAlert() {
+		var _that = this;
+		console.log(this.data.checkedStatusToggle)
+		var temp_car_shopping_list = this.data.car_shopping_list
+		for (var i = 0; i < temp_car_shopping_list.length; i++) {
+			console.log(temp_car_shopping_list[i].selectStatus)
+			if (temp_car_shopping_list[i].selectStatus) {
+				break;
+			}
+		}
+		if (temp_car_shopping_list.length === i) {
+			wx.showToast({
+				title: '~亲~,没有选中商品！',
+				icon: 'none',
+				duration: 1500,
+				mask: false,
+			});
+			return;
+		}
+
+		wx.showModal({
+			title: '支付',
+			content: '您要支付的金额: ' + _that.data.allPriceValue + ' 元',
+			success(res) {
+				if (res.confirm) {
+					// console.log('用户点击确定');
+					var payForObjList = _that.handleSelecedShopping('payfor');
+					console.log(payForObjList);
+					if (!payForObjList) {
+						wx.showToast({
+							title: '支付出现异常',
+							icon: 'none',
+							duration: 1500,
+							mask: false,
+						});
+						return;
+					}
+					app.globalData.payForObjList = payForObjList;
+					wx.navigateTo({
+						url: "/pages/payfor/index?payforMoney="+_that.data.allPriceValue,
+						success: function () {
+							//        console.log('跳转到news页面成功')// success              
+						},
+						fail: function () {
+							//     console.log('跳转到news页面失败')   fail 
+						}
+					})
+
+				} else if (res.cancel) {
+					wx.showToast({
+						title: '~亲~,您取消了支付',
+						icon: 'none',
+						duration: 1500,
+						mask: false,
+					});
+				}
+			}
+		})
+	},
+	//结算
+	handelPayforSelectedGoods() {
+		var _that = this;
+		getNativeUsername(function(res){
+			if(res.data){
+				_that.getInitAddress(res.data);
+			}else{
+				wx.showToast({
+					title: '您还没有登录哦',
+					icon: 'none',
+					duration: 1500,
+					mask: false,
+				});
+			}
+		});
+		// console.log("可以结算了");
+	},
+	getInitAddress(username){
+		var _that = this;
+		var url = Domain+"initAddress?username="+username;
+		getRequest(url,function(res){
+
+				if(res.data){
+					_that.setData({
+						userAddress:res.data
+					})
+				}
+				console.log(_that.data.userAddress.length);
+				if(_that.data.userAddress.length === 0){
+					wx.showToast({
+						title: '您还没有收货地址',
+						icon: 'none',
+						duration: 1500,
+						mask: false,
+					});
+					return;
+				}
+				_that.payForAlert();
+				
 		})
 	}
 })

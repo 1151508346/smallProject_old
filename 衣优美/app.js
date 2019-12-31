@@ -4,7 +4,8 @@ App({
 	 
  },
  globalData:{
-	defaultValue:"0" 
+	defaultValue:"0" ,
+	payForObjList:[]
  },
  onLaunch(){
    

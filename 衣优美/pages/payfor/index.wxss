@@ -1,0 +1,26 @@
+/* pages/payfor/index.wxss */
+.payfor-money{
+    border-top:1px solid #eee;
+    text-align: center;
+    font-size:50rpx;
+    padding:40rpx 0;
+}
+.saler{
+    /* margin-top:40rpx; */
+    border:1px solid #eee;
+    padding: 20rpx 40rpx;
+    display: flex;
+    justify-content: space-between;
+    /* text-align: center; */
+}
+/* .saler>text{
+    flex: 1;
+
+    border:1px solid red;
+} */
+.payforbutton{
+    width: 95%;
+    /* border:1px solid red; */
+    margin:auto;
+    margin-top:40rpx;
+}
