@@ -128,7 +128,7 @@ Page({
 				}
 			}
 			//将待支付的商品插入到order表中
-			var url = Domain+"payForToOrder"
+			var url = Domain+"payForToOrder";
 			postRequest(url,tempSendData,function(res){
 				console.log(res.data)
 				if(res.data.type === "success" && res.data.status==="200"){
@@ -451,8 +451,9 @@ Page({
 		if (operateType === "delete") {
 			if (this.data.checkedStatusToggle) {
 				handleObjList = this.data.car_shopping_list;
+				var tempHandleObjList = [];
 				this.data.car_shopping_list.forEach(function (item) {
-					handleObjList.push({
+					tempHandleObjList.push({
 						userid: item.userid,
 						goodsid: item.goodsid,
 						buycount: item.buycount,
@@ -463,15 +464,16 @@ Page({
 					car_shopping_list: [],
 					allPriceValue: 0
 				});
-				return handleObjList;
+				return tempHandleObjList;
 			}
 		}
 		if (operateType === "payfor") {
-			// console.log("payfor");
+			console.log("payfor");
 			if (this.data.checkedStatusToggle) {
 				handleObjList = this.data.car_shopping_list;
+				var tempHandleObjList = [];
 				this.data.car_shopping_list.forEach(function (item) {
-					handleObjList.push({
+					tempHandleObjList.push({
 						userid: item.userid,
 						goodsid: item.goodsid,
 						buycount: item.buycount,
@@ -479,7 +481,7 @@ Page({
 					});
 				});
 				// _that.payForAlert(_that);
-				return handleObjList;
+				return tempHandleObjList;
 				// this.setData({
 				// 	car_shopping_list:[],
 				// 	allPriceValue:0

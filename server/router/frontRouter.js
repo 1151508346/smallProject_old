@@ -25,6 +25,34 @@ function handleImageURL(data) {
     }
   }
 }
+function formatDate() {
+  var date = new Date();
+  console.log()
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  // var hour = date.getHours();
+  // var minutes = date.getMinutes();
+  // console.log(minutes);
+  // var seconds = date.getSeconds();
+  if (month < 10) {
+    month = "0" + month;
+  }
+  if (day < 10) {
+    day = "0" + day;
+  }
+  // if(hour<10){
+  //   hour = "0" + hour;
+  // }
+  // if(minutes<10){
+  //   minutes = "0"+minutes;
+  // }
+  // if(seconds<10){
+  //   seconds = "0"+seconds;
+  // }
+  // `${year}-${month}-${day} ${hour}:${minutes}:${seconds}`;
+  return `${year}-${month}-${day}`;
+}
 module.exports = function (router) {
   router.post(Url.register, function (req, res) {
     var password = req.body.password;
@@ -757,32 +785,72 @@ module.exports = function (router) {
 
   // payForToOrder
   router.post(Url.payForToOrder, function (req, res) {
+
     req.body.forEach(function (item, index) {
       var { userid, goodsid, count, size, purchasetime, goodsstatus } = item;
-      console.log(item)
+      // console.log(item)
       // console.log(userid, goodsid, count, size, purchasetime, goodsstatus);
       // ,\'${userid}\',\'${purchasetime}\',\'${count}\',\'${size}\',\'${goodsstatus}\'
       var insertSQL = `insert into orders (goodsid,userid,purchasetime,count,size,goodsstatus) value(\'${goodsid}\',\'${userid}\' ,\'${purchasetime}\' ,\'${count}\'  ,\'${size}\',\'${goodsstatus}\')`;
       var deleteSQL = ` delete from buycar where goodsid = \'${goodsid}\' and userid = \'${userid}\' and buycount = \'${count}\' and buysize = \'${size}\'`
-      getInsert(con, insertSQL, [], function (err, insertData) {
-        if (insertData.affectedRows === 1) {
-          getDelete(con, deleteSQL, [], function (err, deleteData) {
-            console.log(deleteData);
-            if (deleteData.affectedRows === 1) {
-              res.json({
-                type: "success",
-                status: "200"
-              });
-            } else {
-              res.json({
-                type: "fail",
-                status: "200"
+      var selectSQL = `
+        select * from orders 
+        where userid = \'${userid}\' and
+        goodsid = \'${goodsid}\' and
+        size = \'${size}\' and
+        goodsstatus = 0
+
+      `
+      getFind(con, selectSQL, function (err, data) {
+        if (err) {
+          throw new Error("server error");
+        }
+        if (data.length != 0) {
+          var newData = data.map(item => {
+            item.goodsstatus = 1;
+            return item;
+          });
+          newData.forEach(item => {
+            var updateSQL = `update  orders set goodsstatus = 1
+              where orderid = \'${item.orderid}\'
+            
+             `
+            getUpdate(con, updateSQL, [], function (err, updateData) {
+              if (err) {
+                throw new Error("server error");
+              }
+              if (updateData.affectedRows === 1) {
+                res.json({
+                  type: "success",
+                  status: "200"
+                })
+              }
+            })
+          })
+        } else {
+          getInsert(con, insertSQL, [], function (err, insertData) {
+            if (insertData.affectedRows === 1) {
+              getDelete(con, deleteSQL, [], function (err, deleteData) {
+                console.log(deleteData);
+                if (deleteData.affectedRows === 1) {
+                  res.json({
+                    type: "success",
+                    status: "200"
+                  });
+                } else {
+                  res.json({
+                    type: "fail",
+                    status: "200"
+                  })
+                }
               })
+
             }
           })
-
         }
-      })
+      });
+
+
     });
   });
   router.get(Url.updateDefaultAddress, function (req, res) {
@@ -886,27 +954,105 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
     });
   })
 
-  router.get(Url.insertVisited,function(req,res){
-    var  { userid,goodsid} = req.query;
-    console.log(userid,goodsid)
-      var insertSQL = `insert into visited  value(\'${goodsid}\',\'${userid}\')`;
-      getInsert(con,insertSQL,[],function(err,data){
-        if(err){
-          throw new Error("server error");
-        }
-        if(data.affectedRows === 1){
+  router.get(Url.insertVisited, function (req, res) {
+    var { userid, goodsid } = req.query;
+    console.log(userid, goodsid)
+    var insertSQL = `insert into visited  value(\'${goodsid}\',\'${userid}\')`;
+    getInsert(con, insertSQL, [], function (err, data) {
+      if (err) {
+        throw new Error("server error");
+      }
+      if (data.affectedRows === 1) {
+        res.json({
+          type: "insertSuccess",
+          status: "200"
+        })
+      } else {
+        res.json({
+          type: "fail",
+          status: "400"
+        })
+      }
+    })
+  });
+  router.get(Url.applyBackMoney, function (req, res) {
+    var { userid, goodsid, size, goodsstatus } = req.query;
+    var deleteSQL = `delete from orders where userid= \'${userid}\' and goodsid = \'${goodsid}\' and size = \'${parseFloat(size)}\' and goodsstatus = \'${goodsstatus}\'`;
+    getDelete(con, deleteSQL, [], function (err, data) {
+      if (err) {
+        throw new Error("server error");
+      }
+      console.log(data);
+      if (data.affectedRows >= 1) {
+        res.json({
+          type: "success", status: "200"
+        });
+      } else {
+        res.json({
+          type: "not exit",
+          status: "200"
+        });
+      }
+    });
+
+  });
+
+  router.get(Url.signIn, function (req, res) {
+    // console.log(req.query)
+    var { userid } = req.query;
+    var selectSQL = `select * from signin where userid = \'${userid}\'`
+    getFind(con, selectSQL, function (err, findData) {
+      if (err) {
+        throw new Error("server error");
+      }
+      // console.log(findData)
+      if (findData.length === 1) {
+        var currentTime = formatDate();
+        var LastTime = findData[0].signindate;
+        var formatCurrentDate = new Date(Date.parse(currentTime)).toLocaleString().split(" ")[0];
+        var formatLastDate = LastTime.toLocaleString().split(" ")[0];
+        if(formatCurrentDate === formatLastDate){
           res.json({
-            type:"insertSuccess",
+            type:"has signed in",
             status:"200"
           })
-        }else{
-          res.json({
-            type:"fail",
-            status:"400"
-          })
+          return ;
         }
-      })
-  });
+        console.log("----------------------------------");
+       
+        var updateSQL = `update signin set integral=integral+1 , signindate=\'${formatDate()}\' where userid = \'${userid}\'`;
+        getUpdate(con, updateSQL, [], function (err, updateData) {
+          if (err) {
+            throw new Error("server error");
+          }
+          if (updateData.affectedRows === 1) {
+            res.json({
+              type: "success",
+              status: "200"
+            });
+          }
+        });
+      } else {
+        var insertSQL = `insert into signin value (\'${userid}\',\'${formatDate()}\',1)`;
+        getInsert(con, insertSQL, [], function (err, insertDate) {
+          if (err) {
+            throw new Error("server error");
+          }
+          if (insertDate.affectedRows === 1) {
+            res.json({
+              type: "success",
+              status: "200"
+            })
+          }
+        })
+      }
+    })
+  })
+
+
+
+
+
 }
 
 

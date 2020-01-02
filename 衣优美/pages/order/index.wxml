@@ -7,7 +7,7 @@
         <text class="{{defaultOrderItem ===3 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="3">待评价</text>
     </view>
     <!-- pendingPaymentList -->
-    <block wx:for="{{pendingPaymentList}}" wx:key="index">
+    <block wx:for="{{pendingList}}" wx:key="index">
         <view class="order-list">
             <!-- <view class="class-list-item order-list-checked">
 					<radio class="default-checkbox" 
@@ -25,7 +25,10 @@
                 <view class="order-list_price">￥{{item.goodsprice}}</view>
                 <view class="order-list_input_num">
                     <view wx:if="{{item.goodsstatus === 0}}" >
-                        <text class="cancalOrder" hover-class="cancel-goPayFor-active" bindtap="handleCancelOrder"
+                        <text class="cancalOrder"
+                        
+                        hover-class="cancel-goPayFor-active" 
+                        bindtap="handleCancelOrder"
                             data-goodsid="{{item.goodsid}}"
                             data-userid="{{item.userid}}"
                             data-size= "{{item.size}}"
@@ -35,6 +38,9 @@
                         </text>
                         <text class="goPayFor" hover-class="cancel-goPayFor-active" bindtap="handleGoPayFor"
                              data-goodsid="{{item.goodsid}}"
+                             data-size = "{{item.size}}"
+                             data-price = "{{item.goodsprice}}"
+                             data-count = "{{item.count}}"
                         >
                             去支付
                         </text>
@@ -43,7 +49,12 @@
                         <!-- <text class="cancalOrder" hover-class="cancel-goPayFor-active" bindtap="handleCancelOrder">
                             取消订单
                         </text> -->
-                        <text class="goPayFor" hover-class="cancel-goPayFor-active" >
+                        <text class="goPayFor" hover-class="cancel-goPayFor-active" 
+                            bindtap = "appliyBackMoney"
+                            data-goodsid="{{item.goodsid}}"
+                            data-size= "{{item.size}}"
+                            data-goodsstatus = "{{item.goodsstatus}}"
+                        >
                             申请退款
                         </text>
                     </view>

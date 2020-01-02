@@ -6,8 +6,11 @@
     <view class="login_name">
       <text bindtap="handelNavigatorToLoginPage">{{!loginStatus ? "登 录" : username}}</text>
     </view>
-    <view class="sign_come">
-      <text>签到</text>
+    <view class="sign_come"
+    >
+      <text
+        bindtap = "handleSignIn"
+      >签到</text>
     </view>
   </view>
   <view class="yh_ll_jf_sc">

@@ -26,7 +26,9 @@ var Url = {
     cancelOrder:"/cancelOrder",
     toCollect:"/toCollect",
     toVisited:"/toVisited",
-    insertVisited:"/insertVisited"
+    insertVisited:"/insertVisited",
+    applyBackMoney:"/applyBackMoney",
+    signIn:"/signIn"
   }
 
   module.exports = Url;

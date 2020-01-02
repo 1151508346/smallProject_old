@@ -16,6 +16,7 @@ Page({
       payforMoney: options.payforMoney
     })
 
+    console.log(options.payforMoney)
   },
   onHide() {
 
@@ -28,7 +29,7 @@ Page({
   handleNowPayFor() {
     var _that = this;
     if (app.globalData.payForObjList.length !== 0) {
-      // console.log(app.globalData.payForObjList);
+      console.log(app.globalData.payForObjList);
      var tempPayForData  = app.globalData.payForObjList.map(function(item){
       //  console.log(item);
         var tempObj = {};
@@ -40,7 +41,7 @@ Page({
         tempObj.goodsstatus = 1;
 
         return tempObj;
-     })
+     });
      console.log(tempPayForData)
       // console.log(tempPayForData);
       var url = Domain + "payForToOrder"
