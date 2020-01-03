@@ -11,7 +11,6 @@ app.use(expressSession({
     saveUninitialized:true , //强制将未初始化的sesson进行存储，默认值为true 建议是设置成true，
     cookie:{
         maxAge:50000, //过期时间,
-
     } ,
     // 强制重新设置cookie ，每次请求都设置cookie 
     //防止过期时间太短，而用户在操作的时候已经超过了过期时间，出现自动退出
