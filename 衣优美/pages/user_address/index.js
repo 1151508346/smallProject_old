@@ -2,6 +2,7 @@
 var Domain = require("../../tools/domain");
 var { getRequest, postRequest } = require("../../tools/request.js");
 var getNativeUsername = require("../../tools/getNativeUsername");
+var getNativeUserId = require("../../tools/getNativeUserId");
 
 Page({
 
@@ -20,9 +21,9 @@ Page({
   onLoad: function (options) {
     var _that = this;
     // initAddress
-    getNativeUsername(function (res) {
+    getNativeUserId(function (res) {
       if (res.data) {
-        var url = Domain + "initAddress?username=" + res.data;
+        var url = Domain + "initAddress?userid=" + res.data;
         getRequest(url, function (res) {
           if (res.data) {
             console.log(res.data);

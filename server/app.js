@@ -4,6 +4,7 @@ var bodyparser = require('body-parser');
 var app = express();
 var routers = require("./router/index.js"); //router配置
 var expressSession  = require("express-session"); 
+
 app.use(expressSession({
     secret:"key", //随便写的string，用作服务器生成session前面来进行加密
     name:"connect_id",// 保存本地cookie 的一个名字，默认为connect_id ，

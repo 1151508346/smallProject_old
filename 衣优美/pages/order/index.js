@@ -1,8 +1,8 @@
 // pages/order/index.js
 var { getRequest, postRequest } = require("../../tools/request.js");
 var Domain = require("../../tools/domain");
-var getNativeUsername = require("../../tools/getNativeUsername");
-var getNativeUserId = require("../../tools/getNativeUserId");
+var getNativeUsername = require("../../tools/getNativeUsername.js");
+var getNativeUserId = require("../../tools/getNativeUserId.js");
 var app = getApp();
 Page({
 
@@ -133,9 +133,9 @@ Page({
     })
   },
   appliyBackMoney(e){
-   
     var {goodsid,size,goodsstatus} = e.currentTarget.dataset
     // console.log(size)
+    console.log("=====================================")
     var _that = this;
     getNativeUserId(function(res){
       if(!res.data){

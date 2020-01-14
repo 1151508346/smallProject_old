@@ -2,6 +2,8 @@ var app = getApp();
 var { getRequest, postRequest } = require("../../tools/request.js");
 var Domain = require("../../tools/domain");
 var getNativeUsername = require("../../tools/getNativeUsername");
+
+var getNativeUserId = require("../../tools/getNativeUserId");
 Page({
 
 	/**
@@ -9,7 +11,6 @@ Page({
 	 */
 	data: {
 		checkedStatus: "selected",
-
 		checkedStatusToggle: true,
 		car_shopping_list: [
 			// {
@@ -27,10 +28,9 @@ Page({
 		],
 		allPriceValue: 0.00,
 		parforStatus: false,
-		userAddress:[],
+		userAddress: [],
 
 	},
-
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -59,7 +59,7 @@ Page({
 					console.log("get buyCar list error");
 					return;
 				}
-				console.log(res.data);
+				// console.log(res.data);
 				_that.setData({
 					car_shopping_list: res.data
 				})
@@ -69,12 +69,10 @@ Page({
 
 		});
 	},
-
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-
 	},
 	initBuyCarSelected() {
 		var length = this.data.car_shopping_list.length;
@@ -82,7 +80,6 @@ Page({
 			value.selectStatus = true;
 			return value;
 		})
-		// console.log(newData);
 		this.setData({
 			car_shopping_list: newData
 		});
@@ -92,7 +89,6 @@ Page({
 				tempPriceValue += this.data.car_shopping_list[i].goodsprice * this.data.car_shopping_list[i].buycount;
 			}
 		}
-
 		this.setData({
 			allPriceValue: tempPriceValue
 		})
@@ -101,99 +97,87 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-			
-		if(app.globalData.path === "/pages/payfor/index"){
+		if (app.globalData.path === "/pages/payfor/index") {
 			/**
 			 * 没有支付进入待付款中
 			 * 获取选中的商品  
 			 * 发送ajax ，insert selected的 shopping
-			 * 
 			 */
 			var tempSendData = [];
 			var _that = this;
 			// 2019-12-11 20:24:46
-		
 			for (var i = 0; i < _that.data.car_shopping_list.length; i++) {
 				if (_that.data.car_shopping_list[i].selectStatus) {
 					tempSendData.push({
-						goodsid:_that.data.car_shopping_list[i].goodsid,
-						userid:_that.data.car_shopping_list[i].userid,
-						purchasetime:this.forMatDate(),
-						count:_that.data.car_shopping_list[i].buycount,
-						size:_that.data.car_shopping_list[i].buysize,
+						goodsid: _that.data.car_shopping_list[i].goodsid,
+						userid: _that.data.car_shopping_list[i].userid,
+						purchasetime: this.forMatDate(),
+						count: _that.data.car_shopping_list[i].buycount,
+						size: _that.data.car_shopping_list[i].buysize,
 						// goodsstatus = 0 表示待支付状态
-						goodsstatus:0,
-						
+						goodsstatus: 0,
+
 					});
 				}
 			}
 			//将待支付的商品插入到order表中
-			var url = Domain+"payForToOrder";
-			postRequest(url,tempSendData,function(res){
+			var url = Domain + "payForToOrder";
+			postRequest(url, tempSendData, function (res) {
 				console.log(res.data)
-				if(res.data.type === "success" && res.data.status==="200"){
+				if (res.data.type === "success" && res.data.status === "200") {
 					wx.showToast({
 						title: '您已取消支付',
 						icon: 'none',
 						duration: 1500,
 						mask: false,
 					});
-					
-					return ;
+					return;
 				}
-				
 				wx.showToast({
 					title: '服务器出现错误',
 					icon: 'none',
 					duration: 1500,
 					mask: false,
 				});
-				
-				
 			})
-
-
 		}
 	},
 	//格式化日期
-	forMatDate(){
+	forMatDate() {
 		var tempDate = new Date();
 		var year = tempDate.getFullYear();
-		var month = tempDate.getMonth()+1;
+		var month = tempDate.getMonth() + 1;
 		var date = tempDate.getDate();
 		var hour = tempDate.getHours();
 		var minutes = tempDate.getMinutes();
 		var seconds = tempDate.getSeconds();
-		
-		if(month<10){
-			return year+"-0"+month+"-"+date+" "+hour+":"+minutes+":0"+seconds;
+
+		if (month < 10) {
+			return year + "-0" + month + "-" + date + " " + hour + ":" + minutes + ":0" + seconds;
 		}
-		if(date<10){
-			return year+"-"+month+"-0"+date+" "+hour+":"+minutes+":0"+seconds;
+		if (date < 10) {
+			return year + "-" + month + "-0" + date + " " + hour + ":" + minutes + ":0" + seconds;
 		}
-		if(hour<10){
-			return year+"-"+month+"-"+date+" 0"+hour+":"+minutes+":0"+seconds;
+		if (hour < 10) {
+			return year + "-" + month + "-" + date + " 0" + hour + ":" + minutes + ":0" + seconds;
 		}
-		if(minutes<10){
-			return year+"-"+month+"-"+date+" "+hour+":0"+minutes+":0"+seconds;
+		if (minutes < 10) {
+			return year + "-" + month + "-" + date + " " + hour + ":0" + minutes + ":0" + seconds;
 		}
-		if(seconds<10){
-			return year+"-"+month+"-"+date+" "+hour+":"+minutes+":0"+seconds;
+		if (seconds < 10) {
+			return year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":0" + seconds;
 		}
-		return year+"-"+month+"-"+date+" "+hour+":"+minutes+":"+seconds;
+		return year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + seconds;
 	},
 	/**
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-
 	},
-
 	/**
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
-
 	},
 
 	/**
@@ -266,26 +250,21 @@ Page({
 		this.setData({
 			allPriceValue: tempPrice
 		})
-
-
 	},
 	addBuyNum(e) {
 		var index = e.currentTarget.dataset.index;
 		++this.data.car_shopping_list[index].buycount;
-		console.log(this.data.car_shopping_list[index])
 		this.setData({
 			car_shopping_list: this.data.car_shopping_list
 		});
 		// this.initBuyCarSelected();
-
 		var tempPriceValue = this.data.allPriceValue
 		for (var i = 0; i < this.data.car_shopping_list.length; i++) {
 			if (this.data.car_shopping_list[i].selectStatus && i === index) {
 				tempPriceValue += this.data.car_shopping_list[i].goodsprice * this.data.car_shopping_list[i].buycount;
 			}
 		}
-		console.log(tempPriceValue)
-
+		// console.log(tempPriceValue)
 		this.setData({
 			allPriceValue: tempPriceValue
 		});
@@ -569,7 +548,7 @@ Page({
 					}
 					app.globalData.payForObjList = payForObjList;
 					wx.navigateTo({
-						url: "/pages/payfor/index?payforMoney="+_that.data.allPriceValue,
+						url: "/pages/payfor/index?payforMoney=" + _that.data.allPriceValue,
 						success: function () {
 							//        console.log('跳转到news页面成功')// success              
 						},
@@ -592,10 +571,10 @@ Page({
 	//结算
 	handelPayforSelectedGoods() {
 		var _that = this;
-		getNativeUsername(function(res){
-			if(res.data){
+		getNativeUserId(function (res) {
+			if (res.data) {
 				_that.getInitAddress(res.data);
-			}else{
+			} else {
 				wx.showToast({
 					title: '您还没有登录哦',
 					icon: 'none',
@@ -606,28 +585,86 @@ Page({
 		});
 		// console.log("可以结算了");
 	},
-	getInitAddress(username){
+	getInitAddress(userid) {
 		var _that = this;
-		var url = Domain+"initAddress?username="+username;
-		getRequest(url,function(res){
+		var url = Domain + "initAddress?userid=" + userid;
+		getRequest(url, function (res) {
+			// console.log(res.data);
+			// console.log(res.data)
+			if (res.data) {
+				_that.setData({
+					userAddress: res.data
+				})
+			}
+			// console.log(_that.data.userAddress.length);
+			if (_that.data.userAddress.length === 0) {
+				// wx.showToast({
+				// 	title: '您还没有收货地址',
+				// 	icon: 'none',
+				// 	duration: 1500,
+				// 	mask: false,
+				// 	complete: () => {
+						
+				// 	}
+				// });
+				wx.showModal({
+					title: '提示',
+					content: '您还没有添加收货地址，是否添加',
+					success(res) {
+						if (res.confirm) {
+							wx.navigateTo({
+								url: "/pages/add_address/index",
+								success: function () {
+								},
+								fail: function () {
+								}
+							})
+						} else if (res.cancel) {
+							wx.showToast({
+								title: '取消添加收货地址',
+								icon: 'none',
+								duration: 1500,
+								mask: false,
+							});
+						}
+					}
+				})
+				return;
+			}
+			var userAddressNum  = _that.data.userAddress.length;
+			for (var i= 0; i <userAddressNum; i++) {
+				if(_that.data.userAddress[i].isdefault ===1){
+					break;
+				}
+			}
+			if(i===userAddressNum){
+				wx.showModal({
+					title: '提示',
+					content: '是否设置默认收货地址',
+					success(res) {
+						if (res.confirm) {
+							wx.navigateTo({
+								url: "/pages/user_address/index",
+								success: function () {
+								},
+								fail: function () {
+								}
+							})
+						} else if (res.cancel) {
+							wx.showToast({
+								title: '取消设置默认收货地址',
+								icon: 'none',
+								duration: 1500,
+								mask: false,
+							});
+						}
+					}
+				})
+				return ;
+			}
 
-				if(res.data){
-					_that.setData({
-						userAddress:res.data
-					})
-				}
-				console.log(_that.data.userAddress.length);
-				if(_that.data.userAddress.length === 0){
-					wx.showToast({
-						title: '您还没有收货地址',
-						icon: 'none',
-						duration: 1500,
-						mask: false,
-					});
-					return;
-				}
-				_that.payForAlert();
-				
+			_that.payForAlert();
+
 		})
 	}
 })

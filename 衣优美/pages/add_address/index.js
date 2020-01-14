@@ -2,6 +2,7 @@
 var { checkUserName, checkPassword, isEmpty, checkTelphone, checkZipCode } = require("../../tools/check.js")
 var Domain = require("../../tools/domain");
 var getNativeUsername = require("../../tools/getNativeUsername");
+var getNativeUserId = require("../../tools/getNativeUserId");
 
 Page({
 
@@ -62,12 +63,12 @@ Page({
     var _that = this;
     var regionStr = this.data.region.join(",");
 
-    getNativeUsername(function (res) {
-      var username = res.data;
-      console.log(res.data);
+    getNativeUserId(function (res) {
+      var userid = res.data;
+      // console.log(res.data);
       if (res.data) {
         var userReceiveInfo = {
-          username: username,
+          userid: userid,
           receiver:  _that.data.receiver,
           receivePhone:  _that.data.receivePhone,
           areaPath: regionStr,

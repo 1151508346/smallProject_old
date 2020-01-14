@@ -217,29 +217,21 @@ module.exports = function (router) {
   // });
 
   router.get(Url.initAddress, function (req, res) {
-    var { username } = req.query;
-    // console.log(username);
+    var { userid } = req.query;
     var selectSQL = `
-        select * from user_address where username=\'${username}\' 
+        select * from user_address where userid=\'${userid}\' 
       `
     getFind(con, selectSQL, function (err, data) {
       if (err) {
         throw new Error("serve error")
       }
+      // console.log(data.affectedRows)
       res.json(data);
     })
 
 
 
   });
-
-
-
-
-
-
-
-
 
 
 
@@ -276,10 +268,9 @@ module.exports = function (router) {
     // res.redirect("/getSession");
     // var username = "aa123456"; //登录的用户名
     var createTime = new Date().toLocaleString();
-
-    var { username, receiver, receivePhone, areaPath, detailAddress, isDefault, zipCode } = req.body;
+    var { userid, receiver, receivePhone, areaPath, detailAddress, isDefault, zipCode } = req.body;
     // console.log(username)
-    var insertSQL = `insert into user_address value(\'${username}\',\'${receiver}\',\'${receivePhone}\',\'${areaPath}\',\'${detailAddress}\',\'${isDefault}\',\'${zipCode}\',\'${createTime}\'  )`;
+    var insertSQL = `insert into user_address(userid,receiver,receivephone,areapath,detailaddress,isdefault,zipcode,createtime) value(\'${userid}\',\'${receiver}\',\'${receivePhone}\',\'${areaPath}\',\'${detailAddress}\',\'${isDefault}\',\'${zipCode}\',\'${createTime}\'  )`;
     // UPDATE	buycar SET buycount=buycount+\'${buycount}
     if (isDefault === 1) {
       var updateSQL = `UPDATE	user_address SET isdefault = 0 `;
@@ -294,7 +285,6 @@ module.exports = function (router) {
       });
     }
     insert_Address();
-
     function insert_Address() {
       getInsert(con, insertSQL, [], function (err, data) {
         if (err) {
@@ -338,7 +328,7 @@ module.exports = function (router) {
         return;
       }
 
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       res.json(data);
 
 
@@ -351,23 +341,23 @@ module.exports = function (router) {
     var selectSQL = `SELECT * FROM goods,goodsdetail WHERE  goods.goodsid = \'${goodsid}\' AND goods.goodsid = goodsdetail.goodsid`
     getFind(con, selectSQL, function (err, data) {
       if (err) {
-        console.log("哈哈~~,亲出错了");
+        // console.log("哈哈~~,亲出错了");
         throw new Error("error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       res.json(data)
     })
 
   });
   router.get(Url.getCollectGoods, function (req, res) {
-    console.log("----------------");
+    // console.log("----------------");
     var goodsid = req.query.goodsid; //前台传过来的商品ID号
     var username = req.query.username; //保存在本地缓存中的用户名，表示此时已经登录的用户
 
     var selectUsernameSQL = `select userid from user where username= \'${username}\'`;
     getFind(con, selectUsernameSQL, function (err, data) {
       if (err) {
-        console.log("哈哈~~,亲出错了");
+        // console.log("哈哈~~,亲出错了");
         throw new Error("error");
       }
       // handleImageURL(data);
@@ -378,7 +368,7 @@ module.exports = function (router) {
       var selectSQL = `SELECT * FROM collecgoods WHERE  goodsid = \'${goodsid}\' AND userid=\'${userid}\'`;
       getFind(con, selectSQL, function (err, resu) {
         if (err) {
-          console.log("哈哈~~,亲出错了");
+          // console.log("哈哈~~,亲出错了");
           res.json({
             type: "fail",
             status: "500"
@@ -562,7 +552,7 @@ module.exports = function (router) {
           throw new Error("server error");
         }
         // console.log(data);
-        handleImageURL(data);
+        handleImageURL(data,baseURL);
         res.json(data);
 
       })
@@ -644,7 +634,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       res.json(data)
     });
   });
@@ -658,7 +648,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       res.json(data)
     });
 
@@ -674,7 +664,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       console.log(data);
       res.json(data);
 
@@ -690,7 +680,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       console.log(data);
       res.json(data);
 
@@ -707,7 +697,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       console.log(data);
       res.json(data);
 
@@ -724,7 +714,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       console.log(data);
       res.json(data);
 
@@ -742,7 +732,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       console.log(data);
       res.json(data);
 
@@ -820,16 +810,15 @@ module.exports = function (router) {
     });
   });
   router.get(Url.updateDefaultAddress, function (req, res) {
-    console.log();
     var { addressid } = req.query;
-
+    console.log(addressid);
     var updateSQLAll = `UPDATE	user_address SET isdefault = 0 `;
     getUpdate(con, updateSQLAll, [], function (err, updateRes) {
       if (err) {
         throw new Error("server error");
       }
-      console.log("**************");
-      console.log(updateRes.affectedRows)
+      // console.log("**************");
+      // console.log(updateRes.affectedRows)
       if (updateRes.affectedRows === 1) {
       }
     });
@@ -839,6 +828,7 @@ module.exports = function (router) {
       if (err) {
         throw new Error("server error");
       }
+      // console.log(updateRes.affectedRows);
       if (updateRes.affectedRows === 1) {
         res.json({
           type: "updateSuccess",
@@ -866,7 +856,7 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
         throw new Error("server error");
       }
       // console.log(data)
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       res.json(data);
     })
   });
@@ -900,7 +890,7 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
       if (err) {
         throw new Error("serve error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       res.json(data);
 
     })
@@ -914,7 +904,7 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
       if (err) {
         throw new Error("serve error");
       }
-      handleImageURL(data);
+      handleImageURL(data,baseURL);
       res.json(data);
 
     });

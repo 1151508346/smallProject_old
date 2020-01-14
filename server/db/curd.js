@@ -4,7 +4,7 @@ var con = require("./connectObj"); //获取数据库连接对象
 
 function getFind(con,sql,callback){
      con.query(sql,function(err,data){
-         console.log("sdfasfds")
+        //  console.log("sdfasfds")
         //  console.log(err)
         // if(err){
         //     console.log(err);
@@ -14,7 +14,7 @@ function getFind(con,sql,callback){
         callback(err,data);
         // con.end();
     })
-    
+     
 }
 // getfind("select * from user",function(data){
 //     for(var i = 0;i<data.length;i++){
