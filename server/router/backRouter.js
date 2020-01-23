@@ -18,10 +18,6 @@ var uploadURL = "";
 
 //添加配置文件到muler对象。
 
-
-
-
-
 module.exports = function (router) {
     var sessionID = "";
     router.post(Url.login, function (req, res) {

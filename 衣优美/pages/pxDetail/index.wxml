@@ -1,12 +1,11 @@
-<!-- pages/pxDetail/index.wxml -->
-<view class="container" style="height:{{windowHeight}}px">
+<view class="container">
     <view class="pxDetail-wrapper">
         <view class="pxDetail-image">
-            <image src="/static/init.jpg" />
+            <image src="{{goodsimageUrl}}" />
         </view>
         <view class="pxDetail-goodsname-grade-wrapper">
             <view class="pxDetail-goodsname">
-                美丽美丽中国走起来神经了放假了设计费达康书记发送方经理看似简单风口浪尖拉萨的房间里考虑到讲述了房间里煞老夫就死定了开发按实际得分
+               {{goodsname}}
             </view>
             <view class="pxDetail-grade">
                 <view class="pxDetail-grade-image-wrapper" hover-class="none" hover-stop-propagation="false">
@@ -15,9 +14,6 @@
                             bindtap = "setGrade"
                         />
                     </block>
-                      
-                   
-                    
                 </view>
                 <view wx:if="{{isStartGrade}}" class="grade-content" selectable="false" space="false" decode="false">
                     {{gradeTitle}}
@@ -26,7 +22,7 @@
         </view>
     </view>
     <view class="recond-count-wrapper">
-        <view class="recond-count" hover-class="none" hover-stop-propagation="false">0条回复</view>
+        <view class="recond-count" hover-class="none" hover-stop-propagation="false">{{evaluteCount}}条回复</view>
     </view>
     <view class="evalute-wrapper">
         <block wx:for="{{evaluteList}}" wx:for-item="items" wx:key="indexs">
@@ -34,38 +30,19 @@
             <view class="username-title" hover-class="none" hover-stop-propagation="false">
                 <image class="username-title-image" src="/static/user.png" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload=""></image>
                 :  {{ items.username }}
-                <!-- <image class="username-title-image " style="margin-left:20rpx;" src="/static/selectedStar.png" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload=""></image> -->
                 <block wx:for="{{items.starList}}" wx:key="index">
                     <image class="username-title-image" src="{{item}}" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload=""></image>
                 </block>
             </view>
             <view class="evalute-content" hover-class="none" hover-stop-propagation="false">
-                费账号闪电发货克里斯多夫会计师的看法客户开始的发挥空间上岛咖啡会计师电话费开始接电话焚枯食淡方会计师电话费空间撒大黄蜂开始阿道夫
+               {{items.evaluatecontent}}
             </view>
-            <!-- <view class="evalute-toggle">查看全部>></view> -->
         </view>
         </block>
-          
-        <!-- <view class="evalute-list">
-            <view class="username-title" hover-class="none" hover-stop-propagation="false">
-                <image class="username-title-image" src="/static/user.png" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload=""></image>
-                :zhangsan
-            </view>
-            <view class="evalute-content" hover-class="none" hover-stop-propagation="false">
-                费账号闪电发货克里斯多夫会计师的看法客户开始的发挥空间上岛咖啡会计师电话费开始接电话焚枯食淡方会计师电话费空间撒大黄蜂开始阿道夫
-            </view>
-        </view>
-        <view class="evalute-list">
-            <view class="username-title" hover-class="none" hover-stop-propagation="false">
-                <image class="username-title-image" src="/static/user.png" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload=""></image>
-                :zhangsan
-            </view>
-            <view class="evalute-content" hover-class="none" hover-stop-propagation="false">
-                费账号闪电发货克里斯多夫会计师的看法客户开始的发挥空间上岛咖啡会计师电话费开始接电话焚枯食淡方会计师电话费空间撒大黄蜂开始阿道夫
-            </view>
-        </view> -->
     </view>
-    <view class="evaluate-input-wrapper" hover-class="none" hover-stop-propagation="false">
+    <view 
+        wx:if="{{goodsstatus != 3}}"
+     class="evaluate-input-wrapper" hover-class="none" hover-stop-propagation="false">
         <view class="evaluate-input">
             <input type="text" placeholder="评价内容不能超过100字" 
             bindinput="getEvaluateInfo"

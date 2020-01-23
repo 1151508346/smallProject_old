@@ -97,8 +97,6 @@
 		<view class="register-button">
 			<navigator url="/" bindtap="handleRegisterFunc"> 注册 </navigator>
 		</view>
-
 	</view>
-
 </view>
 

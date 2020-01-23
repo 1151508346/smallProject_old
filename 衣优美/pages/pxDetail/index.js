@@ -10,6 +10,7 @@ Page({
   data: {
     windowHeight: wx.getSystemInfoSync().windowHeight,
     evaluteList: [],
+    evaluteCount:0,
     starImages: [
       "/static/selectedStar.png",
       "/static/selectedStar.png",
@@ -18,9 +19,12 @@ Page({
       "/static/selectedStar.png"
     ],
     isStartGrade: false,
-    gradeTitle:"",
-    inputInfo:"",
-    goodsid :""
+    gradeTitle: "",
+    inputInfo: "",
+    goodsid: "",
+    goodsimageUrl :"",
+    goodsstatus:0,
+    goodsname:""
   },
 
   /**
@@ -28,22 +32,19 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      gradeTitle:this.gradeHint(4)
+      gradeTitle: this.gradeHint(4)
     })
-    // getNativeUserId(function(res){
-    //   if(res.data){
-    //     _that.setData({
-    //       userid:res.data //当前登录的用户id
-    //     })
-    //   }
-    // })
-    options.goodsid = 'B00002';
-    this.setData({
-      goodsid:options.goodsid
-    })
-    if (options.hasOwnProperty("goodsid")) {
-      var { goodsid } = options;
-      this.getEvaluateDetailInfo(goodsid)
+    if (options.hasOwnProperty("goodsid")&& options.hasOwnProperty("goodsimage")) {
+      var { goodsid,goodsimage ,goodsstatus,goodsname} = options;
+      console.log(goodsstatus)
+      // options.goodsid = 'B00002';
+      this.setData({
+        goodsid: goodsid,
+        goodsimageUrl:goodsimage,
+        goodsstatus:goodsstatus,
+        goodsname:goodsname
+      })
+        this.getEvaluateDetailInfo(goodsid)
     }
 
   },
@@ -74,8 +75,10 @@ Page({
           return item;
         })
         console.log(result)
+
         _that.setData({
-          evaluteList: result
+          evaluteList: result,
+          evaluteCount:result.length
         })
       }
     })
@@ -154,9 +157,9 @@ Page({
   },
   setGrade(e) {
     // console.log(this.gradeHint())
-    if(!this.data.isStartGrade){
+    if (!this.data.isStartGrade) {
       this.setData({
-        isStartGrade:true
+        isStartGrade: true
       })
     }
     var _that = this;
@@ -166,9 +169,9 @@ Page({
     for (var i = 0; i <= index; i++) {
       starImages.push("/static/selectedStar.png")
     }
-    
+
     this.setData({
-     gradeTitle: _that.gradeHint(i-1)
+      gradeTitle: _that.gradeHint(i - 1)
     })
     while (true) {
       if (i < 5) {
@@ -183,55 +186,65 @@ Page({
       // gradeTitle :_that.gradeHint()
     })
   },
-  getEvaluateInfo(e){
+  getEvaluateInfo(e) {
     // console.log(e.detail.value);
     this.setData({
-      inputInfo : e.detail.value
+      inputInfo: e.detail.value
     })
   },
-  submitEvaluateInfo(){
-      if(!this.data.isStartGrade){
-        wx.showToast({
-          title: '请给出好评等级',
-          icon: 'none',
-          image: '',
-          duration: 1500,
-          mask: false,
-        });
-        return;
-      }
-      if(this.data.inputInfo.trim() === "" ){
-        wx.showToast({
-          title: '内容不能为空',
-          icon: 'none',
-          image: '',
-          duration: 1500,
-          mask: false,
-        
-        });
-        return ;
-      }
-      this.sendEvaluteInfo();
+  submitEvaluateInfo() {
+    if (!this.data.isStartGrade) {
+      wx.showToast({
+        title: '请给出好评等级',
+        icon: 'none',
+        image: '',
+        duration: 1500,
+        mask: false,
+      });
+      return;
+    }
+    if (this.data.inputInfo.trim() === "") {
+      wx.showToast({
+        title: '内容不能为空',
+        icon: 'none',
+        image: '',
+        duration: 1500,
+        mask: false,
+
+      });
+      return;
+    }
+    if (this.data.inputInfo.trim().length >100) {
+      wx.showToast({
+        title: '内容不能超过100字',
+        icon: 'none',
+        image: '',
+        duration: 1500,
+        mask: false,
+      });
+      return;
+    }
+    this.sendEvaluteInfo();
   },
-  sendEvaluteInfo(){
+  sendEvaluteInfo() {
     var _that = this;
     var grade = this.getValueCountInArray(this.data.starImages);
     console.log(grade)
-    getNativeUserId(function(res){
-      if(res.data){
+    getNativeUserId(function (res) {
+      if (res.data) {
         var userid = res.data;
-        var url = Domain+"insertEvalueInfoToDatabase";
+        var url = Domain + "insertEvalueInfoToDatabase";
         var sendInfo = {
-          userid:userid,
-          goodsid:_that.data.goodsid,
-          evaluatecontent:_that.data.inputInfo,
-          grade:grade
+          userid: userid,
+          goodsid: _that.data.goodsid,
+          evaluatecontent: _that.data.inputInfo,
+          grade: grade
         }
-        postRequest(url,sendInfo,function(res){
-          if(res.data){
-            if(res.data.result === "success"){
+        postRequest(url, sendInfo, function (res) {
+          if (res.data) {
+            if (res.data.result === "success") {
               _that.getEvaluateDetailInfo(_that.data.goodsid)
-            }else{
+            } else {
               wx.showToast({
                 title: '评价失败',
                 icon: 'none',
@@ -245,13 +258,13 @@ Page({
       }
     })
   },
-  getValueCountInArray(arr){
+  getValueCountInArray(arr) {
     var grade = 0;
-    arr.map(item=>{
+    arr.map(item => {
       item === "/static/selectedStart.png";
       grade++
     });
     return grade;
   }
-  
+
 })

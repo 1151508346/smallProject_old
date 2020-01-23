@@ -1,7 +1,7 @@
 <view class="container" style="height:{{windowHeight}}px">
     <view class="integeralBg">
         <image src="/static/integeralImages.png" />
-        <view class="integeralBg-total" hover-class="none" hover-stop-propagation="false">100</view>
+        <view class="integeralBg-total" hover-class="none" hover-stop-propagation="false">{{integralTotal}}</view>
     </view>
     <view class="integeral-detail-wrapper" hover-class="none" hover-stop-propagation="false">
         <view class="integeral-title" hover-class="none" hover-stop-propagation="false">积分明细</view>

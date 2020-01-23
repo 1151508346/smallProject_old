@@ -9,7 +9,9 @@ Page({
    */
   data: {
     windowHeight: wx.getSystemInfoSync().windowHeight,
-    signinList:[]
+    signinList:[],
+    integralTotal:0
+
   },
   /**
    * 生命周期函数--监听页面加载
@@ -36,8 +38,10 @@ Page({
                 item.signindate = forMatDate(new Date(item.signindate));
                 return item ;
               })
+              console.log(signinList[0].integralTotal);
               _that.setData({
-                signinList:signinList
+                signinList:signinList,
+                integralTotal:signinList[0].integralTotal
               });
           }
         })

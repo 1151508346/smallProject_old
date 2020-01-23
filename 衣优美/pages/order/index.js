@@ -13,7 +13,7 @@ Page({
     defaultImage: "/static/init.jpg",
     pendingList: [],
     defaultOrderItem: 0,
-    userid:""
+    userid:"",
   },
 
   /**
@@ -182,9 +182,10 @@ Page({
   },
   navigateToPXDetailPage(e){
     if(this.data.userid!=""){
-      var { goodsid } = e.currentTarget.dataset;
+      var { goodsid,goodsimage,goodsstatus,goodsname} = e.currentTarget.dataset;
+      console.log(goodsstatus)
       wx.navigateTo({
-        url: '/pages/pxDetail/index?goodsid='+goodsid,
+        url: '/pages/pxDetail/index?goodsid='+goodsid+"&goodsimage="+goodsimage+"&goodsstatus="+goodsstatus+"&goodsname="+goodsname,
         success: (result)=>{
         },
         fail: ()=>{},
