@@ -97,6 +97,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
+		
 		if (app.globalData.path === "/pages/payfor/index") {
 			/**
 			 * 没有支付进入待付款中
@@ -116,15 +117,13 @@ Page({
 						size: _that.data.car_shopping_list[i].buysize,
 						// goodsstatus = 0 表示待支付状态
 						goodsstatus: 0,
-
 					});
 				}
 			}
 			//将待支付的商品插入到order表中
-			var url = Domain + "payForToOrder";
+			var url = Domain + "cancelPayFor";
 			postRequest(url, tempSendData, function (res) {
-				console.log(res.data)
-				if (res.data.type === "success" && res.data.status === "200") {
+				if (res.data.type === "cancelSuccess" && res.data.status === "200") {
 					wx.showToast({
 						title: '您已取消支付',
 						icon: 'none',
@@ -534,9 +533,8 @@ Page({
 			content: '您要支付的金额: ' + _that.data.allPriceValue + ' 元',
 			success(res) {
 				if (res.confirm) {
-					// console.log('用户点击确定');
 					var payForObjList = _that.handleSelecedShopping('payfor');
-					console.log(payForObjList);
+					// console.log(payForObjList);
 					if (!payForObjList) {
 						wx.showToast({
 							title: '支付出现异常',

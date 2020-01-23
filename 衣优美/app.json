@@ -14,7 +14,10 @@
     "pages/payfor/index",
     "pages/order/index",
     "pages/collectGoods/index",
-     "pages/visited/index"
+    "pages/visited/index",
+    "pages/coupon/index",
+    "pages/integeral/index",
+    "pages/pxDetail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

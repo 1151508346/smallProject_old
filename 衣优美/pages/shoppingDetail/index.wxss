@@ -71,7 +71,6 @@ swiper{
 	overflow: hidden;
 	/* text-overflow: ellipsis; */
 	/* white-space: nowrap; */
-	font-size:32rpx;
 	padding:10rpx;
 	text-overflow: -o-ellipsis-lastline;
 	overflow: hidden;
@@ -127,31 +126,96 @@ swiper{
 }
 .detail-size-count text:nth-of-type(2){
 	float: right;
-	
 	margin-right:20rpx;
 }
 .detail-photo-show-img image{
   width: 100%;
   height: 600rpx;
 }
-.select-size-count-alert,
+/* 
+.coupon-image{
+  width: 90%;
+  margin-top:20rpx;
+  position: relative;
+  box-shadow: 0 0 5rpx #ddd;
 
+}
+.coupon-image image{
+  height: 140rpx;
+}
+.coupon-price-date-box{
+  position: absolute;
+  bottom:0px;
+  height: 100%;
+  width: 440rpx;
+  text-align: right;
+}
+.coupon-goods-image{
+  position: absolute;
+  top:10rpx;
+  left: 20rpx;
+  width: 140rpx;
+  height: 120rpx !important;
+  border-radius: 20rpx;
+}
+.coupon-price{
+  font-size:48rpx;
+  color:#f00;
+}
+.coupon-dated-descript,.coupon-date{
+  color:#aaa;
+  font-size :23rpx;
+  padding: 4rpx;
+}
+.coupon-liji-user{
+  position: absolute;
+  right:16rpx;
+  bottom: 54rpx;
+  color:#fff;
+  font-size:34rpx;
+} */
+.coupon-box{
+  border:1px dashed red;
+  width: 90%;
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  border-radius: 10px;
+  background-color: #fff2E6;
+  padding: 5rpx; 
+}
+.coupon-price-data{
+  width: 65%;
+  text-align: center;
+}
+.coupon-price-data view{
+  color:#f00;
+}
+.coupon-price{
+  font-size: 36rpx;
+}
+.coupon-use{
+  flex: 1;
+  border-left: 1px #FF8000 dashed;
+  color:#F00;
+  text-align: center;
+  padding-top: 60rpx;
+}
+
+.select-size-count-alert,
 .select-size-count-alert_end{
   height:800rpx;
   width:100%;
   background-color:#fff;
   /* opacity: 0.5; */
   position:fixed;
-  transition:200ms;
+  transition:500ms;
   z-index: 100;
-
 }
-
 .select-size-count-alert{
   bottom:-1000rpx;
 }
 .select-size-count-alert_end{
-  
  bottom:0;
 }
 .addCarAlert_image{
@@ -163,7 +227,6 @@ swiper{
 .addCarAlert_image image{
   width: 260rpx;
   height: 260rpx;
-  
 }
 .alertPrice_box{
   /* border:1px solid red;  */
@@ -188,16 +251,13 @@ swiper{
 .alert_count_box{
   display: flex;
   border:1px solid #eee;
-
 }
 .alert_count_box view{
-  
   margin-top:20rpx;
   margin-bottom: 20rpx;
 }
 .alert_size_box view{
   margin-left:60rpx;
-  
   /* border: 1px solid red; */
 }
 .alert_size_box view:nth-of-type(2){
@@ -235,12 +295,6 @@ swiper{
   text-align: center;
 }
 
-
-
-
-
-
-
 .alertYes{
   display: inline-block;
   background: #f00;
@@ -258,8 +312,6 @@ swiper{
   background-color:#f00 !important;
   color:#fff;
 }
-
-
 
 
 .closeWindow{

@@ -1,0 +1,48 @@
+/* pages/integeral/index.wxss */
+.container{
+    background-color:#eee;
+}
+.integeralBg{
+    height: 360rpx;
+    text-align:center;
+    /* border:1px solid red; */
+    position: relative;
+}
+.integeralBg image{
+    width: 100%;
+    height: 100%;
+}
+.integeralBg .integeralBg-total{
+    position: absolute;
+    top:70rpx;
+    font-size:80rpx;
+    left:50%;
+    margin-left:-55rpx;
+}
+.integeral-detail-wrapper{
+    padding:  4%;
+    background-color:#fff;
+}
+.integeral-title{
+    border-left:2px solid #f00;
+    padding-left: 10rpx;
+}
+.integeral-item{
+    display: flex;
+    justify-content: space-between;
+    background-color:#fff;
+    margin-top: 20rpx;
+    padding: 4%;
+}
+.integeral-left-pattern{
+    margin-bottom: 20rpx;
+    font-size: 36rpx;
+}
+.integeral-left-date{
+    color:#999;
+}
+.integeral-right{
+    margin-top:25rpx;
+    font-size:50rpx;
+    color:#f00
+}

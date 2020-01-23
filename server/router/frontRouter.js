@@ -15,7 +15,7 @@ var baseURL = "http://localhost:3000/public/static/"; //访问静态资源基础
 var con = require("../db/connectObj");
 var { getInsert, getFind, getUpdate, getDelete } = require("../db/curd.js");
 var { aesEncrypt, aesDecrypt } = require("../aes_en_de.js");
-var { formatDate ,handleImageURL} = require("../tool/index.js");
+var { formatDate, handleImageURL } = require("../tool/index.js");
 var Url = require("./fontApi.js");
 
 
@@ -328,7 +328,7 @@ module.exports = function (router) {
         return;
       }
 
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       res.json(data);
 
 
@@ -344,7 +344,7 @@ module.exports = function (router) {
         // console.log("哈哈~~,亲出错了");
         throw new Error("error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       res.json(data)
     })
 
@@ -552,7 +552,7 @@ module.exports = function (router) {
           throw new Error("server error");
         }
         // console.log(data);
-        handleImageURL(data,baseURL);
+        handleImageURL(data, baseURL);
         res.json(data);
 
       })
@@ -634,7 +634,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       res.json(data)
     });
   });
@@ -648,7 +648,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       res.json(data)
     });
 
@@ -664,7 +664,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       console.log(data);
       res.json(data);
 
@@ -680,7 +680,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       console.log(data);
       res.json(data);
 
@@ -697,7 +697,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       console.log(data);
       res.json(data);
 
@@ -714,7 +714,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       console.log(data);
       res.json(data);
 
@@ -732,7 +732,7 @@ module.exports = function (router) {
         });
         throw new Error("serve error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       console.log(data);
       res.json(data);
 
@@ -741,12 +741,17 @@ module.exports = function (router) {
 
   // payForToOrder
   router.post(Url.payForToOrder, function (req, res) {
+    var payGoodsNum = 0;
 
-    req.body.forEach(function (item, index) {
+    var payGoodsList = [];
+    if (req.body.hasOwnProperty("notDelete")) {
+      payGoodsList = req.body.tempPayForData
+    } else {
+      payGoodsList = req.body
+    }
+
+    payGoodsList.forEach(function (item, index) {
       var { userid, goodsid, count, size, purchasetime, goodsstatus } = item;
-      // console.log(item)
-      // console.log(userid, goodsid, count, size, purchasetime, goodsstatus);
-      // ,\'${userid}\',\'${purchasetime}\',\'${count}\',\'${size}\',\'${goodsstatus}\'
       var insertSQL = `insert into orders (goodsid,userid,purchasetime,count,size,goodsstatus) value(\'${goodsid}\',\'${userid}\' ,\'${purchasetime}\' ,\'${count}\'  ,\'${size}\',\'${goodsstatus}\')`;
       var deleteSQL = ` delete from buycar where goodsid = \'${goodsid}\' and userid = \'${userid}\' and buycount = \'${count}\' and buysize = \'${size}\'`
       var selectSQL = `
@@ -769,16 +774,31 @@ module.exports = function (router) {
           newData.forEach(item => {
             var updateSQL = `update  orders set goodsstatus = 1
               where orderid = \'${item.orderid}\'
-            
              `
             getUpdate(con, updateSQL, [], function (err, updateData) {
               if (err) {
                 throw new Error("server error");
               }
               if (updateData.affectedRows === 1) {
-                res.json({
-                  type: "success",
-                  status: "200"
+
+                getDelete(con, deleteSQL, [], function (err, deleteData) {
+                  if (err) {
+                    throw new Error("server error");
+                  }
+                  payGoodsNum++;
+                  if (deleteData.affectedRows === 1 && payGoodsNum === payGoodsList.length) {
+                    // console.log(payGoodsNum)
+                    res.json({
+                      type: "success",
+                      status: "200"
+                    });
+                  } else if (deleteData.affectedRows != 1 && payGoodsNum === payGoodsList.length) {
+                    // console.log(payGoodsNum)
+                    res.json({
+                      type: "fail",
+                      status: "200"
+                    })
+                  }
                 })
               }
             })
@@ -786,14 +806,27 @@ module.exports = function (router) {
         } else {
           getInsert(con, insertSQL, [], function (err, insertData) {
             if (insertData.affectedRows === 1) {
+              if (req.body.hasOwnProperty("notDelete")) {
+                console.log("=====================================================");
+                res.json({
+                  type: "success",
+                  status: "200"
+                })
+                return;
+              }
               getDelete(con, deleteSQL, [], function (err, deleteData) {
-                console.log(deleteData);
-                if (deleteData.affectedRows === 1) {
+                if (err) {
+                  throw new Error("server error");
+                }
+                payGoodsNum++;
+                if (deleteData.affectedRows === 1 && payGoodsNum === payGoodsList.length) {
+                  // console.log(payGoodsNum)
                   res.json({
                     type: "success",
                     status: "200"
                   });
-                } else {
+                } else if (deleteData.affectedRows != 1 && payGoodsNum === payGoodsList.length) {
+                  // console.log(payGoodsNum)
                   res.json({
                     type: "fail",
                     status: "200"
@@ -805,6 +838,109 @@ module.exports = function (router) {
           })
         }
       });
+
+
+    });
+  });
+
+  router.post(Url.cancelPayFor, function (req, res) {
+    var payGoodsList = req.body;
+    var payGoodsNum = 0;
+    payGoodsList.forEach(item => {
+      var { userid, goodsid, count, size, purchasetime, goodsstatus } = item;
+      console.log(item);
+      var selectSQL = `
+          select orderid from orders
+            where userid = '${userid}' and 
+            goodsid = '${goodsid}' and 
+            size = ${size} and 
+            goodsstatus = ${goodsstatus}
+          `
+      var deleteSQL = ` 
+          delete from buycar 
+          where goodsid = \'${goodsid}\' and
+           userid = \'${userid}\' and 
+           buycount = \'${count}\' and 
+           buysize = \'${size}\'`
+
+
+
+      getFind(con, selectSQL, function (err, data) {
+        if (err) {
+          throw new Error("server error");
+        }
+        if (data.length > 0) {
+          var updateSQL = `update orders set count = count + ${count}
+            where orderid = '${data[0].orderid}'
+          `;
+
+          getUpdate(con, updateSQL, [], function (err, data) {
+            if (err) {
+              throw new Error("server error");
+            }
+            if (data.affectedRows === 1) {
+              getDelete(con, deleteSQL, [], function (err, deleteData) {
+                if (err) {
+                  throw new Error("server error");
+                }
+                payGoodsNum++;
+                if (deleteData.affectedRows === 1 && payGoodsNum === payGoodsList.length) {
+                  // console.log(payGoodsNum)
+                  res.json({
+                    type: "cancelSuccess",
+                    status: "200"
+                  });
+                } else if (deleteData.affectedRows != 1 && payGoodsNum === payGoodsList.length) {
+                  // console.log(payGoodsNum)
+                  res.json({
+                    type: "fail",
+                    status: "404"
+                  })
+                }
+              })
+            }
+
+          });
+
+
+        } else {
+          //insert
+          var insertSQL = `
+            insert into orders(goodsid,userid,purchasetime,count,size,goodsstatus) value(
+              '${goodsid}','${userid}','${purchasetime}','${count}','${size}','${goodsstatus}'
+            )`;
+          getInsert(con, insertSQL, [], function (err, data) {
+
+            if (err) {
+              throw new Error("server error");
+            }
+
+            if (data.affectedRows === 1) {
+              getDelete(con, deleteSQL, [], function (err, deleteData) {
+                if (err) {
+                  throw new Error("server error");
+                }
+                payGoodsNum++;
+                if (deleteData.affectedRows === 1 && payGoodsNum === payGoodsList.length) {
+                  // console.log(payGoodsNum)
+                  res.json({
+                    type: "cancelSuccess",
+                    status: "200"
+                  });
+                } else if (deleteData.affectedRows != 1 && payGoodsNum === payGoodsList.length) {
+                  // console.log(payGoodsNum)
+                  res.json({
+                    type: "fail",
+                    status: "404"
+                  })
+                }
+              })
+            }
+          });
+
+
+        }
+      })
 
 
     });
@@ -846,17 +982,25 @@ module.exports = function (router) {
   });
   router.get(Url.getOrderList, function (req, res) {
     console.log(req.query);
+
     var { username, goodsstatus } = req.query;
     var selectSQL = `
 SELECT * FROM  goods , orders WHERE orders.goodsid = goods.goodsid AND 
 orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') AND goodsstatus = ${goodsstatus}
       `
+    if (goodsstatus === "99") {
+      selectSQL = `
+      SELECT * FROM  goods , orders WHERE orders.goodsid = goods.goodsid AND 
+      orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
+            `
+    }
+
     getFind(con, selectSQL, function (err, data) {
       if (err) {
         throw new Error("server error");
       }
       // console.log(data)
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       res.json(data);
     })
   });
@@ -867,7 +1011,6 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
       size = \'${size}\' and
       goodsstatus = \'${goodsstatus}\' and
       userid = \'${userid}\' 
-
     `
     getDelete(con, deleteSQL, [], function (err, data) {
       if (err) {
@@ -890,11 +1033,9 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
       if (err) {
         throw new Error("serve error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       res.json(data);
-
     })
-
   });
   router.get(Url.toVisited, function (req, res) {
     var { userid } = req.query;
@@ -904,7 +1045,7 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
       if (err) {
         throw new Error("serve error");
       }
-      handleImageURL(data,baseURL);
+      handleImageURL(data, baseURL);
       res.json(data);
 
     });
@@ -912,24 +1053,25 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
 
   router.get(Url.insertVisited, function (req, res) {
     var { userid, goodsid } = req.query;
-    console.log(userid, goodsid)
-    var insertSQL = `insert into visited  value(\'${goodsid}\',\'${userid}\')`;
+    var visitedTime = formatDate();
+    var insertSQL = `insert into visited value('${goodsid}','${userid}','${visitedTime}')`;
     getInsert(con, insertSQL, [], function (err, data) {
       if (err) {
         throw new Error("server error");
       }
       if (data.affectedRows === 1) {
+        console.log("---------insert success---------")
         res.json({
           type: "insertSuccess",
           status: "200"
-        })
+        });
       } else {
         res.json({
           type: "fail",
           status: "400"
         })
       }
-    })
+    });
   });
   router.get(Url.applyBackMoney, function (req, res) {
     var { userid, goodsid, size, goodsstatus } = req.query;
@@ -952,36 +1094,59 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
     });
 
   });
-
   router.get(Url.signIn, function (req, res) {
     // console.log(req.query)
     var { userid } = req.query;
-    var selectSQL = `select * from signin where userid = \'${userid}\'`
+    var selectSQL = `select userid,integral ,MAX(signindate) AS lastSignindate 
+      from signin where userid = \'${userid}\'`
+    /**
+     * SELECT userid,integral ,MAX(signindate) AS lastSignindate FROM signin
+    	 WHERE userid = '19'
+     */
     getFind(con, selectSQL, function (err, findData) {
       if (err) {
         throw new Error("server error");
       }
       // console.log(findData)
       if (findData.length === 1) {
-        var currentTime = formatDate();
-        var LastTime = findData[0].signindate;
-        var formatCurrentDate = new Date(Date.parse(currentTime)).toLocaleString().split(" ")[0];
-        var formatLastDate = LastTime.toLocaleString().split(" ")[0];
-        if(formatCurrentDate === formatLastDate){
+        // var currentTime = formatDate();
+
+/*-------------------------------处理上次签到的时间和当前签到的时间之差是------------*/
+        var currentTime = new Date();
+        var LastTime = findData[0].lastSignindate; //当前用户最后一次签到
+        var diffTime = currentTime.getTime() - LastTime.getTime();
+        var diffDay = diffTime / (24 * 3600 * 1000); //上次签到的时间和本次签到的时间之差
+/*---------------------------------------------------------------------------- */
+        // return ;
+        // var formatCurrentDate = new Date(Date.parse(currentTime)).toLocaleString().split(" ")[0];
+        // console.log(formatCurrentDate);
+        // var formatLastDate = LastTime.toLocaleString().split(" ")[0];
+
+        /**
+         * 上次签到的时间和当前签到的时间是否大于1天，
+         * 如果大于1天 允许再次签到，否则不允许签到
+         */
+
+        if (diffDay < 1) {
           res.json({
-            type:"has signed in",
-            status:"200"
+            type: "has signed in",
+            status: "200"
           })
-          return ;
+          return;
         }
-        console.log("----------------------------------");
-       
-        var updateSQL = `update signin set integral=integral+1 , signindate=\'${formatDate()}\' where userid = \'${userid}\'`;
-        getUpdate(con, updateSQL, [], function (err, updateData) {
+
+        // var updateSQL = `update  signin set integral=integral+1 , signindate=\'${formatDate()}\' where userid = \'${userid}\'`;
+        
+        var insertSQL = `
+          insert into signin(userid,signindate,integral,pattern)
+            value(${userid},'${formatDate()}',5,'签到')
+        `;
+
+        getInsert(con, insertSQL, [], function (err, inserData) {
           if (err) {
             throw new Error("server error");
           }
-          if (updateData.affectedRows === 1) {
+          if (inserData.affectedRows === 1) {
             res.json({
               type: "success",
               status: "200"
@@ -1000,16 +1165,135 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
               status: "200"
             })
           }
+        });
+      }
+    })
+  });
+  router.get(Url.getDiffOrderStatusNum, function (req, res) {
+    var { userid } = req.query;
+    var selectSQL = `
+      SELECT orderid,goodsid,goodsstatus,COUNT(goodsstatus) as goodsstatusNum FROM orders
+      WHERE userid = '${userid}'
+      GROUP BY goodsstatus
+    `
+    getFind(con, selectSQL, function (err, data) {
+      if (err) {
+        throw new Error("server error");
+      }
+      res.json(data);
+    });
+  });
+  router.post(Url.isExistCoupon, function (req, res) {
+    var { userid, goodsid } = req.body;
+    var selectSQL = `
+        select * from coupon 
+          where userid = '${userid}' and
+                goodsid = '${goodsid}'
+    `
+    getFind(con, selectSQL, function (err, data) {
+      if (err) {
+        throw new Error("server error");
+      }
+      if (data.length !== 0) {
+        res.json({
+          result: true,
+          couponList: data
+        });
+      } else {
+        res.json({
+          result: false,
         })
       }
     })
-  })
 
+  });
+  router.post(Url.getCoupon, function (req, res) {
+    var { userid, goodsid } = req.body;
+    var updateSQL = `
+      update coupon set couponstatus = 1
+      where  userid = '${userid}' and goodsid = '${goodsid}'
+    `
+    getUpdate(con, updateSQL, [], function (err, data) {
+      if (err) {
+        throw new Error("serve error");
+      }
+      console.log(data.affectedRows);
+      if (data.affectedRows === 1) {
+        res.json({
+          result: "success"
+        })
+      } else {
+        res.json({
+          result: "fail"
+        })
+      }
+    })
+  });
+  router.get(Url.useCoupon, function (req, res) {
 
-
-
+    var { couponid } = req.query;
+    console.log(couponid)
+    var updateSQL = `
+      update coupon set couponstatus = 2
+        where  couponid = '${couponid}'
+    ` ;
+    getUpdate(con, updateSQL, [], function (err, data) {
+      if (err) {
+        throw new Error("server error");
+      }
+      if (data.affectedRows === 1) {
+        res.json({
+          type: "success",
+          status: "200"
+        })
+      } else {
+        res.json({
+          type: "fail",
+          status: "400"
+        })
+      }
+    })
+  });
+  router.get(Url.getConponList, function (req, res) {
+    var { userid } = req.query;
+    var selectSQL = `
+      SELECT * FROM coupon , goods 
+      WHERE coupon.goodsid = goods.goodsid
+      AND userid = '${userid}'
+    `
+    getFind(con, selectSQL, function (err, data) {
+      if (err) {
+        throw new Error("server error");
+      }
+      handleImageURL(data, baseURL)
+      res.json(data);
+    })
+  });
+  router.get(Url.getSigninDetail,function(req,res){
+    var { userid } = req.query;
+    var selectSQL = `
+    SELECT * ,
+      (SELECT SUM(integral) 
+      FROM signin  
+      WHERE userid = '${userid}') 
+      AS integralTotal 
+    FROM signin  
+	  WHERE userid = '${userid}';
+    
+    
+    `
+   getFind(con,selectSQL,function(err,data){
+    if(err){
+        throw new Error("server error");
+    }
+    res.json(data);
+   });
+  
+  });
 
 }
+
+
 
 
 

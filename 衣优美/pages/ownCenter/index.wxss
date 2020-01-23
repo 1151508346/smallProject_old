@@ -62,9 +62,6 @@
 }
 
 
-
-
-
 .dingdan_box{
   /* border:1px solid red; */
   border-bottom: 1px solid #eee;
@@ -86,10 +83,27 @@
 .dingdan_item{
   flex:1;
   text-align: center;
+  /* border:1px solid red; */
+  position: relative;
 }
 .dingdan_item image{
   width: 80rpx;
   height: 80rpx;
+
+}
+.badge{
+  position: absolute;
+  right: 46rpx;
+  top:-10rpx;
+  color:#fff;
+  font-size:20rpx;
+  background-color:#f00;
+  border-radius: 50%;
+  display: inline-block;
+  width: 46rpx;
+  height: 46rpx;
+  text-align:center;
+  line-height: 46rpx;
 
 }
 

@@ -8,30 +8,40 @@ Page({
    * 页面的初始数据
    */
   data: {
-    payforMoney: 0
+    payforMoney: 0,
+    isCancelPay: true,
+    useCoupon: false,
+    couponid: "",
   },
   onLoad(options) {
-    // console.log(options);
+    console.log(options);
+    if (options.hasOwnProperty("couponid")) {
+      this.setData({
+        useCoupon: true,
+        couponid: options.couponid
+      });
+    }
     this.setData({
       payforMoney: options.payforMoney
     })
+    // console.log(options.payforMoney)
 
-    console.log(options.payforMoney)
   },
   onHide() {
-
   },
   onUnload() {
-    app.globalData.path = "/pages/payfor/index";
+    if (this.data.isCancelPay) {
+      app.globalData.path = "/pages/payfor/index";
+    }
   },
 
 
   handleNowPayFor() {
     var _that = this;
     if (app.globalData.payForObjList.length !== 0) {
-      console.log(app.globalData.payForObjList);
-     var tempPayForData  = app.globalData.payForObjList.map(function(item){
-      //  console.log(item);
+      // console.log(app.globalData.payForObjList);
+      var tempPayForData = app.globalData.payForObjList.map(function (item) {
+        //  console.log(item);
         var tempObj = {};
         tempObj.goodsid = item.goodsid;
         tempObj.userid = item.userid;
@@ -39,22 +49,30 @@ Page({
         tempObj.size = item.buysize;
         tempObj.purchasetime = _that.forMatDate();
         tempObj.goodsstatus = 1;
-
         return tempObj;
-     });
-     console.log(tempPayForData)
-      // console.log(tempPayForData);
-      var url = Domain + "payForToOrder"
-      postRequest(url, tempPayForData, function (res) {
+      });
+      //  console.log(tempPayForData)
+      var url = Domain + "payForToOrder";
+      // console.log(tempPayForData)
+      postRequest(url, {tempPayForData,notDelete:true}, function (res) {
         console.log(res)
-        if(res.data.type === "success" && res.data.status === '200'){
-          wx.showToast({
-            title: '支付成功',
-            icon: 'success',
-            duration: 1500,
-            mask: false,
-          });
-        }else{
+        if (res.data.type === "success" && res.data.status === '200') {
+          _that.setData({
+            isCancelPay: false
+          })
+          if (_that.data.useCoupon || _that.data.couponid != "") {
+            _that.handleUseCoupon();
+          } else {
+            wx.showToast({
+              title: '支付成功',
+              icon: 'success',
+              duration: 1500,
+              mask: false,
+            });
+          }
+
+        } else {
+          console.log("支付失败2")
           wx.showToast({
             title: '支付失败',
             icon: 'none',
@@ -67,8 +85,9 @@ Page({
        * 发送请求更新数据order中的数据
        * 删除购物车中的数据
        */
-     
+
     } else {
+      console.log("支付失败1")
       wx.showToast({
         title: '支付失败',
         icon: 'none',
@@ -103,4 +122,27 @@ Page({
     }
     return year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + seconds;
   },
+  handleUseCoupon() {
+    var _that = this;
+    console.log(_that.data)
+    var useCouponUrl = Domain + "useCoupon?couponid=" + _that.data.couponid;
+    getRequest(useCouponUrl, function (res) {
+      console.log(res)
+      if (res.data.type === "success" && res.data.status === "200") {
+        wx.showToast({
+          title: '支付成功',
+          icon: 'success',
+          duration: 1500,
+          mask: false,
+        });
+      } else {
+        wx.showToast({
+          title: '支付失败',
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+      }
+    });
+  }
 })

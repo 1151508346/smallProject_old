@@ -28,7 +28,36 @@
   >
 		<text>请选择您的尺寸和数量</text><text>></text>
 	</view>
-	
+
+	<!-- <view class="coupon-image" hover-class="none" hover-stop-propagation="false">
+        <image  class="coupon-bg" src="/static/yhj.png" />
+        <view class="coupon-price-date-box">
+            <image class="coupon-goods-image" src="/static/init.jpg" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload="">
+            </image>
+            <view class="coupon-price" >
+                ￥300
+            </view>
+            <view class="coupon-dated-descript">
+                使用时间
+            </view>
+            <view class="coupon-date">2020.01.16~2016.01.17</view>
+        </view>
+        <view class="coupon-liji-user" >
+            立即使用
+        </view>
+    </view> -->
+	<view class="coupon-box" wx-if="{{isExistCoupon}}">
+		<view class="coupon-price-data">
+			<view class="coupon-price">￥{{couponList[0].couponprice}}</view>
+			<view class="coupon-time-hint" hover-class="none" hover-stop-propagation="false">
+				使用时间
+			</view>
+			<view class="coupon-dated">{{couponList[0].starttime}}~{{couponList[0].endtime}}</view>
+		</view>
+		<view class="coupon-use" bindtap="getCoupon">
+			{{couponHint}}
+		</view>
+	</view>
 	<view class="detail-photo">
 		<view class="detail-photo-show">
 			<text>图文展示</text>
@@ -40,7 +69,6 @@
 				</image>
 			</view>
 		</block>
-		
 		
 	</view>
 	
@@ -92,7 +120,6 @@
 
   </view>
 	
-	
 	<view class="detail-bar">
 		<navigator>
 			<view class="detail-bar-list detail-bar-my">
@@ -131,7 +158,10 @@
     >
 			加入购物车
 		</view>
-		<view class="detail-bar-list detail-bar-quickPay" hover-class="active-bar">立即购买</view>
+		<view class="detail-bar-list detail-bar-quickPay"
+		 hover-class="active-bar"
+			bindtap = 'handleFastBuy'
+		 >{{buyTitle}}</view>
 		
 		
 	</view>

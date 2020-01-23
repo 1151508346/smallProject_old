@@ -2,9 +2,10 @@
 <view class="container">
     <view class="topTabbar">
         <text class="{{defaultOrderItem ===0 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="0">待付款</text>
-        <text class="{{defaultOrderItem ===1 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="1">待发货</text>
-        <text class="{{defaultOrderItem ===2 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="2">待收货</text>
-        <text class="{{defaultOrderItem ===3 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="3">待评价</text>
+        <text class="{{defaultOrderItem ===1 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="1">待收货</text>
+        <text class="{{defaultOrderItem ===2 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="2">待评价</text>
+        <text class="{{defaultOrderItem ===3 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="3">已评价</text>
+        <text class="{{defaultOrderItem ===99 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="99">已评价</text>
     </view>
     <!-- pendingPaymentList -->
     <block wx:for="{{pendingList}}" wx:key="index">
@@ -26,7 +27,6 @@
                 <view class="order-list_input_num">
                     <view wx:if="{{item.goodsstatus === 0}}" >
                         <text class="cancalOrder"
-                        
                         hover-class="cancel-goPayFor-active" 
                         bindtap="handleCancelOrder"
                             data-goodsid="{{item.goodsid}}"
@@ -56,6 +56,19 @@
                             data-goodsstatus = "{{item.goodsstatus}}"
                         >
                             申请退款
+                        </text>
+                    </view>
+                    <view wx:if="{{item.goodsstatus === 2}}" >
+                        <!-- <text class="cancalOrder" hover-class="cancel-goPayFor-active" bindtap="handleCancelOrder">
+                            取消订单
+                        </text> -->
+                        <text class="px-detail" hover-class="cancel-goPayFor-active" 
+                            bindtap = "navigateToPXDetailPage"
+                            data-goodsid="{{item.goodsid}}"
+                            data-size= "{{item.size}}"
+                            data-goodsstatus = "{{item.goodsstatus}}"
+                        >
+                            评价详情
                         </text>
                     </view>
                 </view>

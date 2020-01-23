@@ -26,6 +26,7 @@ function formatDate() {
   // return `${year}-${month}-${day}`;
 }
 function handleImageURL(data,baseURL) {
+  
   for (let i = 0; i < data.length; i++) {
    
     var  imageURL= `${baseURL}${data[i].typeid}/${data[i].category}/${data[i].goodsid}/`;

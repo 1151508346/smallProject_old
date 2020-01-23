@@ -3,6 +3,7 @@ var router = express.Router();
 //前端路由
 require("./frontRouter")(router);
 require("./backRouter")(router);
+require("./frontRouter2")(router);
 
 /**
  * 注册返回值

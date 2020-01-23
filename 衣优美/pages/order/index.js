@@ -12,16 +12,25 @@ Page({
   data: {
     defaultImage: "/static/init.jpg",
     pendingList: [],
-    defaultOrderItem: 0
+    defaultOrderItem: 0,
+    userid:""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var _that = this;
     var goodsStatus = options.goodsStatus;
     // console.log(options)
-    this.getOrderList(goodsStatus)
+    this.getOrderList(goodsStatus);
+    getNativeUserId(function(res){
+      if(res.data){
+        _that.setData({
+          userid:res.data
+        })
+      }
+    })
   },
 
   /**
@@ -135,7 +144,7 @@ Page({
   appliyBackMoney(e){
     var {goodsid,size,goodsstatus} = e.currentTarget.dataset
     // console.log(size)
-    console.log("=====================================")
+    // console.log("=====================================")
     var _that = this;
     getNativeUserId(function(res){
       if(!res.data){
@@ -170,5 +179,24 @@ Page({
 
     });
     
+  },
+  navigateToPXDetailPage(e){
+    if(this.data.userid!=""){
+      var { goodsid } = e.currentTarget.dataset;
+      wx.navigateTo({
+        url: '/pages/pxDetail/index?goodsid='+goodsid,
+        success: (result)=>{
+        },
+        fail: ()=>{},
+        complete: ()=>{}
+      });
+    }else{
+      wx.showToast({
+        title: '您还没有登录呢',
+        icon: 'none',
+        duration: 1500,
+        mask: false,
+      });
+    }
   }
 })

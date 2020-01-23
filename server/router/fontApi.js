@@ -28,7 +28,16 @@ var Url = {
     toVisited:"/toVisited",
     insertVisited:"/insertVisited",
     applyBackMoney:"/applyBackMoney",
-    signIn:"/signIn"
+    signIn:"/signIn",
+    cancelPayFor:"/cancelPayFor",
+    getDiffOrderStatusNum:"/getDiffOrderStatusNum",
+    isExistCoupon:"/isExistCoupon",
+    getCoupon:"/getCoupon" ,
+    useCoupon:"/useCoupon",
+    getConponList:"/getConponList",
+    getSigninDetail:"/getSigninDetail",
+    getEvaluateDetailInfo:"/getEvaluateDetailInfo",
+    insertEvalueInfoToDatabase:"/insertEvalueInfoToDatabase"
   }
 
   module.exports = Url;

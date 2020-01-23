@@ -14,7 +14,9 @@
     </view>
   </view>
   <view class="yh_ll_jf_sc">
-    <view class="yh_ll_jf_sc_item">
+    <view class="yh_ll_jf_sc_item"
+      bindtap = 'navigateToIntegralPage'
+    >
       <image src="/static/myCenter/jifen.png"></image>
       <view>积分</view>
     </view>
@@ -24,7 +26,10 @@
       <image src="/static/myCenter/shoucang.png"></image>
       <view>收藏夹</view>
     </view>
-    <view class="yh_ll_jf_sc_item">
+    <view class="yh_ll_jf_sc_item"
+    
+      bindtap = "navigateToCouponPage"
+    >
       <image src="/static/myCenter/youhuiquan.png"></image>
       <view>优惠卷</view>
     </view>
@@ -38,21 +43,35 @@
   <view class="dingdan_box">
     <view class="dingdan_title">订单管理</view>
     <view class="dingdan_list">
+     <!-- <mp-cell> -->
       <view class="dingdan_item" bindtap="navigateToOrderListPage" data-goodsstatus="0">
         <image src="/static/dingdanmanage/daifukuan.png"></image>
         <view>待付款</view>
+        <view class="badge" wx-if="{{waitPay>0}}"  >{{waitPay>0 && waitPay<10 ?  waitPay: "" || waitPay>10 ? "9+" : waitPay}}</view>
       </view>
+      <!-- </mp-cell> -->
       <view class="dingdan_item" bindtap="navigateToOrderListPage" data-goodsstatus="1">
         <image src="/static/dingdanmanage/daishouhuo.png"></image>
         <view>待收货</view>
+           <view class="badge" wx-if="{{waitReceive>0}}"  >{{waitReceive>0 && waitReceive<10 ?  waitReceive: "" || waitReceive>10 ? "9+" : waitReceive}}</view>
       </view>
       <view class="dingdan_item" bindtap="navigateToOrderListPage" data-goodsstatus="2">
         <image src="/static/dingdanmanage/icon4.png"></image>
         <view>待评价</view>
+        <!-- waitEvaluate -->
+         <view class="badge" wx-if="{{waitEvaluate>0}}"  >{{waitEvaluate>0 && waitEvaluate<10 ?  waitEvaluate: "" || waitEvaluate>10 ? "9+" : waitEvaluate}}</view>
       </view>
-      <view class="dingdan_item" bindtap="navigateToOrderListPage" data-goodsstatus="3">
+       <view class="dingdan_item" bindtap="navigateToOrderListPage" data-goodsstatus="3">
+        <image src="/static/dingdanmanage/icon4.png"></image>
+        <view>已评价</view>
+        <!-- waitEvaluate -->
+         <view class="badge" wx-if="{{hasEvaluate>0}}"  >{{hasEvaluate>0 && hasEvaluate<10 ?  hasEvaluate: "" || hasEvaluate>10 ? "9+" : hasEvaluate}}</view>
+      </view>
+      <view class="dingdan_item" bindtap="navigateToOrderListPage" data-goodsstatus="99">
         <image src="/static/dingdanmanage/quanbudingdan.png"></image>
         <view>全部商品</view>
+        <!-- orderAllCount -->
+         <view class="badge" wx-if="{{orderAllCount>0}}"  >{{orderAllCount>0 && orderAllCount<10 ?  orderAllCount: "" || orderAllCount>10 ? "9+" : orderAllCount}}</view>
       </view>
     </view>
     <view></view>

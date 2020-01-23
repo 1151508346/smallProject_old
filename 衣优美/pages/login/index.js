@@ -144,6 +144,17 @@ Page({
               icon: 'success',
               duration: 1500,
               mask: false,
+              success:()=>{
+               setTimeout(()=>{
+                // wx.switchTab({  
+                //   url:'/pages/index/index'  
+                // }); 
+                //回退上一层 
+                wx.navigateBack({
+                  delta:1
+                });
+               },1500)
+              }
             });
             wx.setStorage({
               key:"userid",

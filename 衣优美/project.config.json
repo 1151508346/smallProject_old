@@ -163,6 +163,34 @@
 					"id": -1,
 					"name": "pages/car/index",
 					"pathName": "pages/car/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/coupon/index",
+					"pathName": "pages/coupon/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/coupon/index",
+					"pathName": "pages/coupon/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/integeral/index",
+					"pathName": "pages/integeral/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/pxDetail/index",
+					"pathName": "pages/pxDetail/index",
 					"scene": null
 				}
 			]
