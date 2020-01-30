@@ -17,7 +17,11 @@ var uploadURL = "";
 // });
 
 //添加配置文件到muler对象。
-
+function SQLErrorInfo(err) {
+    if (err) {
+        throw new Error("server error");
+    }
+}
 module.exports = function (router) {
     var sessionID = "";
     router.post(Url.login, function (req, res) {
@@ -491,11 +495,11 @@ module.exports = function (router) {
             }
             // console.log(data.affectedRows)
             if (data.affectedRows === 1) {
-                var goodsDetail = [{size:170,num:30},{size:175,num:30},{size:180,num:40}];
+                var goodsDetail = [{ size: 170, num: 30 }, { size: 175, num: 30 }, { size: 180, num: 40 }];
                 var insertSQLDetail = "";
                 var i = 0;
-                goodsDetail.forEach(item=>{
-                    
+                goodsDetail.forEach(item => {
+
                     insertSQLDetail = `
                       insert into goodsdetail value('${goodsId}',${item.size},${item.num})
                     `
@@ -504,20 +508,192 @@ module.exports = function (router) {
                             throw new Error("server error");
                         }
                         i++;
-                        if(insertData.affectedRows === 1 && i === goodsDetail.length){
-                            
+                        if (insertData.affectedRows === 1 && i === goodsDetail.length) {
+
                             res.json({
                                 result: "success"
                             });
                         }
                     });
                 });
-               
-                
-               
+
+
+
             }
         })
     }
+    router.get(Url.getEvaluteCount, function (req, res) {
+        var { searchInfo } = req.query;
+        var selectSQL = `
+        SELECT 
+            COUNT(evaluateid) AS evaluteCount
+        FROM 
+            evaluatedetail
+            where userid like '%${searchInfo}%' 
+            or goodsid like '%${searchInfo}%'
+        `
+        getFind(con, selectSQL, function (err, data) {
+            if (err) {
+                throw new Error("server error");
+            }
+            if (data[0].hasOwnProperty("evaluteCount")) {
+                res.json(data[0]);
+            }
+        })
+    });
+    router.post(Url.getEvaluteDetailInfo, function (req, res) {
+        // console.log(req.body);
+        var { searchInfo, page, limit } = req.body;
+        var start = (page - 1) * limit;
+        var selectSQL = `
+            select * from evaluatedetail
+                where userid like '%${searchInfo}%' 
+                or goodsid like '%${searchInfo}%'
+            limit ${start},${limit}
+        `
+        getFind(con, selectSQL, function (err, data) {
+            // selectSQL
+            SQLErrorInfo(err);
+            if (data.length != 0) {
+                res.json(data);
+            }
+        });
+    });
+    router.post(Url.deleteEvaluteInfo, function (req, res) {
+        console.log(req.body);
+        var deleteEvaluteList = req.body;
+        var evaluteLen = deleteEvaluteList.length;
+        var deleteSQL = "";
+        for (var i = 0; i < evaluteLen; i++) {
+            var deleteSQL = `
+                delete from evaluatedetail 
+                where evaluateid = '${deleteEvaluteList[0].evaluateid}'
+            `
+                (function (index) {
+                    getDelete(con, deleteSQL, [], function (err, data) {
+                        SQLErrorInfo(err);
+                        if (data.affectedRows == 1 && index + 1 == evaluteLen) {
+                            res.json({
+                                result: "success"
+                            })
+                        }
+                    })
+                }(i));
+        }
+    });
+    router.post(Url.editedEvaluteInfo, function (req, res) {
+        // console.log(req.body)
+        var { evaluateid, userid, goodsid, evaluatecontent, grade } = req.body;
+        var updateSQL = `
+            UPDATE evaluatedetail SET 
+                userid = '${userid}' ,  
+                goodsid = '${goodsid}' ,
+                grade = '${grade}' ,
+                evaluatecontent = '${evaluatecontent}' 
+            WHERE evaluateid = '${evaluateid}'
+        `
+        getUpdate(con, updateSQL, [], function (err, data) {
+            SQLErrorInfo(err);
+            if (data.affectedRows === 1) {
+                res.json({
+                    result: "success"
+                })
+            } else {
+                res.json({
+                    result: "fail"
+                })
+            }
+        })
+
+    });
+    router.get(Url.getCouponCount, function (req, res) {
+        var { searchInfo } = req.query;
+        var selectSQL = `
+        SELECT 
+            COUNT(couponid) AS couponCount
+        FROM 
+            coupon
+            where userid like '%${searchInfo}%' 
+            or goodsid like '%${searchInfo}%'
+        `
+        getFind(con, selectSQL, function (err, data) {
+            if (err) {
+                throw new Error("server error");
+            }
+            if (data[0].hasOwnProperty("couponCount")) {
+                res.json(data[0]);
+            }
+        })
+    });
+    router.post(Url.getCouponDetailInfo, function (req, res) {
+        // console.log(req.body);
+        var { searchInfo, page, limit } = req.body;
+        var start = (page - 1) * limit;
+        var selectSQL = `
+            select * from coupon
+                where userid like '%${searchInfo}%' 
+                or goodsid like '%${searchInfo}%'
+            limit ${start},${limit}
+        `
+        getFind(con, selectSQL, function (err, data) {
+            // selectSQL
+            SQLErrorInfo(err);
+            if (data.length != 0) {
+                res.json(data);
+            }
+        });
+    });
+    router.post(Url.editedCouponInfo, function (req, res) {
+        console.log(req.body);
+        var { couponid, userid, goodsid, couponprice, couponstatus, starttime, endtime, } = req.body;
+        var updateSQL = `
+            UPDATE coupon SET 
+                userid = '${userid}' ,  
+                goodsid = '${goodsid}' ,
+                couponprice = '${couponprice}' ,
+                couponstatus = '${couponstatus}',
+                starttime = '${starttime}',
+                endtime = '${endtime}'
+            WHERE couponid = '${couponid}'
+        `
+        getUpdate(con, updateSQL, [], function (err, data) {
+            SQLErrorInfo(err);
+            if (data.affectedRows === 1) {
+                res.json({
+                    result: "success"
+                })
+            } else {
+                res.json({
+                    result: "fail"
+                })
+            }
+        })
+    })
+    router.post(Url.deleteCouponInfo, function (req, res) {
+        var deleteCouponList = req.body;
+        var couponLen = deleteCouponList.length;
+        var deleteSQL = "";
+        var deleteSQL = "";
+        for (var i = 0; i < couponLen; i++) {
+            deleteSQL = `
+            delete from coupon 
+            where couponid = '${deleteCouponList[i].couponid}'
+        `;
+            (function (index) {
+                getDelete(con, deleteSQL, [], function (err, data) {
+                    SQLErrorInfo(err);
+                    console.log(index)
+                    if (data.affectedRows == 1 && index + 1 == couponLen) {
+                        res.json({
+                            result: "success"
+                        })
+                    }
+                })
+
+            }(i))
+
+        }
+    })
 
 
 }

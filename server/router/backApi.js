@@ -18,6 +18,15 @@ var Url = {
     getSort:`${BASEPATH}/getSort`,
     getCategoryList:`${BASEPATH}/getCategoryList`,
     uploadFile:`${BASEPATH}/uploadFile`,
-    createContent:`${BASEPATH}/createContent`
+    createContent:`${BASEPATH}/createContent`,
+    getEvaluteCount:`${BASEPATH}/getEvaluteCount`,
+    getEvaluteDetailInfo:`${BASEPATH}/getEvaluteDetailInfo`,
+    deleteEvaluteInfo:`${BASEPATH}/deleteEvaluteInfo`,
+    editedEvaluteInfo:`${BASEPATH}/editedEvaluteInfo`,
+    getCouponCount:`${BASEPATH}/getCouponCount`,
+    getCouponDetailInfo:`${BASEPATH}/getCouponDetailInfo`,
+    editedCouponInfo:`${BASEPATH}/editedCouponInfo`,
+    deleteCouponInfo:`${BASEPATH}/deleteCouponInfo`
+    
 }
 module.exports = Url;
