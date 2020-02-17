@@ -1,7 +1,8 @@
 var getNativeUserId = require("../../tools/getNativeUserId.js");
 var { getRequest, postRequest } = require("../../tools/request.js");
 var Domain = require("../../tools/domain");
-var { forMatDate } = require("../../tools/common.js");
+var { forMatDate, handleAuditLog } = require("../../tools/common");
+
 var app = getApp();
 Page({
   data: {
@@ -391,10 +392,18 @@ Page({
             _that.setData({
               isCollect: true,
             })
+            getNativeUserId(res=>{
+              handleAuditLog(res.data,"收藏商品"+_that.data.goodsid+"成功")
+            })
+
           } if (res.data.type === "cancelCollect" && res.data.status === '200') {
             _that.setData({
               isCollect: false,
+            });
+            getNativeUserId(res=>{
+              handleAuditLog(res.data,"取消商品"+_that.data.goodsid+"收藏")
             })
+
           }
 
         },
@@ -442,8 +451,15 @@ Page({
             icon: 'success',
             duration: 1500,
             mask: false,
+          });
+         setTimeout(() => {
+          getNativeUserId(res=>{
+            if(res.data){
+              handleAuditLog(res.data,"商品ID:"+_that.data.goodsid+",尺寸:"+activeSize+" 加入购物车");
+            }
           })
-          return
+         }, 1500);
+          return;
         }
       })
     })
@@ -452,6 +468,11 @@ Page({
     console.log("switch car page")
     wx.switchTab({
       url: '/pages/car/index'
+    });
+  },
+  handleSwitchTabToOwnCenterPage(){
+    wx.switchTab({
+      url: '/pages/ownCenter/index'
     });
   },
   getCoupon() {
@@ -494,7 +515,14 @@ Page({
   },
   handleFastBuy() {
     var _that = this;
-    var payforMoney = this.data.goodsPrice - this.data.couponList[0].couponprice;
+    // console.log(this.data.couponList[0]);
+    var payforMoney = 0;
+    if(this.data.couponList[0]){
+      payforMoney= this.data.goodsPrice - this.data.couponList[0].couponprice;
+    }else{
+      payforMoney = this.data.goodsPrice;
+    }
+   
     // console.log( this.data.goodsPrice,this.data.couponList[0].couponprice)
     // 
     if(this.data.activeSize==0){
@@ -516,10 +544,11 @@ Page({
     });
     app.globalData.payForObjList = tempHandleObjList
     var url = "";
-    if(this.data.buyTitle === "立即领取"){
-      url = '/pages/payfor/index?payforMoney=' + payforMoney
+    console.log(this.data.buyTitle)
+    if(this.data.buyTitle === "立即购买"){
+      url = '/pages/payfor/index?payforMoney=' + payforMoney+'&fromURL=shoppingDetail'
     }else{
-      url = '/pages/payfor/index?payforMoney=' + payforMoney+'&couponid='+_that.data.couponid;
+      url = '/pages/payfor/index?payforMoney=' + payforMoney+'&couponid='+_that.data.couponid+"&fromURL=shoppingDetail";
     }
     wx.navigateTo({
       url: url,

@@ -181,8 +181,6 @@ module.exports = function (router) {
                 })
             }
         })
-
-
     });
     router.post(Url.deleteUserInfo, function (req, res) {
         var useridList = req.body.useridList;
@@ -693,7 +691,155 @@ module.exports = function (router) {
             }(i))
 
         }
+    });
+    /**
+     * getAuditLogCount
+        getAuditLogDetailInfo
+     */
+    router.get(Url.getAuditLogCount, function (req, res) {
+        var { searchInfo } = req.query;
+        var selectSQL = `
+        SELECT 
+            COUNT(auditid) AS auditCount
+        FROM 
+            auditlog
+        where userid like '%${searchInfo}%' 
+        or operateway like '%${searchInfo}%'
+        `;
+        getFind(con, selectSQL, function (err, data) {
+            if (err) {
+                throw new Error("server error");
+            }
+            if (data[0].hasOwnProperty("couponCount")) {
+                res.json(data[0]);
+            }
+        })
+    });
+    router.post(Url.getAuditLogDetailInfo, function (req, res) {
+        // console.log(req.body);
+        var { searchInfo, page, limit } = req.body;
+        var start = (page - 1) * limit;
+        var selectSQL = `
+            select auditid,auditlog.userid,username,operateway,operatetime  
+            FROM user,auditlog
+                where user.userid = auditlog.userid and
+               ( auditlog.userid like '%${searchInfo}%' or
+               operateway like '%${searchInfo}%')
+            limit ${start},${limit}
+        `;
+        getFind(con, selectSQL, function (err, data) {
+            // selectSQL
+            SQLErrorInfo(err);
+            if (data.length != 0) {
+                res.json(data);
+            }
+        });
+    });
+    router.post(Url.deleteAuditInfo,function(req,res){
+        console.log(req.body)
+        var deleteAuditList = req.body;
+        var auditLen = deleteAuditList.length;
+        var deleteSQL = "";
+        for (var i = 0; i < auditLen; i++) {
+            deleteSQL = `
+            delete from auditlog 
+            where auditid = '${deleteAuditList[i].auditid}'
+        `;
+            (function (index) {
+                getDelete(con, deleteSQL, [], function (err, data) {
+                    SQLErrorInfo(err);
+                    console.log(index)
+                    if (data.affectedRows == 1 && index + 1 == auditLen) {
+                        res.json({
+                            result: "success"
+                        })
+                    }
+                })
+
+            }(i))
+
+        }   
+    })
+    /**
+     * SELECT * FROM auditlog
+     * 
+     *  
+        INSERT INTO auditlog (userid,operateway,operatetime) VALUES(19,'登录成功','2020-01-29 12:35:00')
+
+     */
+    router.post(Url.deleteNotTheSameDayLog,function(req,res){
+        /**
+         * 获取今天的年-月-日
+         * 格式为:2020-01-30
+         */
+        var currentDate = formatDate().split(" ")[0];
+        /**
+         * 删除掉不是今天的操作日志
+         * 使用取反进行like模糊查询
+         */
+        var deleteSQL = `
+            DELETE FROM auditlog
+            WHERE  !(operatetime LIKE '%${currentDate}%')
+        `
+        getDelete(con,deleteSQL,[],function(err,data){
+            SQLErrorInfo(err);
+            
+                res.json({
+                    result:"success"
+                })
+        })
+    });
+    router.post(Url.searchGoodsSaleNumType,function(req,res){
+        var selectSQL = `
+        SELECT typeid ,COUNT(typeid) AS typeNum , COUNT(typeid)*100 AS total  ,SUM(goodscount) AS remainNum FROM  goods
+        GROUP BY typeid
+        
+        `
+        getFind(con,selectSQL,function(err,data){
+            SQLErrorInfo(err);
+            res.json(data);
+        })
+    });
+    router.post(Url.searchGoodsSaleNumSize,function(req,res){
+        var { goodsId } = req.body;
+        // console.log(req.body)
+        var selectSQL = `
+            SELECT goodsid,size,goodssizenum 
+            AS remainNum  
+            FROM goodsdetail
+            WHERE goodsid = '${goodsId}'
+        `;
+        getFind(con,selectSQL,function(err,data){
+            SQLErrorInfo(err);
+            console.log(data);
+            var newData = data.map(item=>{
+                switch(item.size){
+                case 170:
+                    item.total = 30;
+                    break;
+                case 175:
+                    item.total = 30;
+                    break;
+                case 180:
+                    item.total = 40;
+                    break;
+                }
+                return item;
+            })
+            res.json(newData);
+        });
+    });
+    router.post(Url.getAllGoodsId,function(req,res){
+        var selectSQL = `
+        SELECT goodsid AS value ,goodsid AS label FROM goods
+        `
+        getFind(con,selectSQL,function(err,data){
+            SQLErrorInfo(err);
+            res.json(data);
+        })
     })
 
 
 }
+
+

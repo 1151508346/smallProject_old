@@ -44,7 +44,14 @@
                         <text class="cancalOrder" hover-class="cancel-goPayFor-active" bindtap="handleCancelOrder" data-goodsid="{{item.goodsid}}" data-userid="{{item.userid}}" data-size="{{item.size}}" data-goodsstatus="{{item.goodsstatus}}">
                             取消订单
                         </text>
-                        <text class="goPayFor" hover-class="cancel-goPayFor-active" bindtap="handleGoPayFor" data-goodsid="{{item.goodsid}}" data-size="{{item.size}}" data-price="{{item.goodsprice}}" data-count="{{item.count}}">
+                        <text class="goPayFor" hover-class="cancel-goPayFor-active"
+                         bindtap="handleGoPayFor" 
+                         data-goodsid="{{item.goodsid}}" 
+                         data-size="{{item.size}}" 
+                         data-price="{{item.goodsprice}}" 
+                         data-count="{{item.count}}"
+                         data-orderid= "{{item.orderid}}"
+                         >
                             去支付
                         </text>
                     </view>

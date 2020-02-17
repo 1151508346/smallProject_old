@@ -1,7 +1,7 @@
 // pages/coupon/index.js
 var getNativeUserId = require("../../tools/getNativeUserId.js");
 var { getRequest, postRequest } = require("../../tools/request.js");
-var { forMatDate } = require("../../tools/common.js");
+var { forMatDate,handleAuditLog } = require("../../tools/common.js");
 var Domain = require("../../tools/domain");
 Page({
 
@@ -94,6 +94,12 @@ Page({
           _that.setData({
             coupon_goods_Info:temp_CGI
           });
+          setTimeout(()=>{
+            /**
+             * sendInfo.userid
+             */
+            handleAuditLog(sendInfo.userid,"领取优惠卷")
+          },1500);
           wx.showToast({
             title: '领取成功',
             icon: 'success',

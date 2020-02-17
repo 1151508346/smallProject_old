@@ -61,7 +61,12 @@
 	bottom:0rpx;
 	
   }
-    .car-list-name view:nth-of-type(2){
+  .car-list-name-buysize{
+	  position: absolute;
+	  bottom:45rpx !important;
+	  padding-left: 5rpx;
+  }
+    .car-list-name view:nth-of-type(3){
 		right:0rpx;
 	}
 	.car-list_input_num view{
@@ -104,8 +109,8 @@
 	background-color:#fff;
 }
 .tabbar_car view{
-		height:100%;
-		line-height:100rpx;
+	height:100%;
+	line-height:100rpx;
     text-align: center;
     /* border:1px solid red; */
     flex:.6;

@@ -1,6 +1,8 @@
 // pages/payfor/index.js
 var { getRequest, postRequest } = require("../../tools/request.js");
 var Domain = require("../../tools/domain");
+var { forMatDate, handleAuditLog } = require("../../tools/common");
+var  getNativeUserId  = require("../../tools/getNativeUserId");
 var app = getApp();
 Page({
 
@@ -12,6 +14,7 @@ Page({
     isCancelPay: true,
     useCoupon: false,
     couponid: "",
+    fromURL:"", //判断是从哪个页面跳转到支付页面的
   },
   onLoad(options) {
     console.log(options);
@@ -21,28 +24,52 @@ Page({
         couponid: options.couponid
       });
     }
+    if(options.hasOwnProperty('fromURL') && options.fromURL == "car"){
+      //表示从购物车页面跳转过来的
+      this.setData({
+        fromURL:"car"
+      })
+    } else if(options.hasOwnProperty('fromURL') && options.fromURL == "shoppingDetail"){
+      //表示从购物车页面跳转过来的
+      this.setData({
+        fromURL:"shoppingDetail"
+      })
+    }else if(options.hasOwnProperty('fromURL') && options.fromURL == "order"){
+      //表示从购物车页面跳转过来的
+      this.setData({
+        fromURL:"order"
+      })
+    }
     this.setData({
       payforMoney: options.payforMoney
     })
     // console.log(options.payforMoney)
-
   },
   onHide() {
   },
   onUnload() {
     if (this.data.isCancelPay) {
       app.globalData.path = "/pages/payfor/index";
+      getNativeUserId(res=>{
+        if(res.data){
+          handleAuditLog(res.data,"取消支付")
+        }
+      });
     }
   },
 
 
   handleNowPayFor() {
     var _that = this;
+    console.log(app.globalData.payForObjList)
     if (app.globalData.payForObjList.length !== 0) {
       // console.log(app.globalData.payForObjList);
       var tempPayForData = app.globalData.payForObjList.map(function (item) {
-        //  console.log(item);
         var tempObj = {};
+        //  console.log(item);
+        if(item.orderid){
+          tempObj.orderid = item.orderid;
+        }
         tempObj.goodsid = item.goodsid;
         tempObj.userid = item.userid;
         tempObj.count = item.buycount;
@@ -51,27 +78,60 @@ Page({
         tempObj.goodsstatus = 1;
         return tempObj;
       });
-      //  console.log(tempPayForData)
+       console.log(tempPayForData)
       var url = Domain + "payForToOrder";
       // console.log(tempPayForData)
-      postRequest(url, {tempPayForData,notDelete:true}, function (res) {
+      var sendPayForData = {};
+      switch(this.data.fromURL){
+        case "car":
+          sendPayForData = {tempPayForData,fromURL:"car"}
+          break;
+        case "shoppingDetail":
+          sendPayForData = {tempPayForData,fromURL:"shoppingDetail"}
+          break;
+        case "order":
+          sendPayForData ={tempPayForData,fromURL:"order"};
+          break;
+        
+      }
+        //  如何支付是从购物车跳转过来的就要删除掉保存在购物车中的商品内容
+       
+        // 如果支付是从shoppingDetail跳转过来的，就不用删除掉购物车中的内容，因为购物车中没有添加该内容
+        // sendPayForData = {tempPayForData,notDelete:true}
+      postRequest(url,sendPayForData, function (res) {
         console.log(res)
         if (res.data.type === "success" && res.data.status === '200') {
           _that.setData({
             isCancelPay: false
           })
+          console.log(_that.data.useCoupon || _that.data.couponid != "")
           if (_that.data.useCoupon || _that.data.couponid != "") {
             _that.handleUseCoupon();
           } else {
-            wx.showToast({
+             wx.showToast({
               title: '支付成功',
               icon: 'success',
               duration: 1500,
               mask: false,
             });
+            setTimeout(()=>{
+              getNativeUserId(res=>{
+                if(res.data){
+                  handleAuditLog(res.data,"原价支付成功")
+                }
+              })
+            },1500)
           }
 
         } else {
+       
+          setTimeout(()=>{
+            getNativeUserId(res=>{
+              if(res.data){
+                handleAuditLog(res.data,"原价支付失败")
+              }
+            })
+          },1500);
           console.log("支付失败2")
           wx.showToast({
             title: '支付失败',
@@ -129,13 +189,25 @@ Page({
     getRequest(useCouponUrl, function (res) {
       console.log(res)
       if (res.data.type === "success" && res.data.status === "200") {
+        console.log("aaaaaaaaaaaaaaaaaaaaaa")
         wx.showToast({
           title: '支付成功',
           icon: 'success',
           duration: 1500,
           mask: false,
         });
+        getNativeUserId(res=>{
+          if(res.data){
+            handleAuditLog(res.data,"使用优惠卷支付成功")
+          }
+        })
+        
       } else {
+        getNativeUserId(res=>{
+          if(res.data){
+            handleAuditLog(res.data,"使用优惠卷支付失败");
+          }
+        })
         wx.showToast({
           title: '支付失败',
           icon: 'none',

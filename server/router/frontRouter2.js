@@ -4,7 +4,11 @@ var { getInsert, getFind, getUpdate, getDelete } = require("../db/curd.js");
 var { aesEncrypt, aesDecrypt } = require("../aes_en_de.js");
 var { formatDate, handleImageURL } = require("../tool/index.js");
 var Url = require("./fontApi.js");
-
+function SQLErrorInfo(err) {
+    if (err) {
+        throw new Error("server error");
+    }
+}
 module.exports = function (router) {
     router.post(Url.getEvaluateDetailInfo, function (req, res) {
 
@@ -51,6 +55,28 @@ module.exports = function (router) {
             }
         });
     });
+    router.post(Url.setAuditLog,function(req,res){
+        var { userid, operateway,operatetime } = req.body;
+        var insertSQL = `
+            insert into auditlog(userid,operateway,operatetime) 
+            values('${userid}','${operateway}','${operatetime}')
+    
+        `
+        getInsert(con,insertSQL,[],function(err,data){
+            SQLErrorInfo(err);
+            if(data.affectedRows === 1){
+                res.json({
+                    type:"success",
+                    status:"200"
+                })
+            }else{
+                res.json({
+                    type:"fail",
+                    status:"404"
+                })
+            }
+        })
+    })
 
 
 

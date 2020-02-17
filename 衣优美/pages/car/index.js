@@ -546,7 +546,7 @@ Page({
 					}
 					app.globalData.payForObjList = payForObjList;
 					wx.navigateTo({
-						url: "/pages/payfor/index?payforMoney=" + _that.data.allPriceValue,
+						url: "/pages/payfor/index?payforMoney=" + _that.data.allPriceValue+'&fromURL=car',
 						success: function () {
 							//        console.log('跳转到news页面成功')// success              
 						},

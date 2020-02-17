@@ -37,7 +37,8 @@ var Url = {
     getConponList:"/getConponList",
     getSigninDetail:"/getSigninDetail",
     getEvaluateDetailInfo:"/getEvaluateDetailInfo",
-    insertEvalueInfoToDatabase:"/insertEvalueInfoToDatabase"
+    insertEvalueInfoToDatabase:"/insertEvalueInfoToDatabase",
+    setAuditLog:"/setAuditLog"
   }
 
   module.exports = Url;

@@ -1,6 +1,9 @@
 // pages/login/index.js
 var { checkUserName , checkPassword,isEmpty }= require("../../tools/check.js")
 var  Domain = require("../../tools/domain")
+var { forMatDate,handleAuditLog } = require("../../tools/common");
+var { postRequest } = require("../../tools/request");
+
 
 
 Page({
@@ -71,6 +74,7 @@ Page({
 
   },
   handleLoginFunc(){
+    var _that= this;
     if(!isEmpty(this.data.username_input)){
       wx.showToast({
         title: '用户名不能为空',
@@ -101,7 +105,7 @@ Page({
       //   mask: false,
       // })
       //表示用户名和密码校验成功
-      console.log(Domain+'frontLogin')
+      // console.log(Domain+'frontLogin')
       wx.request({
         url: Domain+'frontLogin',
         data: JSON.stringify(userInfo),
@@ -132,12 +136,16 @@ Page({
             return ;
           }
           if(res.data.status == 200 && res.data.type == "success"){
-            console.log(res.data)
+            // console.log(res.data)
             // console.log(res);
             //将用户登录的信息保存在本地缓存中
             wx.setStorage({
               key:"username",
               data:res.data.username
+            });
+            wx.setStorage({
+              key:"userid",
+              data:res.data.userid
             });
             wx.showToast({
               title: '登录成功',
@@ -156,11 +164,7 @@ Page({
                },1500)
               }
             });
-            wx.setStorage({
-              key:"userid",
-              data:res.data.userid
-            });
-            
+            handleAuditLog(res.data.userid,"登录成功");
           }
         },
         fail: function(res) {
@@ -230,6 +234,8 @@ Page({
       clearButtonStatus:false
     })
   },
+  
+    
  
  
 

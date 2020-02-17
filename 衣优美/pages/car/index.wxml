@@ -32,7 +32,7 @@
 				</view>
 				<view class="class-list-item car-list-name">{{item.goodsname}}
 				
-				
+					<view class="car-list-name-buysize"> 尺寸:{{item.buysize}}</view>
 					<view class = "car-list_price"> ￥{{item.goodsprice}}</view>
 					<view class = "car-list_input_num" >
 						

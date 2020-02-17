@@ -1,6 +1,8 @@
 var getNativeUserId = require("../../tools/getNativeUserId.js");
 var { getRequest, postRequest } = require("../../tools/request.js");
 var Domain = require("../../tools/domain");
+var { forMatDate, handleAuditLog } = require("../../tools/common");
+
 Page({
 
   /**
@@ -14,7 +16,7 @@ Page({
     waitEvaluate: 0, //待评价 （已经收货）
     orderAllCount: 0,
     hasEvaluate: 0,
-    userid:""
+    userid: ""
   },
   /**
    * 生命周期函数--监听页面加载
@@ -25,11 +27,11 @@ Page({
   onShow() {
     var _that = this;
     this.setData({
-      waitPay:0,
-      waitReceive:0,
-      waitEvaluate:0,
-      orderAllCount:0,
-      hasEvaluate:0
+      waitPay: 0,
+      waitReceive: 0,
+      waitEvaluate: 0,
+      orderAllCount: 0,
+      hasEvaluate: 0
     });
     wx.getStorage({
       key: 'username', //检验本地缓存中有没有username用户信息，有则说明处于登录状态，反之为登录状态
@@ -45,7 +47,7 @@ Page({
       complete: () => { }
     });
     getNativeUserId(function (res) {
-    
+
       if (!res.data) {
         wx.showToast({
           title: '您还未登录',
@@ -56,7 +58,7 @@ Page({
         return;
       }
       _that.setData({
-        userid:res.data
+        userid: res.data
       })
       // wx.navigateTo({
       //   url: "/pages/collectGoods/index?userid=" + res.data
@@ -66,7 +68,7 @@ Page({
       getRequest(url, function (res) {
         if (res.data) {
           console.log(res.data);
-         
+
           res.data.forEach(item => {
             _that.setData({
               orderAllCount: _that.data.orderAllCount + item.goodsstatusNum
@@ -111,64 +113,85 @@ Page({
   },
   userExitLogin() {
     var _that = this;
-    //  console.log(_that.data.username)
-    wx.removeStorage({
-      key: "username",
-      success: (result) => {
-        console.log("exit")
-        _that.setData({
-          loginStatus: false,
-          username:""
-        })
-      },
-      fail: () => { },
-      complete: () => { }
-    });
-    wx.removeStorage({
-      key: "userid",
-      success: (result) => {
-        console.log("exit")
-        _that.setData({
-          loginStatus: false,
-          userid:""
-        })
-      },
-      fail: () => { },
-      complete: () => { }
-    });
-    // wx.getStorage({
-    //   key: "username",
-    //   success(res) {
-    //     // console.log(res.data)
-    //     // console.log(res.data == _that.data.username)
-    //     // if (res.data == _that.data.username) {
-    //       wx.removeStorage({
-    //         key: "username",
-    //         success: (result) => {
-    //           console.log("exit")
-    //           _that.setData({
-    //             loginStatus: false
-    //           })
-    //         },
-    //         fail: () => { },
-    //         complete: () => { }
-    //       });
-    //     // }
-    //   }, fail() {
-    //     // console.log("失败鸟");
-    //     wx.showToast({
-    //       title: '您还未登录',
-    //       icon: 'none',
-    //       image: '',
-    //       duration: 1500,
-    //       mask: false,
-    //       success: (result) => {
-    //       },
-    //       fail: () => { },
-    //       complete: () => { }
-    //     });
-    //   }
-    // })
+    getNativeUserId(function (res) {
+      if (!res.data) {
+        wx.showToast({
+          title: '您还未登录',
+          icon: 'none',
+          duration: 1500,
+          mask: false,
+        });
+        return;
+      }
+
+      //  console.log(_that.data.username)
+      wx.removeStorage({
+        key: "username",
+        success: (result) => {
+          console.log("exit")
+          _that.setData({
+            loginStatus: false,
+            username: ""
+          })
+        },
+        fail: () => { },
+        complete: () => { }
+      });
+      wx.removeStorage({
+        key: "userid",
+        success: (result) => {
+          console.log("exit")
+          _that.setData({
+            loginStatus: false,
+            userid: ""
+          })
+        },
+        fail: () => { },
+        complete: () => { }
+      });
+      wx.showToast({
+        title: '退出登录',
+        icon: 'success',
+        duration: 1500,
+        mask: false,
+      });
+      handleAuditLog(res.data,"退出登录");
+      // wx.getStorage({
+      //   key: "username",
+      //   success(res) {
+      //     // console.log(res.data)
+      //     // console.log(res.data == _that.data.username)
+      //     // if (res.data == _that.data.username) {
+      //       wx.removeStorage({
+      //         key: "username",
+      //         success: (result) => {
+      //           console.log("exit")
+      //           _that.setData({
+      //             loginStatus: false
+      //           })
+      //         },
+      //         fail: () => { },
+      //         complete: () => { }
+      //       });
+      //     // }
+      //   }, fail() {
+      //     // console.log("失败鸟");
+      //     wx.showToast({
+      //       title: '您还未登录',
+      //       icon: 'none',
+      //       image: '',
+      //       duration: 1500,
+      //       mask: false,
+      //       success: (result) => {
+      //       },
+      //       fail: () => { },
+      //       complete: () => { }
+      //     });
+      //   }
+      // })
+
+    })
+
   },
   navigateToOrderListPage(e) {
     var goodsStatus = e.currentTarget.dataset.goodsstatus;
@@ -211,6 +234,7 @@ Page({
   },
   handleSignIn() {
     getNativeUserId(res => {
+      var userid = ""
       if (!res.data) {
         wx.showToast({
           title: '您还未登录',
@@ -220,11 +244,16 @@ Page({
         });
         return;
       }
+      userid = res.data;
       var url = Domain + "signIn?userid=" + res.data;
+      
       getRequest(url, function (res) {
         if (res.data) {
           console.log(res.data);
           if (res.data.type === "success" && res.data.status === "200") {
+            console.log("------------------------------------")
+            console.log(userid)
+            handleAuditLog(userid,"今日签到");
             wx.showToast({
               title: '签到成功',
               icon: 'success',
@@ -244,9 +273,9 @@ Page({
       })
     });
   },
-  navigateToCouponPage(){
-    getNativeUserId(function(res){
-      if(!res.data){
+  navigateToCouponPage() {
+    getNativeUserId(function (res) {
+      if (!res.data) {
         wx.showToast({
           title: '您还没有登录呢',
           icon: 'none',
@@ -254,16 +283,16 @@ Page({
           duration: 1500,
           mask: false,
         });
-        return ;
+        return;
       }
       wx.navigateTo({
-        url: '/pages/coupon/index?userid='+res.data,
+        url: '/pages/coupon/index?userid=' + res.data,
       });
     });
   },
   //点击积分按钮，跳转到积分详情页面
-  navigateToIntegralPage(){
-    if(this.data.userid !=""){
+  navigateToIntegralPage() {
+    if (this.data.userid != "") {
       // var url  = Domain +"getSigninDetail?userid=" + this.data.userid
       // getRequest(url,function(res){
       //   if(res.data){
@@ -273,7 +302,7 @@ Page({
       wx.navigateTo({
         url: '/pages/integeral/index',
       });
-    }else{
+    } else {
       wx.showToast({
         title: '您还没有登录呢',
         icon: 'none',

@@ -3,6 +3,8 @@ var { getRequest, postRequest } = require("../../tools/request.js");
 var Domain = require("../../tools/domain");
 var getNativeUsername = require("../../tools/getNativeUsername.js");
 var getNativeUserId = require("../../tools/getNativeUserId.js");
+var { forMatDate, handleAuditLog } = require("../../tools/common");
+
 var app = getApp();
 Page({
 
@@ -13,7 +15,7 @@ Page({
     defaultImage: "/static/init.jpg",
     pendingList: [],
     defaultOrderItem: 0,
-    userid:"",
+    userid: "",
   },
 
   /**
@@ -24,10 +26,10 @@ Page({
     var goodsStatus = options.goodsStatus;
     // console.log(options)
     this.getOrderList(goodsStatus);
-    getNativeUserId(function(res){
-      if(res.data){
+    getNativeUserId(function (res) {
+      if (res.data) {
         _that.setData({
-          userid:res.data
+          userid: res.data
         })
       }
     })
@@ -76,28 +78,30 @@ Page({
   },
   //去支付
   handleGoPayFor(e) {
-    var  { goodsid,price,size,count} = e.currentTarget.dataset;
-    getNativeUserId(function(res){
-      if(!res.data){
+    var { goodsid, price, size, count, orderid } = e.currentTarget.dataset;
+    // console.log(e.currentTarget.dataset)
+    getNativeUserId(function (res) {
+      if (!res.data) {
         wx.showToast({
           title: "您还未登录",
           icon: 'none',
           duration: 1500,
           mask: false,
         });
-        return ;
+        return;
       }
       app.globalData.payForObjList = [
         {
-          goodsid:goodsid,
-          buycount:count,
-          buysize:size,
-          userid:res.data
+          orderid: orderid,
+          goodsid: goodsid,
+          buycount: count,
+          buysize: size,
+          userid: res.data
         }
       ];
-      console.log(price)
+      // console.log(price)
       wx.navigateTo({
-        url: "/pages/payfor/index?payforMoney="+price,
+        url: "/pages/payfor/index?payforMoney=" + price + "&fromURL=order",
         success: function () {
           //        console.log('跳转到news页面成功')// success              
         },
@@ -105,10 +109,10 @@ Page({
           //     console.log('跳转到news页面失败')   fail 
         }
       })
-      
+
     })
-    
-    
+
+
   },
   getOrderList(e) {
     var _that = this;
@@ -141,57 +145,77 @@ Page({
       }
     })
   },
-  appliyBackMoney(e){
-    var {goodsid,size,goodsstatus} = e.currentTarget.dataset
+  appliyBackMoney(e) {
+    var { goodsid, size, goodsstatus } = e.currentTarget.dataset
     // console.log(size)
     // console.log("=====================================")
     var _that = this;
-    getNativeUserId(function(res){
-      if(!res.data){
+    getNativeUserId(function (res) {
+      if (!res.data) {
         wx.showToast({
           title: "您还未登录",
           icon: 'none',
           duration: 1500,
           mask: false,
         });
-        return ;
+        return;
       }
       var userid = res.data;
-      var url = Domain+"applyBackMoney?userid="+userid+"&goodsid="+goodsid+"&size="+size+"&goodsstatus="+goodsstatus;
-      getRequest(url,function(res){
+      var url = Domain + "applyBackMoney?userid=" + userid + "&goodsid=" + goodsid + "&size=" + size + "&goodsstatus=" + goodsstatus;
+      getRequest(url, function (res) {
         console.log(res)
-          if(res.data.type === "success" && res.data.status === "200"){
-            var tempPendingList = JSON.parse(JSON.stringify(_that.data.pendingList));
-            console.log(tempPendingList)
-            //  tempPendingList.filter(item=>{
-            //   return item.goodsid !== goodsid && item.userid !== userid;
-            // });
-            for(var i = 0;i<tempPendingList.length;i++){
-                if(tempPendingList[i].goodsid === goodsid && tempPendingList[i].userid === userid &&  tempPendingList[i].size === size &&  tempPendingList[i].goodsstatus === goodsstatus ){
-                  tempPendingList.splice(i,1);
-                }
+        if (res.data.type === "success" && res.data.status === "200") {
+          wx.showToast({
+            title: '申请退款成功',
+            icon: 'success',
+            duration: 1500,
+            mask: false,
+          });
+          setTimeout(() => {
+            handleAuditLog(userid, "申请退款成功");
+          }, 1500);
+
+          var tempPendingList = JSON.parse(JSON.stringify(_that.data.pendingList));
+          console.log(tempPendingList)
+          //  tempPendingList.filter(item=>{
+          //   return item.goodsid !== goodsid && item.userid !== userid;
+          // });
+          for (var i = 0; i < tempPendingList.length; i++) {
+            if (tempPendingList[i].goodsid === goodsid && tempPendingList[i].userid === userid && tempPendingList[i].size === size && tempPendingList[i].goodsstatus === goodsstatus) {
+              tempPendingList.splice(i, 1);
             }
-            _that.setData({
-              pendingList : tempPendingList
-            });
           }
+          _that.setData({
+            pendingList: tempPendingList
+          });
+        }else{
+          wx.showToast({
+            title: '申请退款失败',
+            icon: 'none',
+            duration: 1500,
+            mask: false,
+          });
+          setTimeout(()=>{
+            handleAuditLog(userid,"申请退款失败");
+          },1500);
+        }
       });
 
     });
-    
+
   },
-  navigateToPXDetailPage(e){
-    if(this.data.userid!=""){
-      var { goodsid,goodsimage,goodsstatus,goodsname} = e.currentTarget.dataset;
+  navigateToPXDetailPage(e) {
+    if (this.data.userid != "") {
+      var { goodsid, goodsimage, goodsstatus, goodsname } = e.currentTarget.dataset;
       console.log(goodsstatus)
       wx.navigateTo({
-        url: '/pages/pxDetail/index?goodsid='+goodsid+"&goodsimage="+goodsimage+"&goodsstatus="+goodsstatus+"&goodsname="+goodsname,
-        success: (result)=>{
+        url: '/pages/pxDetail/index?goodsid=' + goodsid + "&goodsimage=" + goodsimage + "&goodsstatus=" + goodsstatus + "&goodsname=" + goodsname,
+        success: (result) => {
         },
-        fail: ()=>{},
-        complete: ()=>{}
+        fail: () => { },
+        complete: () => { }
       });
-    }else{
+    } else {
       wx.showToast({
         title: '您还没有登录呢',
         icon: 'none',

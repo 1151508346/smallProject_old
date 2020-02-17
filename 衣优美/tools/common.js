@@ -1,3 +1,5 @@
+var { postRequest } = require("./request");
+var Domain = require("./domain");
 function forMatDate(defaultDate) {
     var tempDate = defaultDate || new Date();
     var year = tempDate.getFullYear();
@@ -24,7 +26,25 @@ function forMatDate(defaultDate) {
     }
     return year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + seconds;
 }
+function handleAuditLog(currentUserId,operateway,callback){
+        var url = Domain + "setAuditLog";
+        var auditInfo = {
+          operateway:operateway,
+          userid:currentUserId,
+          operatetime:forMatDate()
+        };
+        postRequest(url,auditInfo,function(res){
+        //   if(res.data){
+        //     console.log(res.data)
+        //   }
+            if(callback){
+                callback(res);
+            }
+        
+        })
+}
 
 module.exports = {
-    forMatDate
+    forMatDate,
+    handleAuditLog
 }

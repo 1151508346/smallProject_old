@@ -26,7 +26,14 @@ var Url = {
     getCouponCount:`${BASEPATH}/getCouponCount`,
     getCouponDetailInfo:`${BASEPATH}/getCouponDetailInfo`,
     editedCouponInfo:`${BASEPATH}/editedCouponInfo`,
-    deleteCouponInfo:`${BASEPATH}/deleteCouponInfo`
+    deleteCouponInfo:`${BASEPATH}/deleteCouponInfo`,
+    getAuditLogCount:`${BASEPATH}/getAuditLogCount`,
+    getAuditLogDetailInfo: `${BASEPATH}/getAuditLogDetailInfo`, 
+    deleteAuditInfo:`${BASEPATH}/deleteAuditInfo`,
+    deleteNotTheSameDayLog:`${BASEPATH}/deleteNotTheSameDayLog`,
+    searchGoodsSaleNumType:`${BASEPATH}/searchGoodsSaleNumType`,
+    searchGoodsSaleNumSize:`${BASEPATH}/searchGoodsSaleNumSize`,
+    getAllGoodsId:`${BASEPATH}/getAllGoodsId`
     
 }
 module.exports = Url;

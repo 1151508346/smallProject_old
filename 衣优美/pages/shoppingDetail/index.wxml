@@ -74,7 +74,7 @@
 	
 	<view class="{{toggleAddCarAlert ? 'select-size-count-alert_end' : 'select-size-count-alert' }}" >
       <view class="addCarAlert_image">
-          <image src="{{background[0]}}"></image>
+          <image src="{{goodsImage[0]}}"></image>
       </view>
       <view class="alertPrice_box">
         <view class = "alertPrice">￥{{goodsPrice}}</view>
@@ -121,8 +121,10 @@
   </view>
 	
 	<view class="detail-bar">
-		<navigator>
-			<view class="detail-bar-list detail-bar-my">
+		<navigator url = "null">
+			<view class="detail-bar-list detail-bar-my"
+				bindtap = "handleSwitchTabToOwnCenterPage"
+			>
 				<image src="/static/shoppingDedail/defaultMy.png"></image>
 				<view class="detail-bar-list-title">
 					<text>我的</text>

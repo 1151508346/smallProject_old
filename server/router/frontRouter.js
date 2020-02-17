@@ -741,107 +741,256 @@ module.exports = function (router) {
 
   // payForToOrder
   router.post(Url.payForToOrder, function (req, res) {
-    var payGoodsNum = 0;
+    // var payGoodsNum = 0;
+    // console.log(req.body)
+    // var payGoodsList = [];
+    // if (req.body.hasOwnProperty("notDelete")) {
+    //   payGoodsList = req.body.tempPayForData
+    // } else {
+    //   payGoodsList = req.body
+    // }
+    // payGoodsList.forEach(function (item, index) {
+    //   var { userid, goodsid, count, size, purchasetime, goodsstatus } = item;
+    //   var insertSQL = `insert into orders (goodsid,userid,purchasetime,count,size,goodsstatus) value(\'${goodsid}\',\'${userid}\' ,\'${purchasetime}\' ,\'${count}\'  ,\'${size}\',\'${goodsstatus}\')`;
+    //   var deleteSQL = ` delete from buycar where goodsid = \'${goodsid}\' and userid = \'${userid}\' and buycount = \'${count}\' and buysize = \'${size}\'`
+    //   var selectSQL = `
+    //     select * from orders 
+    //     where userid = \'${userid}\' and
+    //     goodsid = \'${goodsid}\' and
+    //     size = \'${size}\' and
+    //     goodsstatus = 0
+    //   `
+    //   getFind(con, selectSQL, function (err, data) {
+    //     if (err) {
+    //       throw new Error("server error");
+    //     }
+    //     console.log(data);
+    //     if (data.length != 0) {
+    //       var newData = data.map(item => {
+    //         item.goodsstatus = 1;
+    //         return item;
+    //       });
+    //       newData.forEach(item => {
+    //         var updateSQL = `update  orders set goodsstatus = 1
+    //           where orderid = \'${item.orderid}\'
+    //          `
+    //         getUpdate(con, updateSQL, [], function (err, updateData) {
+    //           if (err) {
+    //             throw new Error("server error");
+    //           }
+    //           if (updateData.affectedRows === 1) {
 
-    var payGoodsList = [];
-    if (req.body.hasOwnProperty("notDelete")) {
-      payGoodsList = req.body.tempPayForData
-    } else {
-      payGoodsList = req.body
+    //             getDelete(con, deleteSQL, [], function (err, deleteData) {
+    //               if (err) {
+    //                 throw new Error("server error");
+    //               }
+    //               payGoodsNum++;
+    //               console.log(payGoodsNum)
+    //               if (deleteData.affectedRows === 1 && payGoodsNum === payGoodsList.length) {
+    //                 // console.log(payGoodsNum)
+    //                 res.json({
+    //                   type: "success",
+    //                   status: "200"
+    //                 });
+    //               } else if (deleteData.affectedRows != 1 && payGoodsNum === payGoodsList.length) {
+    //                 // console.log(payGoodsNum)
+    //                 res.json({
+    //                   type: "fail",
+    //                   status: "200"
+    //                 })
+    //               }
+    //             })
+    //           }
+    //         })
+    //       })
+    //     } else {
+    //       getInsert(con, insertSQL, [], function (err, insertData) {
+    //         if (insertData.affectedRows === 1 && payGoodsNum === payGoodsList.length) {
+    //           if (req.body.hasOwnProperty("notDelete")) {
+    //             console.log("=====================================================");
+    //             res.json({
+    //               type: "success",
+    //               status: "200"
+    //             })
+    //             return;
+    //           }
+    //           getDelete(con, deleteSQL, [], function (err, deleteData) {
+    //             if (err) {
+    //               throw new Error("server error");
+    //             }
+    //             payGoodsNum++;
+    //             if (deleteData.affectedRows === 1 && payGoodsNum === payGoodsList.length) {
+    //               // console.log(payGoodsNum)
+    //               res.json({
+    //                 type: "success",
+    //                 status: "200"
+    //               });
+    //             } else if (deleteData.affectedRows != 1 && payGoodsNum === payGoodsList.length) {
+    //               // console.log(payGoodsNum)
+    //               res.json({
+    //                 type: "fail",
+    //                 status: "200"
+    //               })
+    //             }
+    //           })
+
+    //         }
+    //       })
+    //     }
+    //   });
+    // });
+    payFor(req, res);
+
+  });
+  function payFor(req, res) {
+    //如果等于false 说明支付购物车中的商品
+    if (req.body.hasOwnProperty("fromURL") && req.body.fromURL == "car") {
+      handleBuyCarPayFor(req, res);
+      return;
     }
-
-    payGoodsList.forEach(function (item, index) {
-      var { userid, goodsid, count, size, purchasetime, goodsstatus } = item;
-      var insertSQL = `insert into orders (goodsid,userid,purchasetime,count,size,goodsstatus) value(\'${goodsid}\',\'${userid}\' ,\'${purchasetime}\' ,\'${count}\'  ,\'${size}\',\'${goodsstatus}\')`;
-      var deleteSQL = ` delete from buycar where goodsid = \'${goodsid}\' and userid = \'${userid}\' and buycount = \'${count}\' and buysize = \'${size}\'`
-      var selectSQL = `
-        select * from orders 
-        where userid = \'${userid}\' and
-        goodsid = \'${goodsid}\' and
-        size = \'${size}\' and
-        goodsstatus = 0
-
-      `
-      getFind(con, selectSQL, function (err, data) {
+    // console.log(req.body)
+    if (req.body.hasOwnProperty("fromURL") && req.body.fromURL == "shoppingDetail") {
+      insertOrdersSQLByShoppingDetail(req, res);
+    }
+    if (req.body.hasOwnProperty("fromURL") && req.body.fromURL == "order") {
+      updateOrderStatusComePayed(req, res);
+    }
+  }
+  //将待支付状态的商品改变为已经支付的状态
+  function updateOrderStatusComePayed(req, res) {
+    var tempPayForData = req.body.tempPayForData[0];
+    var { orderid } = tempPayForData;
+    var updateSQL = `update  orders set goodsstatus = 1
+        where orderid = \'${orderid}\'`;
+    getUpdate(con, updateSQL, [], function (err, updateData) {
+      if (err) {
+        throw new Error("server error");
+      }
+      if (updateData.affectedRows === 1) {
+        // res.json({
+        //   type:"success",
+        //   status:"200"
+        // });
+        updateGoodsAndGoodsDetail(req, res);
+      } else {
+        res.json({
+          type: "fail",
+          status: "404"
+        })
+      }
+    })
+  }
+  function handleBuyCarPayFor(req, res) {
+    insertOrdersSQL(req, res);
+  }
+  function insertOrdersSQL(req, res) {
+    var tempPayForData = req.body.tempPayForData;
+    var tempPayForDataLen = tempPayForData.length;
+    console.log(req.body)
+    for (var i = 0; i < tempPayForDataLen; i++) {
+      console.log("insert order success")
+      var insertSQL = "";
+      var { goodsid, userid, count, size, purchasetime, goodsstatus } = tempPayForData[i]
+      console.log(goodsid, userid, count, size, purchasetime, goodsstatus)
+      insertSQL = `insert into orders 
+      (goodsid,userid,purchasetime,count,size,goodsstatus) 
+      values(\'${goodsid}\',\'${userid}\' ,\'${purchasetime}\' ,\'${count}\'  ,\'${size}\',\'${goodsstatus}\')`;
+      getInsert(con, insertSQL, [], function (err, insertData) {
+        if (err) {
+          throw new Error('server error');
+        }
+        if (insertData.affectedRows === 1 && i == tempPayForDataLen) {
+          console.log("insert order success")
+          deleteHasPayForInBuyCar(req, res)
+        }
+      });
+    }
+  }
+  function insertOrdersSQLByShoppingDetail(req, res) {
+    var tempPayForData = req.body.tempPayForData;
+    var tempPayForDataLen = tempPayForData.length;
+    // console.log(req.body)
+    for (var i = 0; i < tempPayForDataLen; i++) {
+      console.log("insert order success")
+      var insertSQL = "";
+      var { goodsid, userid, count, size, purchasetime, goodsstatus } = tempPayForData[i]
+      console.log(goodsid, userid, count, size, purchasetime, goodsstatus)
+      insertSQL = `insert into orders 
+      (goodsid,userid,purchasetime,count,size,goodsstatus) 
+      values(\'${goodsid}\',\'${userid}\' ,\'${purchasetime}\' ,\'${count}\'  ,\'${size}\',\'${goodsstatus}\')`;
+      getInsert(con, insertSQL, [], function (err, insertData) {
+        if (err) {
+          throw new Error('server error');
+        }
+        if (insertData.affectedRows === 1 && i == tempPayForDataLen) {
+          updateGoodsAndGoodsDetail(req, res);
+          // res.json({
+          //   type: "success",
+          //   status: "200"
+          // });
+        }
+      });
+    }
+  }
+  function deleteHasPayForInBuyCar(req, res) {
+    var deleteSQL = "";
+    var tempPayForData = req.body.tempPayForData;;
+    var tempPayForDataLen = tempPayForData.length;
+    for (var i = 0; i < tempPayForDataLen; i++) {
+      var { goodsid, userid, count, size } = tempPayForData[i]
+      deleteSQL = ` delete from buycar where 
+        goodsid = \'${goodsid}\' and 
+        userid = \'${userid}\' and 
+        buycount = \'${count}\' and 
+        buysize = \'${size}\'`
+      getDelete(con, deleteSQL, [], function (err, deleteData) {
         if (err) {
           throw new Error("server error");
         }
-        if (data.length != 0) {
-          var newData = data.map(item => {
-            item.goodsstatus = 1;
-            return item;
-          });
-          newData.forEach(item => {
-            var updateSQL = `update  orders set goodsstatus = 1
-              where orderid = \'${item.orderid}\'
-             `
-            getUpdate(con, updateSQL, [], function (err, updateData) {
-              if (err) {
-                throw new Error("server error");
-              }
-              if (updateData.affectedRows === 1) {
-
-                getDelete(con, deleteSQL, [], function (err, deleteData) {
-                  if (err) {
-                    throw new Error("server error");
-                  }
-                  payGoodsNum++;
-                  if (deleteData.affectedRows === 1 && payGoodsNum === payGoodsList.length) {
-                    // console.log(payGoodsNum)
-                    res.json({
-                      type: "success",
-                      status: "200"
-                    });
-                  } else if (deleteData.affectedRows != 1 && payGoodsNum === payGoodsList.length) {
-                    // console.log(payGoodsNum)
-                    res.json({
-                      type: "fail",
-                      status: "200"
-                    })
-                  }
-                })
-              }
-            })
-          })
-        } else {
-          getInsert(con, insertSQL, [], function (err, insertData) {
-            if (insertData.affectedRows === 1) {
-              if (req.body.hasOwnProperty("notDelete")) {
-                console.log("=====================================================");
-                res.json({
-                  type: "success",
-                  status: "200"
-                })
-                return;
-              }
-              getDelete(con, deleteSQL, [], function (err, deleteData) {
-                if (err) {
-                  throw new Error("server error");
-                }
-                payGoodsNum++;
-                if (deleteData.affectedRows === 1 && payGoodsNum === payGoodsList.length) {
-                  // console.log(payGoodsNum)
-                  res.json({
-                    type: "success",
-                    status: "200"
-                  });
-                } else if (deleteData.affectedRows != 1 && payGoodsNum === payGoodsList.length) {
-                  // console.log(payGoodsNum)
-                  res.json({
-                    type: "fail",
-                    status: "200"
-                  })
-                }
-              })
-
-            }
+        if (deleteData.affectedRows === 1 && i == tempPayForDataLen) {
+          updateGoodsAndGoodsDetail(req, res);
+          // res.json({
+          //   type: "success",
+          //   status: "200"
+          // });
+        }
+      })
+    }
+  }
+  function updateGoodsAndGoodsDetail(req, res) {
+    var tempPayForData = req.body.tempPayForData;
+    var tempPayForDataLen = tempPayForData.length;
+    /**
+     * 
+     */
+    for (var i = 0; i < tempPayForDataLen; i++) {
+      var { goodsid, userid, count, size } = tempPayForData[i];
+      var updateSQL = `
+      UPDATE goods,goodsdetail 
+      SET 
+        goods.goodscount = goods.goodscount - ${count},
+        goodsdetail.goodssizenum = goodsdetail.goodssizenum -${count}
+      WHERE goods.goodsid = goodsdetail.goodsid 
+      AND   goods.goodsid = '${goodsid}' 
+      AND	goodsdetail.size = ${size}
+      `;
+      getUpdate(con, updateSQL, [], function (err, data) {
+        if (err) {
+          throw new Error("server error");
+        }
+        console.log(i ,tempPayForDataLen)
+        if (data.affectedRows > 1 && i == tempPayForDataLen) {
+          res.json({
+            type: "success",
+            status: "200"
           })
         }
-      });
+      })
 
 
-    });
-  });
+    }
+
+  }
 
   router.post(Url.cancelPayFor, function (req, res) {
     var payGoodsList = req.body;
@@ -1050,7 +1199,6 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
 
     });
   })
-
   router.get(Url.insertVisited, function (req, res) {
     var { userid, goodsid } = req.query;
     var visitedTime = formatDate();
@@ -1101,7 +1249,7 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
       from signin where userid = \'${userid}\'`
     /**
      * SELECT userid,integral ,MAX(signindate) AS lastSignindate FROM signin
-    	 WHERE userid = '19'
+       WHERE userid = '19'
      */
     getFind(con, selectSQL, function (err, findData) {
       if (err) {
@@ -1111,12 +1259,12 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
       if (findData.length === 1) {
         // var currentTime = formatDate();
 
-/*-------------------------------处理上次签到的时间和当前签到的时间之差是------------*/
+        /*-------------------------------处理上次签到的时间和当前签到的时间之差是------------*/
         var currentTime = new Date();
         var LastTime = findData[0].lastSignindate; //当前用户最后一次签到
         var diffTime = currentTime.getTime() - LastTime.getTime();
         var diffDay = diffTime / (24 * 3600 * 1000); //上次签到的时间和本次签到的时间之差
-/*---------------------------------------------------------------------------- */
+        /*---------------------------------------------------------------------------- */
         // return ;
         // var formatCurrentDate = new Date(Date.parse(currentTime)).toLocaleString().split(" ")[0];
         // console.log(formatCurrentDate);
@@ -1136,7 +1284,7 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
         }
 
         // var updateSQL = `update  signin set integral=integral+1 , signindate=\'${formatDate()}\' where userid = \'${userid}\'`;
-        
+
         var insertSQL = `
           insert into signin(userid,signindate,integral,pattern)
             value(${userid},'${formatDate()}',5,'签到')
@@ -1269,7 +1417,7 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
       res.json(data);
     })
   });
-  router.get(Url.getSigninDetail,function(req,res){
+  router.get(Url.getSigninDetail, function (req, res) {
     var { userid } = req.query;
     var selectSQL = `
     SELECT * ,
@@ -1282,45 +1430,18 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
     
     
     `
-   getFind(con,selectSQL,function(err,data){
-    if(err){
+    getFind(con, selectSQL, function (err, data) {
+      if (err) {
         throw new Error("server error");
-    }
-    res.json(data);
-   });
-  
+      }
+      res.json(data);
+    });
+
   });
 
-}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// router.post("/test",function(req,res){
+  // router.post("/test",function(req,res){
   //   console.log(req.body);
   //   console.log(req.headers.authorization)
   //   res.json({
@@ -1378,37 +1499,37 @@ orders.userid = (SELECT user.userid FROM USER WHERE username = \'${username}\') 
 
 
 
-// var goodsid = ["S00001", "S00002", "S00003", "S00004", "S00005"];
+  // var goodsid = ["S00001", "S00002", "S00003", "S00004", "S00005"];
 
-// var sizenum = [
-//   {
-//     size: 170,
-//     goodsidsizenum: 30
-//   },
-//   {
-//     size: 175,
-//     goodsidsizenum: 30
-//   },
-//   {
-//     size: 180,
-//     goodsidsizenum: 40
-//   },
-// ]
-// function test() {
-//   var insertSQL = ""
-//   for (var i = 0; i < goodsid.length; i++) {
-//     for (var j = 0; j < sizenum.length; j++) {
-//       insertSQL = `insert into goodsdetail value (\'${goodsid[i]}\',\'${sizenum[j].size}\',\'${sizenum[j].goodsidsizenum}\')`;
-//       getInsert(con, insertSQL, [], function (err, data) {
-//         console.log(data)
-//       })
-//     }
+  // var sizenum = [
+  //   {
+  //     size: 170,
+  //     goodsidsizenum: 30
+  //   },
+  //   {
+  //     size: 175,
+  //     goodsidsizenum: 30
+  //   },
+  //   {
+  //     size: 180,
+  //     goodsidsizenum: 40
+  //   },
+  // ]
+  // function test() {
+  //   var insertSQL = ""
+  //   for (var i = 0; i < goodsid.length; i++) {
+  //     for (var j = 0; j < sizenum.length; j++) {
+  //       insertSQL = `insert into goodsdetail value (\'${goodsid[i]}\',\'${sizenum[j].size}\',\'${sizenum[j].goodsidsizenum}\')`;
+  //       getInsert(con, insertSQL, [], function (err, data) {
+  //         console.log(data)
+  //       })
+  //     }
 
-//   }
-// }
-// test();
+  //   }
+  // }
+  // test();
 
 
-
+};
 
 
