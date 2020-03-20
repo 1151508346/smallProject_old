@@ -1,0 +1,20 @@
+<!-- 用户收货地址 -->
+<view class="container" style="height:{{windowHeight}}px">
+  <view class="add_address" bindtap="handelNavigatorToAdd_address">新增收货地址</view>
+  <!-- {{receivingAddress.areapath}} {{receivingAddress.detailaddress}} -->
+  <block wx:for="{{receivingAddress}}" wx:key = "index">
+    <view class="address_list">
+      <view class="address_title address_item">收货地址 :{{item.areapath}} {{item.detailaddress}}</view>
+      <view class="operate_address address_item">
+        <view>
+          <radio class="" value="" checked="{{item.addressid === defaultIndex}}" color="#f00" 
+            bindtap = "updateDefaultAddress"
+          data-index="{{item.addressid}}" ></radio>
+          <text class="">默认地址</text>
+        </view>
+        <view hover-class="operate_edit_delete">编辑</view>
+        <view hover-class="operate_edit_delete">删除</view>
+      </view>
+    </view>
+  </block>
+</view>

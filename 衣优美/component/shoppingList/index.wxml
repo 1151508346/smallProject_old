@@ -1,0 +1,16 @@
+<!--component/shoppingList/index.wxml-->
+<view class="shoppingListBox" >
+	<navigator url="/pages/shoppingDetail/index?goodsid={{shoppingData.goodsid}}"  >
+		<view class="shopping_img">
+			<image src="{{shoppingData.goodsimage[0]}}"></image>
+		</view>
+		<view>
+			<text class="shopping_content">{{shoppingData.goodsname}}</text>
+		</view>
+		<view class="shoppping_property">
+			<text class="shopping_price">￥{{shoppingData.goodsprice}}</text>
+			<text class="isHot">hot</text>
+		</view>
+	</navigator>
+	
+</view>

@@ -1,0 +1,24 @@
+<view class="container" style="height:{{windowHeight}}px">
+    <view class="integeralBg">
+        <image src="/static/integeralImages.png" />
+        <view class="integeralBg-total" hover-class="none" hover-stop-propagation="false">{{integralTotal}}</view>
+    </view>
+    <view class="integeral-detail-wrapper" hover-class="none" hover-stop-propagation="false">
+        <view class="integeral-title" hover-class="none" hover-stop-propagation="false">积分明细</view>
+    </view>
+    <block wx:for="{{signinList}}" wx:key="index">
+        <view class="integeral-list" hover-class="none" hover-stop-propagation="false">
+            <view class="integeral-item">
+                <view class="integeral-left">
+                    <view class="integeral-left-pattern" hover-class="none" hover-stop-propagation="false">
+                       {{item.pattern === "签到" ? "签到有礼":item.pattern}}
+                    </view>
+                    <view class="integeral-left-date" hover-class="none" hover-stop-propagation="false">
+                       {{item.signindate}}
+                    </view>
+                </view>
+                <view class="integeral-right">+{{item.integral}}</view>
+            </view>
+        </view>
+    </block>
+</view>

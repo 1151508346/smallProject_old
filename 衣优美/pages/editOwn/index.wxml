@@ -1,0 +1,69 @@
+<!-- pages/add_address/index.wxml -->
+<view class="container" style="height:{{windowHeight}}px">
+    <view class="name_phone_box">
+        <view class="add_item">
+            <view>用户名</view>
+            <view>
+                <input type="text"
+                 placeholder="用户名" 
+                 value = "{{username}}"
+                 bindinput="handleReceiverInput"
+                 disabled="true"
+                 />
+            </view>
+        </view>
+        <view class="add_item">
+            <view>联系电话</view>
+            <view>
+                <input type="text"
+                bindinput="handleReceivePhoneInput"
+                
+                value="{{userPhone}}"
+                placeholder="联系人电话" />
+            </view>
+        </view>
+    </view>
+     <view class="area_address_email_box">
+       <view class="add_item">
+            <view>性别</view>
+            <view class="picker_box">
+                <picker 
+                  bindchange="bindSexChange" 
+                  value="{{sexIndex}}" 
+                  range="{{sexArray}}"
+                  custom-item="{{customItem}}"
+                 >
+                {{sexArray[sexIndex]}}
+                </picker>
+            </view>
+        </view>
+    </view>
+    <view class="area_address_email_box">
+        <view class="add_item">
+            <view>所在区域</view>
+            <view class="picker_box">
+                <picker mode="region"
+                 bindchange="bindRegionChange" 
+                 value="{{region}}" 
+                 custom-item="{{customItem}}">
+            {{region[0]}}，{{region[1]}}，{{region[2]}}
+                </picker>
+            </view>
+        </view>
+        <view class="add_item">
+            <view>详细地址</view>
+            <view>
+                <input type="text" 
+                value="{{detailAddress}}"
+                bindinput="handleDetailAddressInput"
+                placeholder="详细地址" />
+            </view>
+        </view>
+       
+    </view>
+    <view class="save_box" 
+    hover-class="save_box_active"
+    bindtap = "handleSaveUserInfo"
+    >保存</view>
+    
+</view>

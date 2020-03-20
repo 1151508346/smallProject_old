@@ -1,0 +1,131 @@
+.container{
+}
+.loginStatus_box{
+  background-color: #f00;
+  /* border:1px solid red; */
+  display: flex;
+  height: 300rpx;
+  justify-content: space-between;
+
+}
+.loginStatus_box view{
+  height: 100%;
+  /* border:1px solid #ddd; */
+  line-height: 320rpx;
+
+}
+.login_icon{
+  margin-left:60rpx;
+}
+.login_icon image{
+  display: inline-block;
+  width: 150rpx;
+  height: 150rpx;
+  border:3px solid #fff;
+  border-radius: 50%;
+  margin-top:75rpx;
+  
+  
+}
+.login_name {
+  flex: 1;
+}
+.login_name text,
+.sign_come text{
+  margin-left:20rpx;
+  margin-right:10rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+
+}
+.login_name text{
+  margin-left: 70rpx;
+}
+.sign_come text{
+  text-align: center;
+  padding: 26rpx;padding-top:15rpx;
+  padding-bottom:15rpx;
+  background-color:rgba(100, 100, 100, .5);
+  border-radius: 20rpx;
+}
+.yh_ll_jf_sc{
+  display: flex;
+  justify-content: space-evenly;
+}
+.yh_ll_jf_sc_item {
+  flex: 1;
+  text-align: center;
+  margin-top:20rpx;
+  margin-bottom:20rpx;
+}
+.yh_ll_jf_sc_item image{
+    width: 70rpx;
+    height: 70rpx;
+}
+
+
+.dingdan_box{
+  /* border:1px solid red; */
+  border-bottom: 1px solid #eee;
+
+}
+
+.dingdan_title {
+  padding: 25rpx;
+  padding-left: 50rpx;
+  border:1px solid #eee;
+}
+.dingdan_list {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top:20rpx;
+  margin-bottom: 20rpx;
+
+}
+.dingdan_item{
+  flex:1;
+  text-align: center;
+  /* border:1px solid red; */
+  position: relative;
+}
+.dingdan_item image{
+  width: 80rpx;
+  height: 80rpx;
+
+}
+.badge{
+  position: absolute;
+  right: 46rpx;
+  top:-10rpx;
+  color:#fff;
+  font-size:20rpx;
+  background-color:#f00;
+  border-radius: 50%;
+  display: inline-block;
+  width: 46rpx;
+  height: 46rpx;
+  text-align:center;
+  line-height: 46rpx;
+
+}
+
+.navigator-hover{
+  background-color: #eee;
+}
+.qb_address_about_exit_list{
+   display: flex;
+  justify-content: space-between;
+  padding: 25rpx;
+  padding-left: 50rpx;
+  border-bottom:1rpx solid #eee;
+}
+
+.qb_address_about_exit_list:last-child{
+  border-bottom: transparent;
+}
+.qb_address_about_exit_list text:last-child{
+  margin-right:30rpx;
+  color:#999;
+  font-size:32rpx;
+}

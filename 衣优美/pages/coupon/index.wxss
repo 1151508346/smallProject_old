@@ -1,0 +1,50 @@
+/* pages/coupon/index.wxss */
+.container{
+   
+    background-color:#eee;
+}
+.coupon-image{
+    /* height: 120rpx; */
+    width: 90%;
+    margin-top:20rpx;
+    position: relative;
+    box-shadow: 0 0 5rpx #ddd;
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* background-image: url("/static/yhj.png"); */
+}
+.coupon-image image{
+    height: 140rpx;
+}
+.coupon-price-date-box{
+    position: absolute;
+    /* border:1px solid red; */
+    bottom:0px;
+    height: 100%;
+    width: 440rpx;
+    text-align: right;
+}
+.coupon-goods-image{
+    position: absolute;
+    top:10rpx;
+    left: 20rpx;
+    width: 140rpx;
+    height: 120rpx !important;
+    border-radius: 20rpx;
+}
+.coupon-price{
+    font-size:48rpx;
+    color:#f00;
+}
+.coupon-dated-descript,.coupon-date{
+    color:#aaa;
+    font-size :23rpx;
+    padding: 4rpx;
+}
+.coupon-liji-user{
+    position: absolute;
+    right:16rpx;
+    bottom: 54rpx;
+    color:#fff;
+    font-size:34rpx;
+}

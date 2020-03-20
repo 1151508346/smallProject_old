@@ -1,0 +1,51 @@
+/* pages/add_address/index.wxss */
+.container{
+    background-color:#ddd;
+}
+.area_address_email_box{
+    margin-top:15rpx;
+}
+.add_item{
+    height: 100rpx;
+    background-color: #fff;
+    display: flex;
+    line-height: 100rpx;
+    /* border:1px solid red; */
+    margin-top:4rpx;
+}
+.add_item view:nth-of-type(1){
+    /* border:1px solid red; */
+    width:180rpx;
+    text-align: right;
+}
+.add_item view:nth-of-type(2){
+    flex: 1;
+    padding-left:40rpx;
+}
+.add_item view input{
+    /* border:1px solid red; */
+    height: 100rpx;
+    margin-right:30rpx;
+}
+.default_box{
+    margin-top:15rpx;
+}
+.switch_body {
+    text-align: right;
+}
+.switch_body switch{
+    transform: scale(0.7);
+}
+.save_box{
+    background-color:#0a0;
+    color:#fff;
+    width: 94%;
+    margin: auto;
+    margin-top:40rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    text-align:center;
+}
+.save_box_active{
+    background-color:#080;
+}

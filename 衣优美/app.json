@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/shopping/index",
+    "pages/car/index",
+    "pages/ownCenter/index",
+    "pages/shoppingDetail/index",
+    "pages/search/index",
+    "pages/login/index",
+    "pages/register/index",
+    "pages/forget/index",
+    "pages/user_address/index",
+    "pages/add_address/index",
+    "pages/payfor/index",
+    "pages/order/index",
+    "pages/collectGoods/index",
+    "pages/visited/index",
+    "pages/coupon/index",
+    "pages/integeral/index",
+    "pages/pxDetail/index",
+    "pages/editOwn/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "衣优美",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "selectedColor": "#f00",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/tabbarIcon/default/ai-home.png",
+        "selectedIconPath": "static/tabbarIcon/select/ai-home.png"
+      },
+      {
+        "pagePath": "pages/shopping/index",
+        "text": "全部商品",
+        "iconPath": "static/tabbarIcon/default/leimupinleifenleileibie2.png",
+        "selectedIconPath": "static/tabbarIcon/select/leimupinleifenleileibie2.png"
+      },
+      {
+        "pagePath": "pages/car/index",
+        "text": "购物车",
+        "iconPath": "static/tabbarIcon/default/gouwucheman.png",
+        "selectedIconPath": "static/tabbarIcon/select/gouwucheman.png"
+      },
+      {
+        "pagePath": "pages/ownCenter/index",
+        "text": "个人中心",
+        "iconPath": "static/tabbarIcon/default/gerenzhongxinyonghu01.png",
+        "selectedIconPath": "static/tabbarIcon/select/gerenzhongxinyonghu01.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

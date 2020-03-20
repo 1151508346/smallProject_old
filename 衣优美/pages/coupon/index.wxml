@@ -1,0 +1,37 @@
+<view class="container" hover-class="active-container" hover-stop-propagation="false">
+    <block wx:for="{{coupon_goods_Info}}" wx:key="index" >
+        <view class="coupon-image" hover-class="none" hover-stop-propagation="false">
+            <image class="coupon-bg" src="/static/yhj.png" />
+            <view class="coupon-price-date-box">
+                <image class="coupon-goods-image" src="{{item.goodsimage[0]}}" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload=""></image>
+                <view class="coupon-price">￥{{item.couponprice}}</view>
+                <view class="coupon-dated-descript">使用时间</view>
+                <view class="coupon-date">{{item.starttime}}~{{item.endtime}}</view>
+            </view>
+            <view class="coupon-liji-user"
+                bindtap = "getCoupon"
+                data-couponstatus = "{{item.couponstatus}}"
+                data-userid = "{{item.userid}}"
+                data-goodsid = "{{item.goodsid}}"
+                data-couponid = "{{item.couponid}}"
+            >{{item.couponstatus == 0 ?"立即领取":  (item.couponstatus == 1 ? "立即使用" : (item.couponstatus == 2 ? "已使用":"已过期" )) }}</view>
+        </view>
+    </block>
+    <!-- <view class="coupon-image" hover-class="none" hover-stop-propagation="false">
+        <image  class="coupon-bg" src="/static/yhj.png" />
+        <view class="coupon-price-date-box">
+            <image class="coupon-goods-image" src="/static/init.jpg" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload="">
+            </image>
+            <view class="coupon-price" >
+                ￥300
+            </view>
+            <view class="coupon-dated-descript">
+                使用时间
+            </view>
+            <view class="coupon-date">2020.01.16~2016.01.17</view>
+        </view>
+        <view class="coupon-liji-user" >
+            立即使用
+        </view>
+    </view> -->
+</view>

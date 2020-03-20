@@ -1,0 +1,107 @@
+	
+.container{
+	width: 750rpx;
+	
+}
+.gird{
+  margin-top:40rpx;
+  display: flex;
+  justify-content: space-around;
+   text-align:center;
+}
+.page-section{
+  height: 400rpx;
+}
+.page-section swiper{
+  height: 100%;
+}
+.swiper-item image{
+  width:100%;
+  display:inline-block;
+}
+
+.weui-grid__icon{
+  text-align: center;
+  width: 100rpx;
+}
+.weui-grid__icon image{
+  width: 80rpx;
+  height: 80rpx;
+}
+.btuijian,
+.hottitle{
+  display: flex;
+  justify-content: space-between;
+}
+.btuijian_list,
+.hottitle_list{
+  margin:30rpx;
+}
+.btuijian_more:active,
+.hottitle_more:active{
+  color:#f00;
+}
+.tujian_image_list{
+  display: flex;
+  text-align:center;
+  justify-content: space-around
+}
+.tujian_image_list view{
+  flex:1;
+}
+.tujian_image_list_box{
+  height: 500rpx;
+  text-align: center;
+}
+.tujian_image_list_img{
+  width: 95%;
+  height: 100%;
+  padding-left:4rpx;
+}
+.tujian_image_list_item{
+  height: 50%;
+  /* margin: 10rpx; */
+}
+.tujian_image_list_item image{
+  width:98%;
+  height:100%;
+  
+}
+	
+.hotSallList{
+	/* display:flex;
+	/* width: 730rpx; */ 
+	/* height: 440rpx; */
+	box-sizing:border-box;
+	/* justify-content: space-between; */
+	margin:0rpx;
+	/* border:1px solid red; */
+	/* overflow: hidden; */
+	
+}
+
+
+.fashion_girl_title{
+  
+	margin-left:20rpx;
+}
+.fashion_girl_more{
+	margin-left:510rpx;
+	
+}
+	
+.text{
+	display: flex;
+	justify-content: space-between;
+}
+.fashion_girl{
+  margin-top:12px;
+   margin-bottom:12px;
+   /* border:1px solid red; */
+}
+.fashion_girl-box{
+   display: flex;
+  width: 100%;
+  /* border:1px solid red; */
+
+}

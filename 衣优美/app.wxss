@@ -1,0 +1,4 @@
+view,text,label,button,input{
+  font-size:28rpx;
+  color:#333
+}

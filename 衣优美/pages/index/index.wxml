@@ -1,0 +1,95 @@
+<view class="container">
+  <view class="page-section page-section-spacing swiper">
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{background}}" wx:key="{{index}}">
+        <swiper-item>
+          <view class="swiper-item">
+            <image src="{{item}}" />
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class="gird">
+    <block wx:for="{{routers1}}" wx:key="{{index}}">
+      <navigator url="/pages/shopping/index" open-type="switchTab" bindtap="handleNavigatorShoppingPage" data-params="{{item.params}}">
+        <view class="weui-grid__icon">
+          <image src=" {{item.icon}}" mode="scaleToFill" />
+        </view>
+        <text class="weui-grid__label">{{item.name}}</text>
+      </navigator>
+    </block>
+  </view>
+  <view class="gird">
+    <block wx:for="{{routers2}}" wx:key="{{index}}">
+      <navigator url="/pages/shopping/index"  open-type="switchTab"  
+      bindtap="handleNavigatorShoppingPage" data-params="{{item.params}}">
+        <view class="weui-grid__icon">
+          <image src=" {{item.icon}}" mode="scaleToFill" />
+        </view>
+        <text class="weui-grid__label">{{item.name}}</text>
+      </navigator>
+    </block>
+  </view>
+  <view class="tuijian_box">
+    <view class="btuijian">
+      <text class="btuijian_list btuijian_title">精品推荐</text>
+      <text class="btuijian_list btuijian_more">更多>></text>
+    </view>
+    <view class="tujian_image_list">
+      <view class="tujian_image_list_box" data-goodsid="{{branchTuijian[4].goodsid}}" bindtap="handleNavigatorShoppingDetailPage">
+        <image class="tujian_image_list_img" src="{{branchTuijian[4].goodsimage}}"></image>
+      </view>
+      <view class="tujian_image_list_box">
+        <view class="tujian_image_list_item " data-goodsid="{{branchTuijian[0].goodsid}}" bindtap="handleNavigatorShoppingDetailPage">
+          <image src="{{branchTuijian[0].goodsimage}}"></image>
+        </view>
+        <view class="tujian_image_list_item " data-goodsid="{{branchTuijian[1].goodsid}}" bindtap="handleNavigatorShoppingDetailPage">
+          <image src="{{branchTuijian[1].goodsimage}}"></image>
+        </view>
+      </view>
+      <view class="tujian_image_list_box">
+        <view class="tujian_image_list_item " data-goodsid="{{branchTuijian[2].goodsid}}" bindtap="handleNavigatorShoppingDetailPage">
+          <image src="{{branchTuijian[2].goodsimage}}"></image>
+        </view>
+        <view class="tujian_image_list_item " data-goodsid="{{branchTuijian[3].goodsid}}" bindtap="handleNavigatorShoppingDetailPage">
+          <image src="{{branchTuijian[3].goodsimage}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view>
+    <view class="hottitle">
+      <text class="hottitle_list hottitle_title">热卖区</text>
+      <text class="hottitle_list hottitle_more">更多>></text>
+    </view>
+    <view class="hotSallList">
+      <block wx:for="{{lowPriceList}}" wx:key="{{index}}">
+        <ShoppingList shoppingData="{{item}}" />
+      </block>
+    </view>
+    <!-- <block wx:for = "{{shoppingData}}"  wx:key = "{{index}}">
+				<ShoppingList shoppingData = "{{item}}"/>
+			</block> -->
+  </view>
+  <view>
+    <text class="fashion_girl_list fashion_girl_title">时尚男装</text>
+    <text class="fashion_girl_list fashion_girl_more">更多>></text>
+  </view>
+  <view>
+    <block wx:for="{{boyClothList}}" wx:key="{{index}}">
+      <ShoppingList shoppingData="{{item}}" />
+    </block>
+  </view>
+</view>
+<view></view>
+<view>
+
+  <view class="fashion_girl-box">
+    <text class="fashion_girl_list fashion_girl_title">时尚女装</text>
+    <text class="fashion_girl_list fashion_girl_more">更多>></text>
+  </view>
+  <block wx:for="{{girlClothList}}" wx:key="{{index}}">
+    <ShoppingList shoppingData="{{item}}" />
+  </block>
+</view>

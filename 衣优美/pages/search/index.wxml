@@ -1,0 +1,71 @@
+<view class="container">
+  <view class="search_box">
+    <view class="search_window">
+      <view class="search_icon"
+       hover-class="search_icon_active"
+       wx:if = "{{isSearchInputNotFill}}"
+       bindtap = "handelClearSearchInput"
+       >
+        X
+      </view>
+      <input value=""
+        bindinput = "handleShoppingInput"
+        value = "{{searchInput}}"
+        bindblur="handleInputBlur"
+        bindfocus="handleInputFocus"
+      placeholder="请搜索您的商品名"></input>
+      <view class="search_panel" wx:if = "{{searchList}}">
+        <view class="search_shopping_item">
+            asdasdas
+        </view>
+          <view class="search_shopping_item">
+            asdasdas
+        </view>
+          <view class="search_shopping_item">
+            asdasdas
+        </view>
+
+          <view class="search_shopping_item">
+            asdasdas
+        </view>
+
+         
+      </view>
+        
+    </view>
+    <!-- <view class="cancel">取消</view> -->
+    <view class="search-button"
+      hover-class="search-button-active"
+      bindtap = "searchShoppingName"
+    >搜索</view>
+  </view>
+ <view class="zuijinwrapper" 
+  wx-if="{{isShowPersentSearchWrapper}}"
+ > <view class="zuijinsearch">
+    <text class="zuijinsearch_title">最近搜索</text>
+    <view class="zuijinsearch_delete"
+      bindtap = "clearSearchHistoryList"
+      wx:if="{{isClearButtonShow}}"
+    >
+      <image src="/static/shanchu.png"></image>
+    </view>
+  </view>
+  <view class="zuijinsearch_list">
+    <block wx:for="{{searchHistoryList}}" wx:key="index">
+       <button 
+        bindtap='clickHistoryButtonSearch'
+        data-value = "{{item}}"
+        data-index = "{{index}}"
+       >{{item}}</button>
+       
+    </block>
+   
+   
+  </view></view>
+
+
+	<block wx:for = "{{shoppingData}}"  wx:key = "{{index}}">
+      <ShoppingList shoppingData = "{{item}}"/>
+    </block>
+			
+</view>

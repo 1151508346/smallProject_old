@@ -1,0 +1,75 @@
+<view class="container">
+<!-- <button bindtap = "handleSwitchBarShoppingPage">shopping Page</button> -->
+
+	<view class="yiyoumei-discount">
+		<view class="yym-discount-item checked-window">
+			<radio class="default-checkbox" 
+			
+			color="#f00" 
+			checked = "{{checkedStatus}}"
+			bindtap = "allSelectStatusToggle"
+			 />
+		</view>
+		<view class="yym-discount-item yiyoumeiName">衣优美</view>
+		<view class="yym-discount-item discount" >优惠卷</view>
+	</view>
+	
+	<view class="car-list-box">
+		<block wx:for="{{car_shopping_list}}" >
+		<view class="car-list">
+			
+				<view class="class-list-item car-list-checked">
+					<radio class="default-checkbox" 
+					color="#f00" 
+					bindtap = "toggleCheck" 
+					checked= "{{item.selectStatus == true ? 'selected' : ''}}"
+					data-index="{{index}}"
+					/>
+				</view>
+				<view class="class-list-item car-list-image">
+					<image src= "{{item.goodsimage[0]}}" >
+					</image>
+				</view>
+				<view class="class-list-item car-list-name">{{item.goodsname}}
+				
+					<view class="car-list-name-buysize"> 尺寸:{{item.buysize}}</view>
+					<view class = "car-list_price"> ￥{{item.goodsprice}}</view>
+					<view class = "car-list_input_num" >
+						
+						<view>
+							<button bindtap = "reduceBuyNum" data-index="{{index}}">-</button>
+							<input type="text" value="{{item.buycount}}" />
+							<button bindtap = "addBuyNum" data-index="{{index}}">+</button>
+						</view>
+					</view>
+				
+				</view>
+			
+		</view>
+	</block>
+	</view>
+	  
+	<view class="tabbar_car">
+		<view class="yym-discount-item checked-window">
+			<radio id="allselect_bar" class="default-checkbox" 
+			
+			color="#f00" 
+			checked = "{{checkedStatus}}"
+			bindtap = "allSelectStatusToggle"
+			 />
+		</view>
+		<view
+			bindtap = "allSelectStatusToggle"
+		>全选</view>
+		<view 
+			bindtap="deleteSelectedGoodsList"
+		>删除</view>
+		<view>总计：<text>￥{{allPriceValue}}</text></view>
+		<view 
+			bindtap = "handelPayforSelectedGoods"
+		>结算</view>
+	</view>
+
+
+</view>
+

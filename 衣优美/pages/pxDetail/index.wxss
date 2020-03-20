@@ -1,0 +1,125 @@
+/* pages/pxDetail/index.wxss */
+
+.container {
+    background-color: #eee;
+    /* position: relative; */
+    /* border:1px solid red; */
+    height: 100vh;
+}
+
+.pxDetail-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 20rpx;
+    background-color: #fff;
+}
+
+.pxDetail-image {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.pxDetail-image image {
+    width: 100%;
+    height: 100%;
+}
+
+.pxDetail-goodsname-grade-wrapper {
+    flex: 1;
+    padding-left: 20rpx;
+}
+
+.pxDetail-goodsname {
+    overflow: hidden;
+    /* border:1px solid red; */
+    /* text-overflow: ellipsis; */
+    /* white-space: nowrap; */
+    padding: 5rpx 10rpx;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-indent: 2em;
+    font-size: 26rpx;
+    line-height: 45rpx;
+}
+
+.pxDetail-grade {
+    /* border:1px solid red; */
+    display: flex;
+}
+
+.pxDetail-grade-image {
+    width: 40rpx;
+    height: 40rpx;
+    /* border:1px solid red; */
+    float: left;
+    margin-left: 10rpx;
+}
+
+.grade-content {
+    padding-left: 30rpx;
+    line-height: 45rpx;
+}
+
+.recond-count-wrapper {
+    padding: 20rpx;
+    background-color: #fff;
+    margin-top: 20rpx;
+}
+
+.recond-count {
+    border-left: 6rpx solid red;
+    padding: 10rpx;
+    padding-left: 20rpx;
+    font-weight: 600;
+}
+
+.evalute-list {
+    margin-top: 20rpx;
+    padding: 20rpx;
+    /* border:1px solid red; */
+    background-color: #fff;
+}
+
+.username-title-image {
+    width: 40rpx;
+    height: 40rpx;
+    vertical-align: middle;
+}
+
+.evalute-content {
+    text-indent: 2em;
+    color: #888;
+    line-height: 46rpx;
+    /* border:1px solid red; */
+}
+
+
+/* .evalute-toggle{
+    padding:10rpx 0;
+    text-align:center;
+} */
+
+.evaluate-input-wrapper {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 99;
+    justify-content: space-between;
+    padding: 20rpx;
+    background-color: #fff;
+}
+
+.evaluate-input {
+    flex: 1;
+    border: 1px solid red;
+    padding-left: 20rpx;
+}

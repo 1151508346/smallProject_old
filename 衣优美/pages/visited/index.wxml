@@ -1,0 +1,43 @@
+<!--pages/visited/index.wxml-->
+ <block wx:for="{{historyList}}" wx:key="index">
+       <navigator class="" target="" url="/pages/shoppingDetail/index?goodsid={{item.goodsid}}" hover-class="navigator-hover" open-type="navigate">
+            <view class="collect-list"
+         
+        >
+            <view class="class-list-item collect-list-image">
+                <image src="{{item.goodsimage[0]}}"></image>
+            </view>
+            <view class="class-list-item collect-list-name">
+                {{item.goodsname}}
+                <view class="collect-list_price">￥{{item.goodsprice}}</view>
+                <!-- <view class="collect-list_input_num">
+                    <view wx:if="{{item.goodsstatus === 0}}" >
+                        <text class="cancalCollect" hover-class="cancel-goPayFor-active" bindtap="handleCancelcollect"
+                            data-goodsid="{{item.goodsid}}"
+                            data-userid="{{item.userid}}"
+                            data-size= "{{item.size}}"
+                            data-goodsstatus = "{{item.goodsstatus}}"
+                        >
+                            取消订单
+                        </text>
+                        <text class="goPayFor" hover-class="cancel-goPayFor-active" bindtap="handleGoPayFor"
+                             data-goodsid="{{item.goodsid}}"
+                        >
+                            去支付
+                        </text>
+                    </view>
+                    <view wx:if="{{item.goodsstatus === 1}}" >
+                        <text class="cancalCollect" hover-class="cancel-goPayFor-active" bindtap="handleCancelcollect">
+                            取消订单
+                        </text>
+                        <text class="goPayFor" hover-class="cancel-goPayFor-active" >
+                            申请退款
+                        </text>
+                    </view>
+                </view> -->
+            </view>
+        </view>
+       </navigator>
+         
+    </block>
+

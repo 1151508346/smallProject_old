@@ -1,0 +1,11 @@
+<!-- pages/payfor/index.wxml -->
+<view class="container">
+    <view class="payfor-money">￥{{payforMoney}}</view>
+    <view class="saler">
+        <text>收款方</text>
+        <text>admin</text>
+    </view>
+    <view class="payforbutton">
+        <button type="primary" bindtap="handleNowPayFor">立即支付</button>
+    </view>
+</view>

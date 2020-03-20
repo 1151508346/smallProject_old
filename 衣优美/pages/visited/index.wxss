@@ -1,0 +1,74 @@
+/* pages/visited/index.wxss */
+
+
+
+
+.collect-list{
+    display: flex;
+    margin-top:20rpx;
+}
+.collect-list-image {
+	margin-left:30rpx;
+}
+ .collect-list-image image{
+	 width: 150rpx;
+	 height: 150rpx;
+ }
+ .collect-list-checked{
+	 margin-left:30rpx;
+	 margin-top:10rpx;
+	 line-height: 120rpx;	 
+ }
+
+ .collect-list-name{
+	 flex:1;
+	 padding:10rpx;
+	 padding-top:0rpx;
+	 /* border:1px  solid red; */
+	 text-overflow: ellipsis;
+	 overflow: hidden;
+	 white-space: nowrap;
+	 /* display:flex; */
+	 position: relative;
+ }
+  .collect-list-name view{
+	position: absolute;
+	bottom:0rpx;
+	
+  }
+    .collect-list-name view:nth-of-type(2){
+		right:0rpx;
+	}
+	.collect-list_input_num view{
+		display:flex;
+		position:absolute;
+        right:10rpx;
+        /* border:1px solid red; */
+        /* height: 50rpx; */
+    }
+    .collect-list_input_num view text{
+        margin-right:20rpx;
+        /* border:1px solid red; */
+    }
+    .cancel-goPayFor-active{
+        color:#fff;
+        background-color: #f00;
+    }
+	
+	
+	.collect-list_price{
+		color:#f00;
+		font-size:32rpx;
+	}
+
+
+.collect-list-box{
+	/* border:1px solid red; */
+	height: 900rpx;
+	overflow: scroll;
+}
+
+
+
+
+

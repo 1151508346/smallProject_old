@@ -1,0 +1,55 @@
+<view class="container">
+	<view class="modelbg"
+	 style="width: {{screenWidth}}px;height: {{screenHeight}}px;"
+	wx-if = "{{modelBgToggle}}"
+	bindtap = "handleCloseModelBg"
+	 >
+	 </view>
+	
+
+	 <view class="{{shopping_bar}}" >
+		 <block wx:for="{{shopping_barList}}" wx:for-index="indexs" wx:for-item="items" wx:key >
+			 <view >
+				<text 
+					class="shopping_barList_title {{indexs == shoppingType?'activeShoppingStatus':'defaultShoppingStatus'}}" 
+					bindtap="handleShoppingListToggle" 
+					data-listName="{{indexs}}"> 
+					{{indexs}}
+				</text>
+				<view  wx:if = "{{items_toggle == indexs }}" 
+						
+						class="shopping_items" 
+						wx-if="shopping_index_toggle">
+					<block  wx:for="{{items}}" wx:key="{{index}}">
+					 <view 
+							class="{{item == shoppingType?'activeShoppingStatus_items':'defaultShoppingStatus_items'}}"
+							 bindtap = "handleShoppingListToggleItem"
+							 data-listNameItem="{{indexs}}-{{item}}"
+							>
+							{{item}}
+						</view>
+					</block>
+				</view>
+			 </view>
+		 </block>
+		
+	 </view>
+    <view class="fenlei_search_box">
+      <!-- <view class="fs_list fenlei" bindtap = "handleToggleShoppingList">
+		  <image class="fenlei_img" src="/static/分类.png" />
+	  </view> -->
+      <view class="fs_list search">
+		  <button bindtap = "handleNavigatorToSearchPage">搜索</button>
+	  </view>
+   </view>
+	<view>
+			<block wx:for = "{{shoppingData}}"  wx:key = "{{index}}">
+				<ShoppingList shoppingData = "{{item}}"/>
+			</block>
+			
+	</view>
+	
+	
+	
+	
+</view>

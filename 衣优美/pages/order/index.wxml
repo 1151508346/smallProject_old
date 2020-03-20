@@ -1,0 +1,90 @@
+<!-- pages/order/index.wxml -->
+<view class="container">
+    <view class="topTabbar">
+        <text class="{{defaultOrderItem ===0 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="0">
+            待付款
+        </text>
+        <text class="{{defaultOrderItem ===1 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="1">
+            待收货
+        </text>
+        <text class="{{defaultOrderItem ===2 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="2">
+            待评价
+        </text>
+        <text class="{{defaultOrderItem ===3 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="3">
+            已评价
+        </text>
+        <text class="{{defaultOrderItem ===99 ? 'top-tabbar-item top-tabbar-item-active':'top-tabbar-item '}}" bindtap="getOrderList" data-status="99">
+            全部
+        </text>
+    </view>
+    <!-- pendingPaymentList -->
+    <block wx:for="{{pendingList}}" wx:key="index">
+        <view class="order-list">
+            <!-- <view class="class-list-item order-list-checked">
+					<radio class="default-checkbox" 
+					color="#f00" 
+					bindtap = "toggleCheck" 
+					checked= ""
+					data-index="{{index}}"
+					/>
+                </view> -->
+            <view class="class-list-item order-list-image"
+            >
+                <navigator class="" target="" url="/pages/shoppingDetail/index?goodsid={{item.goodsid}}" hover-class="navigator-hover" open-type="navigate">
+                    <image src="{{item.goodsimage[0]}}"></image>
+                </navigator>
+                  
+            </view>
+            <view class="class-list-item order-list-name">
+                   <view class="order-goodsname"> {{item.goodsname}}</view>
+                 
+                <view class="order-list_price">￥{{item.goodsprice}}</view>
+                <view class="order-list_input_num" wx:if="{{defaultOrderItem !== 99}}">
+                    <view wx:if="{{item.goodsstatus === 0}}">
+                        <text class="cancalOrder" hover-class="cancel-goPayFor-active" bindtap="handleCancelOrder" data-goodsid="{{item.goodsid}}" data-userid="{{item.userid}}" data-size="{{item.size}}" data-goodsstatus="{{item.goodsstatus}}">
+                            取消订单
+                        </text>
+                        <text class="goPayFor" hover-class="cancel-goPayFor-active"
+                         bindtap="handleGoPayFor" 
+                         data-goodsid="{{item.goodsid}}" 
+                         data-size="{{item.size}}" 
+                         data-price="{{item.goodsprice}}" 
+                         data-count="{{item.count}}"
+                         data-orderid= "{{item.orderid}}"
+                         >
+                            去支付
+                        </text>
+                    </view>
+                    <view wx:if="{{item.goodsstatus === 1}}">
+                        <!-- <text class="cancalOrder" hover-class="cancel-goPayFor-active" bindtap="handleCancelOrder">
+                            取消订单
+                        </text> -->
+                        <text class="goPayFor" hover-class="cancel-goPayFor-active" bindtap="appliyBackMoney" 
+                        data-goodsid="{{item.goodsid}}" data-size="{{item.size}}" 
+                        data-goodsstatus="{{item.goodsstatus}}"
+                        data-count="{{item.count}}"
+                        >
+                            申请退款
+                        </text>
+                    </view>
+                    <view wx:if="{{item.goodsstatus === 2}}">
+                        <!-- <text class="cancalOrder" hover-class="cancel-goPayFor-active" bindtap="handleCancelOrder">
+                            取消订单
+                        </text> -->
+                        <text class="px-detail" hover-class="cancel-goPayFor-active" bindtap="navigateToPXDetailPage" data-goodsid="{{item.goodsid}}" data-size="{{item.size}}" data-goodsstatus="{{item.goodsstatus}}" data-goodsimage="{{item.goodsimage[0]}}" data-goodsname="{{item.goodsname}}">
+                            评价详情
+                        </text>
+                    </view>
+                    <view wx:if="{{item.goodsstatus === 3}}">
+                        <!-- <text class="cancalOrder" hover-class="cancel-goPayFor-active" bindtap="handleCancelOrder">
+                            取消订单
+                        </text> -->
+                        <text class="px-detail" hover-class="cancel-goPayFor-active" bindtap="navigateToPXDetailPage" data-goodsid="{{item.goodsid}}" data-size="{{item.size}}" data-goodsstatus="{{item.goodsstatus}}" data-goodsimage="{{item.goodsimage[0]}}" data-goodsname="{{item.goodsname}}">
+                            评价详情
+                        </text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
+</view>

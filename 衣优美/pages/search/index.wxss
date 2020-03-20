@@ -1,0 +1,113 @@
+/* pages/search/index.wxss */
+.container{
+  position:relative;
+}
+.search_box{
+  display: flex;
+  padding-top:20rpx;
+  padding-bottom:20rpx;
+  padding-left: 20rpx;
+  /* border:1px solid red; */
+}
+.search_icon{
+
+    width: 30rpx;
+    height: 30rpx;
+    position: absolute;
+    text-align: center;
+    right: 10rpx;
+    top:10rpx;
+    /* border:1px solid #999; */
+    /* border-radius: 50%; */
+    line-height: 30rpx;
+    font-size:22rpx;
+    /* border:1px solid red;s */
+    /* box-shadow: inset 0 0 5rpx #ccc; */
+  
+}
+.search_icon_active{
+  color:#f00;
+}
+/* .search_icon image{
+  width: 80%;
+  height: 80%;
+  margin-top:10%;
+
+} */
+.search_window,
+.cancel{
+  /* border:1px solid red; */
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.search_window{
+flex: 1;
+position: relative;
+background-color: rgb(245, 245, 245);
+border-radius: 50rpx;
+}
+.search_window input{
+  /* border:1px solid red; */
+  margin-right:80rpx;
+  height: 45rpx;
+  text-align: center;
+  box-sizing: border-box
+}
+.cancel,.search-button{
+  width: 100rpx;
+  text-align:center;
+}
+.search-button-active{
+  color:#f00;
+}
+.zuijinwrapper{
+  position: absolute;
+  width: 100%;
+  background-color:#fff;
+  padding-bottom:40rpx;
+}
+.zuijinsearch{
+  display: flex;
+  justify-content: space-between;
+  margin-top:20rpx;
+}
+.zuijinsearch_title{
+  margin-left: 30rpx;
+
+}
+.zuijinsearch_delete{
+  margin-right: 30rpx;
+}
+.zuijinsearch_delete image{
+  width: 36rpx;
+  height: 36rpx;
+}
+.zuijinsearch_list button{
+  display: inline-block;
+  flex-wrap: wrap;
+  height: 50rpx;
+  line-height: 50rpx;
+  margin-left:25rpx;
+  margin-top:25rpx;
+
+}
+.search_panel{
+  position: absolute;
+  /* border:1px solid red; */
+  /* width: 630rpx; */
+  width: 100%;
+  /* height: 400rpx; */
+  background-color:#fff;
+  z-index: 99;
+  box-shadow: 0 2rpx 1rpx #aaa;
+}
+.search_shopping_item{
+  padding: 5rpx;
+  padding-left:20rpx;
+  /* border:1px solid red; */
+  margin: 5rpx;
+
+ 
+}
+
+

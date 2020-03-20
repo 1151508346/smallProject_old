@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+	  "ShoppingList":"/component/shoppingList/index"
+  }
+}

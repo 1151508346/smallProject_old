@@ -1,0 +1,154 @@
+/* pages/login/index.wxss */
+.container{
+  background-color: #eee;
+}
+.login_logo_bg_box{
+  background-color:rgb(255, 0, 0) ;
+  overflow: hidden;
+  padding-bottom:20rpx;
+
+}
+.login_image{
+  width:180rpx;
+  height: 180rpx;
+  border: 3rpx solid #fff;
+  border-radius: 50%;
+  box-sizing: border-box;
+  margin: auto;
+  margin-top:60rpx;
+}
+.login_image image{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.shoppingCity_name{
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-top:20rpx;
+  
+
+}
+
+.login_box{
+  /* border:1px solid red; */
+  margin-top:60rpx;
+}
+.login_box .username,
+.login_box .password{
+  display: flex;
+  height: 100rpx;
+  width: 90%;
+  /* overflow: hidden; */
+  margin: 50rpx auto;background-color: #fff;
+  position: relative;
+}
+
+.username_icon,
+.password_icon{
+  width: 60rpx;
+  height: 60rpx;
+  margin-top:20rpx;
+  /* border:1px solid red; */
+  margin-left:20rpx;
+  margin-right: 20rpx;
+}
+
+.username_icon image,
+.password_icon image{
+  width: 100%;
+  height: 100%;
+}
+.username_icon image{
+  width: 80%;
+  height: 80%;
+}
+.login_box view input{
+  /* border:1px solid red; */
+  height: 60rpx;
+  flex: 1;
+  margin-top:20rpx;
+  margin-right: 76rpx;
+}
+
+.clear_content{
+  position: absolute;
+  width: 36rpx;
+  height: 36rpx;
+  text-align: center;
+  background: #fff;
+  box-shadow: inset 0 0 5rpx #888;
+  top:50%;
+  margin-top:-18rpx;
+  right: 20rpx;
+  border-radius: 50%;
+  line-height: 34rpx;
+  /* border:1px solid red; */
+  
+}
+
+.clear_content_active{
+    position: absolute;
+  width: 36rpx;
+  height: 36rpx;
+  text-align: center;
+  background: #f00;
+  color: #fff;
+  box-shadow: inset 0 0 5rpx #888;
+  top:50%;
+  margin-top:-18rpx;
+  right: 20rpx;
+  border-radius: 50%;
+  line-height: 34rpx;
+}
+
+.login-button{
+  /* border:2px solid red; */
+  margin-top:60rpx;
+}
+.login-button navigator{
+  text-align: center;
+  border:1px solid red;
+  width: 90%;
+  background-color: #f00;
+  margin: auto;
+  color:#fff;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size:36rpx;
+}
+
+.forgetLogin-newRegister{
+  display: flex;
+  justify-content: center;
+  margin-top:90rpx;
+}
+.forgetLogin-newRegister navigator{
+  /* flex: 1; */
+  padding-left:20rpx;
+  padding-right: 20rpx;
+}
+.forgetLogin-newRegister navigator{
+  background-color: transparent;
+}
+.forgetLogin-newRegister navigator:nth-of-type(1){
+  text-align:right;
+}
+.navigator_active{
+  background-color:transparent;
+  color:#f00;
+}
+
+
+
+
+
+
+
+
+
+
+
+
